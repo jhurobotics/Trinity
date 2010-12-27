@@ -47,29 +47,29 @@
 		08FB7794FE84155DC02AAC07 /* sim */ = {
 			isa = PBXGroup;
 			children = (
-				DAC75F4412C8597F00E7E711 /* Source */,
-				DAC75F4312C8597000E7E711 /* Maps */,
+				DAC75F4412C8597F00E7E711 /* src */,
+				DAC75F4312C8597000E7E711 /* maps */,
 				DAC760A812C86ACB00E7E711 /* Products */,
 			);
 			name = sim;
 			sourceTree = "<group>";
 		};
-		DAC75F4312C8597000E7E711 /* Maps */ = {
+		DAC75F4312C8597000E7E711 /* maps */ = {
 			isa = PBXGroup;
 			children = (
 				DAC75F4212C8596D00E7E711 /* basic_map */,
 			);
-			name = Maps;
+			path = maps;
 			sourceTree = "<group>";
 		};
-		DAC75F4412C8597F00E7E711 /* Source */ = {
+		DAC75F4412C8597F00E7E711 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				DAC75F4512C8598F00E7E711 /* main.cpp */,
 				DAC75F4612C859F900E7E711 /* map.h */,
 				DAC75F7012C85E1600E7E711 /* map.cpp */,
 			);
-			name = Source;
+			path = src;
 			sourceTree = "<group>";
 		};
 		DAC760A812C86ACB00E7E711 /* Products */ = {
