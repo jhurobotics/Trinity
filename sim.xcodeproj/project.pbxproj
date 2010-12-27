@@ -1,0 +1,216 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DAC760AE12C86B0200E7E711 /* basic_map in CopyFiles */ = {isa = PBXBuildFile; fileRef = DAC75F4212C8596D00E7E711 /* basic_map */; };
+		DAC760AF12C86B0500E7E711 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F4512C8598F00E7E711 /* main.cpp */; };
+		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DAC760CE12C86B3800E7E711 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				DAC760AE12C86B0200E7E711 /* basic_map in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
+		DAC75F4512C8598F00E7E711 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DAC75F4612C859F900E7E711 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
+		DAC75F7012C85E1600E7E711 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
+		DAC760A712C86ACB00E7E711 /* sim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sim; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DAC760A512C86ACB00E7E711 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* sim */ = {
+			isa = PBXGroup;
+			children = (
+				DAC75F4412C8597F00E7E711 /* Source */,
+				DAC75F4312C8597000E7E711 /* Maps */,
+				DAC760A812C86ACB00E7E711 /* Products */,
+			);
+			name = sim;
+			sourceTree = "<group>";
+		};
+		DAC75F4312C8597000E7E711 /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				DAC75F4212C8596D00E7E711 /* basic_map */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		DAC75F4412C8597F00E7E711 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				DAC75F4512C8598F00E7E711 /* main.cpp */,
+				DAC75F4612C859F900E7E711 /* map.h */,
+				DAC75F7012C85E1600E7E711 /* map.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		DAC760A812C86ACB00E7E711 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DAC760A712C86ACB00E7E711 /* sim */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DAC760A612C86ACB00E7E711 /* sim */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "sim" */;
+			buildPhases = (
+				DAC760A412C86ACB00E7E711 /* Sources */,
+				DAC760A512C86ACB00E7E711 /* Frameworks */,
+				DAC760CE12C86B3800E7E711 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = sim;
+			productName = sim;
+			productReference = DAC760A712C86ACB00E7E711 /* sim */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "sim" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* sim */;
+			productRefGroup = DAC760A812C86ACB00E7E711 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DAC760A612C86ACB00E7E711 /* sim */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DAC760A412C86ACB00E7E711 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAC760AF12C86B0500E7E711 /* main.cpp in Sources */,
+				DAC760B012C86B0500E7E711 /* map.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB919408733D9F0010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+			};
+			name = Debug;
+		};
+		1DEB919508733D9F0010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+			};
+			name = Release;
+		};
+		DAC760AA12C86ACC00E7E711 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = sim;
+			};
+			name = Debug;
+		};
+		DAC760AB12C86ACC00E7E711 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PREBINDING = NO;
+				PRODUCT_NAME = sim;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB919308733D9F0010E9CD /* Build configuration list for PBXProject "sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB919408733D9F0010E9CD /* Debug */,
+				1DEB919508733D9F0010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "sim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAC760AA12C86ACC00E7E711 /* Debug */,
+				DAC760AB12C86ACC00E7E711 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
