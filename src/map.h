@@ -8,10 +8,7 @@
 
 #include <vector>
 #include <string>
-
-extern "C" {
-  float sqrt(float);
-}
+#include <cmath>
 
 namespace sim {
   
@@ -152,6 +149,10 @@ namespace sim {
     }
     Segment(const Segment& other) : start(other.start), end(other.end) {}
     
+    vec2 displacement() {
+      return end - start;
+    }
+    
     vec2& operator[](unsigned int idx) {
       switch( idx ) {
         case 0:
@@ -184,8 +185,8 @@ namespace sim {
     std::vector<Door> doors;
     std::vector<Candle> candles;
   };
-  extern "C" Map* read_map(const std::string & path);
-  
+  extern "C" Map* read_map(const char * path);
+  extern "C" void draw_map(Map * map, bool start, bool emptyCandles);
 }
     
 #endif // __MAP_H__
