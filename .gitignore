@@ -1,0 +1,6 @@
+*~
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode2v3
+build
+*.o
+sim
