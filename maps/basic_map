@@ -10,9 +10,9 @@ width 248
 height 248
 start 95 225
 
-wall 0 103 72 103
-wall 72 46 72 103
-door 72 0 72 0
+wall 0 91 72 91
+wall 72 46 72 91
+door 72 0 72 46
 candle 5 5
 candle 5 85
 candle 65 85
@@ -38,4 +38,4 @@ wall 46 137 72 137
 wall 72 137 72 248
 candle 5 240
 candle 65 240
-candle 54 145
+candle 65 145
