@@ -1,0 +1,41 @@
+# Basic Arena
+# origin in lower left
+# units = centimeters
+# wall startX startY endX endY
+# door startX startY endX endY
+# start x y
+# candle x y
+
+width 248
+height 248
+start 95 225
+
+wall 0 103 72 103
+wall 72 46 72 103
+door 72 0 72 0
+candle 5 5
+candle 5 85
+candle 65 85
+
+wall 128 0 128 45
+door 128 45 128 91
+wall 128 91 248 91
+candle 135 5
+candle 235 5
+candle 235 85
+
+door 128 137 174 137
+wall 174 137 202 137
+wall 202 137 202 202
+wall 202 202 128 202
+wall 128 202 128 137
+candle 135 195
+candle 195 195
+candle 195 145
+
+door 0 137 46 137
+wall 46 137 72 137
+wall 72 137 72 248
+candle 5 240
+candle 65 240
+candle 54 145
