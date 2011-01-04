@@ -7,6 +7,7 @@
 #include <OpenGL/gl.h>
 
 #include "map.h"
+using namespace math;
 using namespace sim;
 
 Map* sim::read_map(const char* path) {
@@ -15,8 +16,7 @@ Map* sim::read_map(const char* path) {
   Map * result = new Map;
   
   std::string astring;
-  while( input ) {
-    input >> astring;
+  for(input >> astring; input; input >> astring ) {
     if( astring[0] == '#' ) { // comment, skip line
       input.ignore(LONG_MAX, '\n');
     }
@@ -44,7 +44,13 @@ Map* sim::read_map(const char* path) {
       input >> c[0] >> c[1];
       result->candles.push_back(c);
     }
+    else {
+      std::cerr << "Unrecognized token in map at " << path << ": " << astring << "\n";
+      input.ignore(LONG_MAX, '\n');
+    }
   }
+  
+  input.close();
   
   result->walls.push_back(Wall(vec2(0, 0), vec2(result->width, 0)));
   result->walls.push_back(Wall(vec2(result->width, 0),
@@ -69,7 +75,7 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
 
   glLineWidth(1.0f);
   glBegin(GL_LINES);
-  glColor3f(0.0f, 0.0f, 1.0f);
+  glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
   for( int i = 0; i < map->doors.size(); i++ ) {
     glVertex2f(map->doors[i][0][0],map->doors[i][0][1]);
     glVertex2f(map->doors[i][1][0],map->doors[i][1][1]);
@@ -80,14 +86,14 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glPushMatrix();
     glTranslatef(map->start[0], map->start[1], 0.0);
-    glColor3f(0.0, 1.0, 0.0);
+    glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
     glRectd(-10, -10, 10, 10);
     glPopMatrix();
   }
   
   if( doCandles ) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glColor3f(1.0, 0.0, 0.0);
+    glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
     const std::vector<Candle>& candles = map->candles;
     for( int i = 0; i < candles.size(); i++) {
       glPushMatrix();

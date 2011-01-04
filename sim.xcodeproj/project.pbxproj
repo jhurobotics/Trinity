@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DAC760AE12C86B0200E7E711 /* basic_map in CopyFiles */ = {isa = PBXBuildFile; fileRef = DAC75F4212C8596D00E7E711 /* basic_map */; };
+		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
+		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
+		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
+		DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
+		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
 		DAC760AF12C86B0500E7E711 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F4512C8598F00E7E711 /* main.cpp */; };
 		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
 /* End PBXBuildFile section */
@@ -19,18 +24,32 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				DAC760AE12C86B0200E7E711 /* basic_map in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA29583B12CD1310003D4584 /* simmotors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simmotors.h; sourceTree = "<group>"; };
+		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
+		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
+		DA47B86012C922EE00A7A0AF /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
+		DA5F5BCD12C96A6800BEA4B0 /* robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot.h; sourceTree = "<group>"; };
+		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
+		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
+		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
 		DAC75F4512C8598F00E7E711 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAC75F4612C859F900E7E711 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
 		DAC75F7012C85E1600E7E711 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
 		DAC760A712C86ACB00E7E711 /* sim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sim; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAC9AB9012CA594B00691585 /* Nomadic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Nomadic; sourceTree = "<group>"; };
+		DAC9AB9312CA5A9900691585 /* first */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = first; sourceTree = "<group>"; };
+		DAC9ABE412CA5EFE00691585 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
+		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
+		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
+		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +69,9 @@
 			children = (
 				DAC75F4412C8597F00E7E711 /* src */,
 				DAC75F4312C8597000E7E711 /* maps */,
+				DAC9AB9212CA5A9900691585 /* robots */,
+				DAC9AB8F12CA592700691585 /* sensors */,
+				DABF690812D2CFE800CA7B16 /* OpenGL.framework */,
 				DAC760A812C86ACB00E7E711 /* Products */,
 			);
 			name = sim;
@@ -65,9 +88,15 @@
 		DAC75F4412C8597F00E7E711 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
+				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
+				DAC9AC6612CA891E00691585 /* Sim mocks */,
 				DAC75F4512C8598F00E7E711 /* main.cpp */,
 				DAC75F4612C859F900E7E711 /* map.h */,
 				DAC75F7012C85E1600E7E711 /* map.cpp */,
+				DAC9AC6412CA890800691585 /* math */,
+				DAC9ADE612CAB49500691585 /* simulation.h */,
+				DAC9ADE712CAB49500691585 /* simulation.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -78,6 +107,44 @@
 				DAC760A712C86ACB00E7E711 /* sim */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		DAC9AB8F12CA592700691585 /* sensors */ = {
+			isa = PBXGroup;
+			children = (
+				DAC9AB9012CA594B00691585 /* Nomadic */,
+			);
+			path = sensors;
+			sourceTree = "<group>";
+		};
+		DAC9AB9212CA5A9900691585 /* robots */ = {
+			isa = PBXGroup;
+			children = (
+				DAC9AB9312CA5A9900691585 /* first */,
+			);
+			path = robots;
+			sourceTree = "<group>";
+		};
+		DAC9AC6412CA890800691585 /* math */ = {
+			isa = PBXGroup;
+			children = (
+				DAC9AD6712CAA7E100691585 /* geometryio.h */,
+				DAC9ABE412CA5EFE00691585 /* math.h */,
+				DA47B85F12C922EE00A7A0AF /* geometry.h */,
+				DA47B86012C922EE00A7A0AF /* geometry.cpp */,
+			);
+			name = math;
+			sourceTree = "<group>";
+		};
+		DAC9AC6612CA891E00691585 /* Sim mocks */ = {
+			isa = PBXGroup;
+			children = (
+				DA29583B12CD1310003D4584 /* simmotors.h */,
+				DA29583C12CD1310003D4584 /* simmotors.cpp */,
+				DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */,
+				DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */,
+			);
+			name = "Sim mocks";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,8 +197,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */,
+				DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */,
+				DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */,
 				DAC760AF12C86B0500E7E711 /* main.cpp in Sources */,
 				DAC760B012C86B0500E7E711 /* map.cpp in Sources */,
+				DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */,
+				DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +213,12 @@
 		1DEB919408733D9F0010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -152,6 +230,12 @@
 		1DEB919508733D9F0010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					x86_64,
+					i386,
+					ppc,
+				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

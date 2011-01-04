@@ -1,0 +1,5 @@
+radius 4
+sensor NORTH  Nomadic
+sensor SOUTH  Nomadic
+sensor EAST   Nomadic
+sensor WEST   Nomadic
