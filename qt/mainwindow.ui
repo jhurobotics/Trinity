@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="robotField">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="robotBrowse">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -37,7 +37,7 @@
      <string>Browse</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="robotLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -50,7 +50,7 @@
      <string>Robot:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="sensorField">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -60,7 +60,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="sensorBrowse">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -73,7 +73,7 @@
      <string>Browse</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="sensorLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -86,7 +86,7 @@
      <string>Sensors:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
+   <widget class="QLineEdit" name="mapField">
     <property name="geometry">
      <rect>
       <x>70</x>
@@ -96,7 +96,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="mapBrowse">
     <property name="geometry">
      <rect>
       <x>510</x>
@@ -109,7 +109,7 @@
      <string>Browse</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="mapLabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -122,7 +122,7 @@
      <string>Map:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_4">
+   <widget class="QPushButton" name="mapPreview">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -135,7 +135,7 @@
      <string>Preview Map</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
       <x>493</x>
