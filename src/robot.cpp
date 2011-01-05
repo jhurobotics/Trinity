@@ -55,11 +55,12 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
   return bot;
 }
 
-Robot::Robot() : NORTH(math::vec2(0, 4), math::vec2(0, 1)),
+Robot::Robot() :rangeFinders(), motors(), edges(), path(),
+                NORTH(math::vec2(0, 4), math::vec2(0, 1)),
                 SOUTH(math::vec2(0, -4), math::vec2(0, -1)),
                 EAST(math::vec2(4, 0), math::vec2(1, 0)),
                 WEST(math::vec2(-4, 0), math::vec2(-1, 0)),
-                position(), edges()
+                position()
 {
 }
 

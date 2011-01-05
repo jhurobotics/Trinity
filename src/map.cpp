@@ -70,7 +70,7 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
   glLineWidth(2.0);
   glBegin(GL_LINES);
   glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-  for( int i = 0; i < map->walls.size(); i++ ) {
+  for( unsigned int i = 0; i < map->walls.size(); i++ ) {
     glVertex2f(map->walls[i][0][0],map->walls[i][0][1]);
     glVertex2f(map->walls[i][1][0],map->walls[i][1][1]);
   }
@@ -79,7 +79,7 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
   glLineWidth(1.0f);
   glBegin(GL_LINES);
   glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
-  for( int i = 0; i < map->doors.size(); i++ ) {
+  for( unsigned int i = 0; i < map->doors.size(); i++ ) {
     glVertex2f(map->doors[i][0][0],map->doors[i][0][1]);
     glVertex2f(map->doors[i][1][0],map->doors[i][1][1]);
   }
@@ -98,7 +98,7 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
     const std::vector<Candle>& candles = map->candles;
-    for( int i = 0; i < candles.size(); i++) {
+    for( unsigned int i = 0; i < candles.size(); i++) {
       glPushMatrix();
       glTranslatef(candles[i][0], candles[i][1], 0.0);
       glRectd(-2, -2, 2, 2);

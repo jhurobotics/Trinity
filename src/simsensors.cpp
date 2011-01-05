@@ -29,7 +29,7 @@ float sim::Ultrasonic::getValue() {
   // find the nearest distance
   float dist = specs.maxRange;
   const std::vector<sim::Wall>& walls = world->map->walls;
-  for( int i = 0; i < walls.size(); i++ ) {
+  for( unsigned int i = 0; i < walls.size(); i++ ) {
     const Wall& curWall = walls[i];
     float curDist = distance(absPos, curWall);
     if( curDist > 0 && curDist < dist ) {

@@ -30,7 +30,7 @@ namespace sim {
     
     public:
     Ultrasonic(sim::Simulation * w, const RangeSpecs& s)
-      : world(w), specs(s)
+      : specs(s), world(w)
     {}
             
     protected:

@@ -6,6 +6,15 @@
 #include <iostream>
 using namespace math;
 
+mat2 math::getRotationMatrix(float angle) {
+  mat2 result;
+  result.data[0][0] = result.data[1][1] = cos(angle);
+  result.data[1][0] = sin(angle);
+  result.data[0][1] = - result.data[1][0];
+  return result;
+}
+
+
 float math::distance(const Ray& ray, const Segment& wall) {
   vec2 b = wall.direction();
   
