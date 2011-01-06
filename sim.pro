@@ -1,9 +1,3 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2011-01-03T23:06:37
-#
-#-------------------------------------------------
-
 QT       += core gui opengl
 
 TARGET = sim
@@ -18,7 +12,8 @@ SOURCES += \
     src/simmotors.cpp \
     src/robot.cpp \
     src/map.cpp \
-    src/geometry.cpp
+    src/geometry.cpp \
+    qt/mapwidget.cpp
 
 HEADERS  += \
     qt/mainwindow.h \
@@ -29,7 +24,9 @@ HEADERS  += \
     src/math.h \
     src/map.h \
     src/geometryio.h \
-    src/geometry.h
+    src/geometry.h \
+    qt/mapwidget.h
 
 FORMS    += \
-    qt/mainwindow.ui
+    qt/mainwindow.ui \
+    qt/mapwindow.ui
