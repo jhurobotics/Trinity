@@ -12,7 +12,10 @@ using namespace sim;
 
 Map* sim::read_map(const char* path) {
   std::ifstream input(path);
-  
+  if( !input ) {
+    return NULL;
+  }
+
   Map * result = new Map;
   
   std::string astring;
