@@ -3,12 +3,16 @@
 #include "ui_mapwindow.h"
 #include "mapwidget.h"
 #include "../src/map.h"
+#include "simwidget.h"
+#include "ui_simwindow.h"
+#include "../src/simulation.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     openDialog(new QFileDialog(this)),
-    mapPreviewWindow(new QMainWindow(this)), mapDisplay(NULL)
+    mapPreviewWindow(new QMainWindow(this)), mapDisplay(NULL),
+    simWindow(new QMainWindow(this)), simDisplay(NULL)
 {
   ui->setupUi(this);
 
@@ -38,12 +42,19 @@ MainWindow::MainWindow(QWidget *parent) :
   mapUI->setupUi(mapPreviewWindow);
   mapDisplay = mapUI->centralwidget;
   delete mapUI;
+
+  Ui::SimWindow * simUI = new Ui::SimWindow;
+  simUI->setupUi(simWindow);
+  simDisplay = simUI->simDisplay;
+  delete simUI;
 }
 
 MainWindow::~MainWindow()
 {
   delete openDialog;
   delete ui;
+  delete mapPreviewWindow;
+  delete simWindow;
 }
 
 QString MainWindow::getRobotPath() const {
@@ -114,4 +125,7 @@ void MainWindow::robotBrowse()
 
 void MainWindow::startSimulation()
 {
+  simDisplay->setWorld(sim::create_simulation(mapPath.toAscii().data(),
+                            robotPath.toAscii().data(), sensorPath.toAscii().data()));
+  simWindow->show();
 }

@@ -13,7 +13,8 @@ SOURCES += \
     src/robot.cpp \
     src/map.cpp \
     src/geometry.cpp \
-    qt/mapwidget.cpp
+    qt/mapwidget.cpp \
+    qt/simwidget.cpp
 
 HEADERS  += \
     qt/mainwindow.h \
@@ -25,8 +26,10 @@ HEADERS  += \
     src/map.h \
     src/geometryio.h \
     src/geometry.h \
-    qt/mapwidget.h
+    qt/mapwidget.h \
+    qt/simwidget.h
 
 FORMS    += \
     qt/mainwindow.ui \
-    qt/mapwindow.ui
+    qt/mapwindow.ui \
+    qt/simwindow.ui

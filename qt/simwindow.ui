@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SimWindow</class>
+ <widget class="QMainWindow" name="SimWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>750</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="SimWidget" name="simDisplay" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>750</width>
+      <height>750</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>760</y>
+      <width>114</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Step Once</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>760</y>
+      <width>121</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Step 1 Second</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SimWidget</class>
+   <extends>QWidget</extends>
+   <header>qt/simwidget.h</header>
+   <container>1</container>
+   <slots>
+    <slot>stepOnce()</slot>
+    <slot>stepSecond()</slot>
+   </slots>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>simDisplay</receiver>
+   <slot>stepOnce()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>777</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>185</x>
+     <y>707</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>simDisplay</receiver>
+   <slot>stepSecond()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>773</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>445</x>
+     <y>636</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

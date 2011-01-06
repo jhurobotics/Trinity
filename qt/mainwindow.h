@@ -12,6 +12,9 @@ namespace Ui {
 #ifndef MAPWIDGET_H
 class MapWidget;
 #endif // MAPWIDGET_H
+#ifndef SIMWIDGET_H
+class SimWidget;
+#endif
 
 class MainWindow : public QMainWindow
 {
@@ -32,6 +35,8 @@ private:
     QMainWindow * mapPreviewWindow;
     MapWidget * mapDisplay;
 
+    QMainWindow * simWindow;
+    SimWidget * simDisplay;
 public:
     QString getRobotPath() const;
     QString getSensorPath() const;
