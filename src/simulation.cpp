@@ -4,7 +4,6 @@
  */
 
 #include <cmath>
-#include <iostream>
 #include "simulation.h"
 #include "robot.h"
 #include "simsensors.h"
@@ -30,14 +29,12 @@ void sim::Simulation::step() {
   
   // find the displacement in the robot's coordinate system
   float theta = bot.angularVelocity * deltaT;
-  std::cout << "theta = " << theta*180/M_PI << "\n";
   math::Ray disp;
   if( fabsf(bot.angularVelocity) > 0.01) {
     float radius = bot.velocity.mag() / bot.angularVelocity;
     disp = math::Ray(math::vec2(0, -radius), math::vec2(1, 0));
     disp.transform(math::getRotationMatrix(theta));
     disp += math::vec2(0, radius);
-    std::cout << "displacement: " << disp << "\n";
   }
   else {
     disp = math::Ray(math::vec2(bot.velocity.mag() * deltaT, 0), math::vec2(1,0));
@@ -45,6 +42,5 @@ void sim::Simulation::step() {
   
   // transform into the world coordinate system
   bot.position += disp;
-  std::cout << "bot at : " << bot.position << "\n";
   //bot.position.rotateAboutStart(math::vec2(cos(theta), sin(theta)).getRotationMatrix());
 }
