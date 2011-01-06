@@ -1,11 +1,9 @@
 #include "mapwidget.h"
 #include "../src/map.h"
-#include <iostream>
 
 MapWidget::MapWidget(QWidget *parent) :
     QGLWidget(parent), theMap(NULL)
 {
-  std::cout << "created a MapWidget\n";
 }
 
 MapWidget::~MapWidget() {
@@ -16,32 +14,21 @@ MapWidget::~MapWidget() {
 
 
 void MapWidget::setMap(sim::Map *newMap) {
-  if( theMap ) {
+  if( theMap && theMap != newMap ) {
     delete theMap;
   }
   theMap = newMap;
+  update();
 }
 
 void MapWidget::initializeGL()
 {
   glClearColor(1.0, 1.0, 1.0, 0.0);
-  std::cout << "initialized OpenGL\n";
 }
 
-void MapWidget::resizeGL() {
-  const QSize size = frameSize();
-  glViewport(0, 0, size.width(), size.height());
-
-  if( !theMap ) {
-    return;
-  }
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  glOrtho( -5.0 , theMap->width+5.0, -5.0, theMap->height+5.0, -1.0, 1.0);
-  std::cout << "map dimensions: " << theMap->width << " x " << theMap->height << "\n";
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
+void MapWidget::resizeGL(int width, int height) {
+  glViewport(0, 0, width, height);
+  paintGL();
 }
 
 void MapWidget::paintGL()
@@ -55,7 +42,6 @@ void MapWidget::paintGL()
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho( -5.0 , theMap->width+5.0, -5.0, theMap->height+5.0, -1.0, 1.0);
-  std::cout << "map dimensions: " << theMap->width << " x " << theMap->height << "\n";
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 

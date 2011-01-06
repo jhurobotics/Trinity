@@ -1,11 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
+#include "ui_mapwindow.h"
+#include "mapwidget.h"
+#include "../src/map.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    openDialog(new QFileDialog(this))
+    openDialog(new QFileDialog(this)),
+    mapPreviewWindow(new QMainWindow(this)), mapDisplay(NULL)
 {
   ui->setupUi(this);
 
@@ -19,14 +22,22 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(this, SIGNAL(mapPathChanged(QString)), ui->mapField, SLOT(setText(QString)));
   connect(ui->mapField, SIGNAL(textChanged(QString)), this, SLOT(setMapPath(QString)));
 
+  connect(ui->mapPreview, SIGNAL(clicked()), this, SLOT(mapPreview()));
+  connect(ui->startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
+
   setRobotPath(QString("/Users/paul/Documents/Robotics/sim/robots/first"));
   setSensorPath(QString("/Users/paul/Documents/Robotics/sim/sensors"));
-  setMapPath(QString("/Users/paul/Documents/Robotics/maps/basic_map"));
+  setMapPath(QString("/Users/paul/Documents/Robotics/sim/maps/basic_map"));
 
   openDialog->setWindowModality(Qt::ApplicationModal);
   openDialog->setAcceptMode(QFileDialog::AcceptOpen);
   openDialog->setLabelText(QFileDialog::Accept, QString("Select"));
   openDialog->setDirectory(QString("/Users/paul/Document/Robotics/sim"));
+
+  Ui::MapWindow * mapUI = new Ui::MapWindow;
+  mapUI->setupUi(mapPreviewWindow);
+  mapDisplay = mapUI->centralwidget;
+  delete mapUI;
 }
 
 MainWindow::~MainWindow()
@@ -79,6 +90,8 @@ void MainWindow::mapBrowse()
 
 void MainWindow::mapPreview()
 {
+  mapDisplay->setMap(sim::read_map(mapPath.toAscii().data()));
+  mapPreviewWindow->show();
 }
 
 void MainWindow::sensorBrowse()

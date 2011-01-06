@@ -16,11 +16,11 @@ protected:
   sim::Map * theMap;
 public:
   explicit MapWidget(QWidget *parent = 0);
-  ~MapWidget();
+  virtual ~MapWidget();
 
 protected:
   virtual void initializeGL();
-  virtual void resizeGL();
+  virtual void resizeGL(int width, int height);
   virtual void paintGL();
 signals:
 

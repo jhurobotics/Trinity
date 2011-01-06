@@ -9,6 +9,10 @@ namespace Ui {
     class MainWindow;
 }
 
+#ifndef MAPWIDGET_H
+class MapWidget;
+#endif // MAPWIDGET_H
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -24,6 +28,9 @@ private:
     QString robotPath;
     QString sensorPath;
     QString mapPath;
+
+    QMainWindow * mapPreviewWindow;
+    MapWidget * mapDisplay;
 
 public:
     QString getRobotPath() const;
