@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace math;
 
-mat2 math::getRotationMatrix(float angle) {
+mat2 math::getRotationMatrix(float angle) throw() {
   mat2 result;
   result.data[0][0] = result.data[1][1] = cos(angle);
   result.data[1][0] = sin(angle);
@@ -14,8 +14,7 @@ mat2 math::getRotationMatrix(float angle) {
   return result;
 }
 
-
-float math::distance(const Ray& ray, const Segment& wall) {
+float math::distance(const Ray& ray, const Segment& wall) throw() {
   vec2 b = wall.direction();
   
   float denom = b.cross(ray.dir());
@@ -32,7 +31,7 @@ float math::distance(const Ray& ray, const Segment& wall) {
   return s;
 }
 
-inline vec2 math::pointToSeg(const vec2& c, const Segment& wall, float *param) {
+vec2 math::pointToSeg(const vec2& c, const Segment& wall, float *param) throw() {
   vec2 b = wall.direction();
   float t = b.dot(c - wall.start) / b.mag_sq();
   if( t > 1.0 ) {
@@ -48,7 +47,7 @@ inline vec2 math::pointToSeg(const vec2& c, const Segment& wall, float *param) {
   return wall.start + t*b - c;
 }
 
-bool math::intersect(const Circle& c, const Segment& wall) {
+bool math::intersect(const Circle& c, const Segment& wall) throw() {
   float t;
   vec2 disp = pointToSeg(c.center(), wall, &t);
   if( t > 0 && t < 1.0 && disp.mag_sq() <= c.radius()*c.radius() ) {

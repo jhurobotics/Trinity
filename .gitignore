@@ -5,3 +5,5 @@ build
 *.o
 sim
 .DS_Store
+*.pro.user
+
