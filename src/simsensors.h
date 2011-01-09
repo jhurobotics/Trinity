@@ -22,6 +22,8 @@ namespace sim {
     // The uncertainty in the measurement
     // this is proportional to the distance, i.e. +/- 1%
     float error;
+    // Tangent of half-of the angular width of the ultrasonic pulse in radians
+    float tanOfWidth;
   };    
   
   class Ultrasonic : public robot::RangeSensor {

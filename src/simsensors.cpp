@@ -24,14 +24,45 @@ Ray sim::Ultrasonic::getAbsolutePosition() {
 
 float sim::Ultrasonic::getValue() {
   Ray absPos = getAbsolutePosition();
+  static const vec2 origin(0.0, 0.0);
+  vec2 upperRay(1.0, specs.tanOfWidth);
+  upperRay.normalize();
+  vec2 lowerRay(1.0, -specs.tanOfWidth);
+  lowerRay.normalize();
   
   // In the perfect simulation model,
   // find the nearest distance
   float dist = specs.maxRange;
   const std::vector<sim::Wall>& walls = world->map->walls;
   for( unsigned int i = 0; i < walls.size(); i++ ) {
+    float curDist = specs.maxRange;
     const Wall& curWall = walls[i];
-    float curDist = distance(absPos, curWall);
+    Wall transWall(absPos.transformToLocal(curWall[0]), absPos.transformToLocal(curWall[1]));
+    // the wall must be in front of the sensor
+    if( transWall[0].x < 0.0 && transWall[1].x < 0.0 ) {
+      continue;
+    }
+
+    // see if this wall is in the cone of the pulse
+    float firstTan = transWall[0].y/transWall[0].x;
+    float secondTan = transWall[1].y/transWall[1].x;
+    if( ( firstTan >  specs.tanOfWidth && secondTan <  specs.tanOfWidth ) ||
+        ( firstTan < -specs.tanOfWidth && secondTan > -specs.tanOfWidth ) ||
+        ( fabsf(firstTan) < specs.tanOfWidth || fabsf(secondTan) < specs.tanOfWidth )
+      ) {
+      float positionOnWall;
+      vec2 disp = pointToSeg(origin, transWall, &positionOnWall);
+      if( disp.y / disp.x > specs.tanOfWidth ) {
+        curDist = distance(Ray(vec2(0.0, 0.0), upperRay), transWall);
+      }
+      else if( disp.y / disp.x < -specs.tanOfWidth ) {
+        curDist = distance(Ray(vec2(0.0, 0.0), lowerRay), transWall);
+      }
+      else {
+        curDist = disp.mag();
+      }
+    }
+
     if( curDist > 0 && curDist < dist ) {
       dist = curDist;
     }
@@ -145,6 +176,11 @@ robot::RangeSensor * sim::SensorFactory::newRangeSensor(std::istream& input) {
     }
     else if( astring == "error" ) {
       input >> specs.error;
+    }
+    else if( astring == "halfAngle" ) {
+      float pulseWidth;
+      input >> pulseWidth;
+      specs.tanOfWidth = tanf(pulseWidth*M_PI/180.0f);
     }
   }
   return new Ultrasonic(world, specs);

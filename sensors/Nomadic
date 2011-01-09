@@ -2,3 +2,5 @@ kind RANGE
 maxRange 1067
 minRange 15
 error 0.01 # really 0.01, but I want more noise right now
+halfAngle 15
+

@@ -35,6 +35,13 @@ float math::distance(const Ray& ray, const Segment& wall) {
 inline vec2 math::pointToSeg(const vec2& c, const Segment& wall, float *param) {
   vec2 b = wall.direction();
   float t = b.dot(c - wall.start) / b.mag_sq();
+  if( t > 1.0 ) {
+    t = 1.0;
+  }
+  else if( t < 0.0 ) {
+    t = 0.0;
+  }
+
   if( param ) {
     *param = t;
   }

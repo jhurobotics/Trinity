@@ -364,6 +364,16 @@ namespace math {
       vec2 result = dir().getRotationMatrix() * vec;
       return (result += origin());
     }
+
+    // Takes the given vector in the absolute coordinate system
+    // and transofrms it to a point in the coordinate system
+    // with the origin at the start of the ray and pointin along it
+    vec2 transformToLocal(const vec2& vec) const throw() {
+      vec2 relative = vec - origin();
+      float t = dir().dot(relative);
+      float s = dir().cross(relative);
+      return vec2(t, s);
+    }
     
     Ray& operator=(const Ray& other) {
       start = other.start;
