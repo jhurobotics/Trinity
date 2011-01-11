@@ -11,7 +11,7 @@
 
 #ifndef __ROBOT_H__
 namespace robot {
-  class Robot;
+  class AbstractRobot;
 }
 #endif
 
@@ -19,7 +19,7 @@ namespace sim {
   
   class Robot {
   public:
-    robot::Robot * bot;
+    robot::AbstractRobot * bot;
     
     // the following are the true values, not where the bot thinks it is
     // position in cm from the lower left of the house

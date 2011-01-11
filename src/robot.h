@@ -30,7 +30,8 @@ namespace robot {
     RangeSpecs specs;
     // Position relative to the robot
     math::Ray relPos;
-    RangeSensor(const RangeSpecs& s) : specs(s), relPos() {}
+    explicit RangeSensor(const RangeSpecs& s) : specs(s), relPos() {}
+    explicit RangeSensor(const RangeSensor& s) : specs(s.specs), relPos(s.relPos) {}
     virtual ~RangeSensor() {}
     
     virtual float getValue() = 0;
@@ -65,7 +66,14 @@ namespace robot {
     virtual MotorControl * newMotors() = 0;
   };
   
-  class Robot {
+  class AbstractRobot {
+    public:
+    AbstractRobot() {}
+    virtual ~AbstractRobot() {}
+    virtual void act() = 0; // do one iteration of its thang.
+  };
+  
+  class Robot : public AbstractRobot {
     public:
     float size;
     std::map<std::string, RangeSensor*> rangeFinders;
@@ -81,7 +89,7 @@ namespace robot {
     math::Ray position;
     Robot();
     
-    void act(); // do one iteration of its thang.
+    virtual void act(); // do one iteration of its thang.
   }; // class SensorLayout
   
   Robot * read_robot(const char * path, SensorFactory * sensors, MotorFactory * motors);  
