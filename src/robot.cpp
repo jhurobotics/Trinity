@@ -11,7 +11,13 @@
 using namespace robot;
 using namespace math;
 
+const std::string Robot::NORTH("NORTH");
+const std::string Robot::SOUTH("SOUTH");
+const std::string Robot::EAST("EAST");
+const std::string Robot::WEST("WEST");
+
 Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFactory * motors) {
+  std::map<std::string, math::Ray> sensorPositions;
   std::ifstream input(path);
   Robot * bot = new Robot;
   std::string astring;
@@ -23,28 +29,19 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
     else if( astring == "radius" ) {
       input >> bot->size;
     }
-    else if( astring == "sensor" ) {
+    else if( astring == "position" ) {
+      math::Ray pos;
       input >> astring;
-      const math::Ray* pos = NULL;
-      if( astring == "NORTH") {
-        pos = &bot->NORTH;
-      }
-      else if( astring == "SOUTH") {
-        pos = &bot->SOUTH;
-      }
-      else if( astring == "EAST" ) {
-        pos = &bot->EAST;
-      }
-      else if( astring == "WEST" ) {
-        pos = &bot->WEST;
-      }
-      
-      if( pos ) {
-        input >> astring;
-        RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
-        bot->rangeFinders[*pos] = ranger;
-        ranger->relPos = *pos;
-      }
+      input >> pos;
+      sensorPositions[astring] = pos;
+    }
+    else if( astring == "sensor" ) {
+      std::string position;
+      input >> position;
+      input >> astring;
+      RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
+      bot->rangeFinders[position] = ranger;
+      ranger->relPos = sensorPositions[position];
     }
   }
   
@@ -56,19 +53,15 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
 }
 
 Robot::Robot() :rangeFinders(), motors(), edges(), path(),
-                NORTH(math::vec2(0, 4), math::vec2(0, 1)),
-                SOUTH(math::vec2(0, -4), math::vec2(0, -1)),
-                EAST(math::vec2(4, 0), math::vec2(1, 0)),
-                WEST(math::vec2(-4, 0), math::vec2(-1, 0)),
                 position()
 {
 }
 
 void robot::Robot::act() {
-  edges.push_back(position.transformToAbsolute(NORTH.getPoint(rangeFinders[NORTH]->getValue())));
-  edges.push_back(position.transformToAbsolute(SOUTH.getPoint(rangeFinders[SOUTH]->getValue())));
-  edges.push_back(position.transformToAbsolute(EAST.getPoint(rangeFinders[EAST]->getValue())));
-  edges.push_back(position.transformToAbsolute(WEST.getPoint(rangeFinders[WEST]->getValue())));
+  edges.push_back(position.transformToAbsolute(rangeFinders[NORTH]->getCoordinate()));
+  edges.push_back(position.transformToAbsolute(rangeFinders[SOUTH]->getCoordinate()));
+  edges.push_back(position.transformToAbsolute(rangeFinders[EAST]->getCoordinate()));
+  edges.push_back(position.transformToAbsolute(rangeFinders[WEST]->getCoordinate()));
   
   float velocity = 10;
   float angularVelocity = 0;//M_PI/4.0;

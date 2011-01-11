@@ -8,46 +8,46 @@
 
 #include <vector>
 #include <map>
+#include <string>
 #include "geometry.h"
 
 namespace robot {
   
-  enum SensorKind {
-    UNKNOWN = 0,
-    RANGE
-  };
+  struct RangeSpecs {
+    // The maximum detectable range
+    float maxRange;
+    // The minimum detectable range
+    float minRange;
+    // The uncertainty in the measurement
+    // this is proportional to the distance, i.e. +/- 1%
+    float error;
+    // Tangent of half-of the angular width of the ultrasonic pulse in radians
+    float tanOfWidth;
+  };    
   
-  class Sensor {
+  class RangeSensor {
     public:
-    Sensor() {}
-    virtual ~Sensor() {}
-  }; // class Sensor
-  
-  class SingleValueSensor : public Sensor {
-    public:
-    SingleValueSensor() : Sensor() {}
-    virtual ~SingleValueSensor() {}
-    
-    virtual float getValue() = 0;
-  }; // class SingleValueSensor
-  
-  class RangeSensor : public SingleValueSensor {
-    public:
+    RangeSpecs specs;
     // Position relative to the robot
     math::Ray relPos;
-    RangeSensor() : SingleValueSensor(), relPos() {}
+    RangeSensor(const RangeSpecs& s) : specs(s), relPos() {}
     virtual ~RangeSensor() {}
+    
+    virtual float getValue() = 0;
+    math::vec2 getCoordinate() {
+      return relPos.getPoint(getValue());
+    }
   };
   
   class SensorFactory {
+    protected:
+    std::map<std::string, robot::RangeSpecs> rangeSensors;
     public:
     virtual ~SensorFactory() {}
-    virtual Sensor * newSensorWithName(const char * name, robot::SensorKind* kind = NULL) = 0;
     
-    class WrongSensorKind {
-    };
-
-    virtual RangeSensor * rangeSensor(const char * name) throw(WrongSensorKind) = 0;
+    class WrongSensorKind {};
+    
+    virtual RangeSensor * rangeSensor(const std::string& name) = 0;
   };
   
   class MotorControl {
@@ -68,15 +68,15 @@ namespace robot {
   class Robot {
     public:
     float size;
-    std::map<math::Ray, RangeSensor*> rangeFinders;
+    std::map<std::string, RangeSensor*> rangeFinders;
     MotorControl * motors;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
     
-    const math::Ray NORTH;
-    const math::Ray SOUTH;
-    const math::Ray EAST;
-    const math::Ray WEST;
+    static const std::string NORTH;
+    static const std::string SOUTH;
+    static const std::string EAST;
+    static const std::string WEST;
     
     math::Ray position;
     Robot();

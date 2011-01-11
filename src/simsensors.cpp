@@ -89,17 +89,10 @@ float sim::Ultrasonic::getValue() {
   return dist;
 }
 
-std::ifstream * sim::SensorFactory::openSensorFile(const char * name) {
-  return new std::ifstream ((libPath + "/" + name).c_str());
-}
-
-robot::Sensor * sim::SensorFactory::newSensorWithName(const char* name, robot::SensorKind * pKind) {
-  robot::Sensor * result = NULL;
-  std::ifstream *in = openSensorFile(name);
-  std::ifstream & input = *in;
-  
-  try {
-    robot::SensorKind kind = robot::UNKNOWN;
+robot::RangeSensor * sim::SensorFactory::rangeSensor(const std::string& name) throw(WrongSensorKind) {
+  if( !rangeSensors.count(name) ) {
+    robot::RangeSpecs specs;
+    std::ifstream input((libPath + "/" + name).c_str());
     std::string astring;
     while( input ) {
       input >> astring;
@@ -108,80 +101,29 @@ robot::Sensor * sim::SensorFactory::newSensorWithName(const char* name, robot::S
       }
       else if( astring == "kind" ) {
         input >> astring;
-        if( astring == "RANGE" ) {
-          kind = robot::RANGE;
+        if( astring != "RANGE" ) {
+          std::cerr << "Sensor named " << name << " is not a range sensor\n";
+          throw WrongSensorKind();
         }
-        else {
-          std::cerr << "Unrecognized type in sensor " << name << ": " << astring << "\n";
-          throw 1;
-        }
-        if( pKind ) {
-          *pKind = kind;
-        }
-        break;
       }
-    }
-    
-    switch( kind ) {
-      case robot::RANGE:
-        result = newRangeSensor(input);
-      default:
-        throw 2;
-    }
-  }
-  catch(...) {
-  }
-  input.close();
-  delete in;
-  return result;
-}
-
-robot::RangeSensor * sim::SensorFactory::rangeSensor(const char * name) throw(WrongSensorKind) {
-  std::ifstream * in = openSensorFile(name);
-  std::ifstream& input = *in;
-  std::string astring;
-  while( input ) {
-    input >> astring;
-    if( astring[0] == '#' ) {
-      input.ignore(LONG_MAX, '\n');
-    }
-    else if( astring == "kind" ) {
-      input >> astring;
-      if( astring != "RANGE" ) {
-        std::cerr << "Sensor named " << name << " is not a range sensor\n";
-        throw WrongSensorKind();
+      else if( astring == "maxRange" ) {
+        input >> specs.maxRange;
       }
-      break;
-    }
-  }  
-  robot::RangeSensor * result = newRangeSensor(input);
-  input.close();
-  delete in;
-  return result;
-}
-
-robot::RangeSensor * sim::SensorFactory::newRangeSensor(std::istream& input) {
-  RangeSpecs specs;
-  std::string astring;
-  while( input ) {
-    input >> astring;
-    if( astring[0] == '#' ) {
-      input.ignore(LONG_MAX, '\n');
-    }
-    else if( astring == "maxRange" ) {
-      input >> specs.maxRange;
-    }
-    else if( astring == "minRange" ) {
-      input >> specs.minRange;
-    }
-    else if( astring == "error" ) {
-      input >> specs.error;
-    }
-    else if( astring == "halfAngle" ) {
-      float pulseWidth;
-      input >> pulseWidth;
-      specs.tanOfWidth = tanf(pulseWidth*M_PI/180.0f);
-    }
+      else if( astring == "minRange" ) {
+        input >> specs.minRange;
+      }
+      else if( astring == "error" ) {
+        input >> specs.error;
+      }
+      else if( astring == "halfAngle" ) {
+        float pulseWidth;
+        input >> pulseWidth;
+        specs.tanOfWidth = tanf(pulseWidth*M_PI/180.0f);
+      }
+    }  
+    input.close();
+    rangeSensors.insert(std::pair<std::string, robot::RangeSpecs>
+                        (name, specs));
   }
-  return new Ultrasonic(world, specs);
+  return new Ultrasonic(world, rangeSensors[name]);
 }

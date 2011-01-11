@@ -1,4 +1,8 @@
 radius 4
+position NORTH  0  4  0  1
+position SOUTH  0 -4  0 -1
+position EAST   4  0  1  0
+position WEST  -4  0 -1  0
 sensor NORTH  Nomadic
 sensor SOUTH  Nomadic
 sensor EAST   Nomadic

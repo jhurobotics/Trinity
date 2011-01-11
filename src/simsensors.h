@@ -13,26 +13,13 @@
 #include <string>
 
 namespace sim {
-  
-  struct RangeSpecs {
-    // The maximum detectable range
-    float maxRange;
-    // The minimum detectable range
-    float minRange;
-    // The uncertainty in the measurement
-    // this is proportional to the distance, i.e. +/- 1%
-    float error;
-    // Tangent of half-of the angular width of the ultrasonic pulse in radians
-    float tanOfWidth;
-  };    
-  
+    
   class Ultrasonic : public robot::RangeSensor {
-    RangeSpecs specs;
     Simulation * world;
     
     public:
-    Ultrasonic(sim::Simulation * w, const RangeSpecs& s)
-      : specs(s), world(w)
+    Ultrasonic(sim::Simulation * w, const robot::RangeSpecs& s)
+      : robot::RangeSensor(s), world(w)
     {}
             
     protected:
@@ -52,12 +39,7 @@ namespace sim {
       : libPath(lib), world(w) {}
     virtual ~SensorFactory() {}
     
-    virtual robot::Sensor * newSensorWithName(const char * name,
-                            robot::SensorKind* kind = NULL);
-    virtual robot::RangeSensor * rangeSensor(const char * name) throw(WrongSensorKind);
-    private:
-    std::ifstream * openSensorFile(const char * name);
-    robot::RangeSensor * newRangeSensor(std::istream& input);
+    virtual robot::RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind);
   };
 } // namespace sim
 
