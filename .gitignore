@@ -6,4 +6,5 @@ build
 sim
 .DS_Store
 *.pro.user
+generated_sources/*
 
