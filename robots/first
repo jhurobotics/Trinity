@@ -3,6 +3,7 @@ position FRONT  4  0  1  0
 position BACK  -4  0 -1  0
 position LEFT   0  4  0  1
 position RIGHT  0 -4  0 -1
+range:
 sensor FRONT  Nomadic
 sensor BACK   Nomadic
 sensor LEFT   Nomadic

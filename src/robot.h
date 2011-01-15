@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <map>
+#include <set>
 #include <string>
 #include "geometry.h"
 
@@ -76,16 +77,11 @@ namespace robot {
   class Robot : public AbstractRobot {
     public:
     float size;
-    std::map<std::string, RangeSensor*> rangeFinders;
+    std::set<RangeSensor*> rangeFinders;
     MotorControl * motors;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
     std::vector<math::vec2> realPoints;
-    
-    static const std::string FRONT;
-    static const std::string BACK;
-    static const std::string LEFT;
-    static const std::string RIGHT;
     
     math::Ray position;
     Robot();

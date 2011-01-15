@@ -11,12 +11,12 @@
 using namespace robot;
 using namespace math;
 
-const std::string Robot::FRONT("FRONT");
-const std::string Robot::BACK("BACK");
-const std::string Robot::LEFT("LEFT");
-const std::string Robot::RIGHT("RIGHT");
-
 Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFactory * motors) {
+  enum SensorType {
+    UNKNOWN = 0,
+    RANGE
+  };
+  SensorType curSensType = UNKNOWN;
   std::map<std::string, math::Ray> sensorPositions;
   std::ifstream input(path);
   Robot * bot = new Robot;
@@ -35,15 +35,41 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
       input >> pos;
       sensorPositions[astring] = pos;
     }
+    else if( astring == "range:" ) {
+      curSensType = RANGE;
+    }
     else if( astring == "sensor" ) {
-      std::string position;
-      input >> position;
-      input >> astring;
-      RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
-      bot->rangeFinders[position] = ranger;
-      ranger->relPos = sensorPositions[position];
+      switch( curSensType ) {
+        case UNKNOWN:
+          break;
+        case RANGE: {
+          std::cout << "adding a new sensor\n";
+          Ray posRay;
+          std::string position;
+          input >> position;
+          if( sensorPositions.find(position) != sensorPositions.end() ) {
+            posRay = sensorPositions[position];
+          }
+          else {
+            float x, y;
+            x = atof(position.c_str());
+            input >> y;
+            vec2 pos(x,y);
+            vec2 dir;
+            input >> dir;
+            posRay = Ray(pos, dir);
+          }
+          input >> astring;
+          RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
+          ranger->relPos = posRay;
+          bot->rangeFinders.insert(ranger);
+          break;
+        }
+      }
     }
   }
+  
+  std::cout << "Robot has " << bot->rangeFinders.size() << " sensors\n";
   
   input.close();
   
@@ -58,10 +84,11 @@ Robot::Robot() :rangeFinders(), motors(), edges(), path(),
 }
 
 void robot::Robot::act() {
-  edges.push_back(position.transformToAbsolute(rangeFinders[FRONT]->getCoordinate()));
-  edges.push_back(position.transformToAbsolute(rangeFinders[BACK]->getCoordinate()));
-  edges.push_back(position.transformToAbsolute(rangeFinders[LEFT]->getCoordinate()));
-  edges.push_back(position.transformToAbsolute(rangeFinders[RIGHT]->getCoordinate()));
+  typedef std::set<RangeSensor*>::iterator RangeIterator;
+  RangeIterator end = rangeFinders.end();
+  for( RangeIterator iter = rangeFinders.begin(); iter != end; iter ++ ) {
+    edges.push_back(position.transformToAbsolute((*iter)->getCoordinate()));
+  }
   
   float velocity = 10;
   float angularVelocity = 0;//M_PI/4.0;
