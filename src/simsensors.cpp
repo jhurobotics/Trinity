@@ -14,9 +14,30 @@
 using namespace sim;
 using namespace math;
 
+// angle of incidence
+#define REFLECT_ANGLE 20.0*M_PI/180.0
+static const float maxDotProd = cos(M_PI/2.0 - REFLECT_ANGLE);
+
 Ray sim::Ultrasonic::getAbsolutePosition() {
   Ray absPos = world->bot.position.transformToAbsolute(relPos);
   return absPos;
+}
+
+float sim::Ultrasonic::minDist(const Ray& ray) {
+  Ray absPos = getAbsolutePosition();
+  
+  // In the perfect simulation model,
+  // find the nearest distance
+  float dist = -10;
+  const std::vector<sim::Wall>& walls = world->map->walls;
+  for( unsigned int i = 0; i < walls.size(); i++ ) {
+    const Wall& curWall = walls[i];
+    float curDist = distance(ray, curWall);
+    if( dist < 0 || (curDist > 0 && curDist < dist) ) {
+      dist = curDist;
+    }
+  }
+  return dist;
 }
 
 float sim::Ultrasonic::getValue() {
@@ -56,6 +77,17 @@ float sim::Ultrasonic::getValue() {
       }
       else {
         curDist = disp.mag();
+      }
+      // if the angle of incidence is low enough, then the beam reflects away off of the wall, so discard the signal
+      float cosOfAngle = disp.dot(transWall.direction()) / disp.mag() / transWall.direction().mag();
+      if( fabsf(cosOfAngle) > maxDotProd ) {
+        continue;
+        // do raytracing?
+      }
+
+      // is this actually the first thing that gets hit?
+      if( minDist(absPos.transformToAbsolute(dispRay)) < curDist ) {
+        continue;
       }
     }
     else {

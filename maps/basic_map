@@ -10,32 +10,42 @@ width 248
 height 248
 start 95 225
 
+# Room 2
 wall 0 91 72 91
-wall 72 46 72 91
+wall 72 46 72 90.9
 door 72 0 72 46
 candle 5 5
 candle 5 85
 candle 65 85
+wall 70 46 71.9 46
 
+# Room 1
 wall 128 0 128 45
 door 128 45 128 91
 wall 128 91 248 91
 candle 135 5
 candle 235 5
 candle 235 85
+wall 128 45.1 130 45
+wall 128 89 128 90.9
 
+# Room 3
 door 128 137 174 137
-wall 174 137 202 137
-wall 202 137 202 202
-wall 202 202 128 202
+wall 174 137 201.9 137
+wall 202 137.1 202 201.9
+wall 202.1 202 128 202
 wall 128 202 128 137
 candle 135 195
 candle 195 195
 candle 195 145
+wall 128 137 130 137
+wall 174 137.1 174 139
 
+# Room 3
 door 0 137 46 137
 wall 46 137 72 137
 wall 72 137 72 248
 candle 5 240
 candle 65 240
 candle 65 145
+wall 46 137 46 139

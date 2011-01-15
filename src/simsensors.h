@@ -25,6 +25,7 @@ namespace sim {
     protected:
     // Find my actual position in the house
     math::Ray getAbsolutePosition();
+    float minDist(const math::Ray& ray);
     
     public:
     // Generate a noisy data point
