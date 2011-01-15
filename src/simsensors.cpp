@@ -15,20 +15,15 @@ using namespace sim;
 using namespace math;
 
 Ray sim::Ultrasonic::getAbsolutePosition() {
-  Ray absPos = relPos;
-  mat2 worldRotation = world->bot.position.dir().getRotationMatrix();
-  absPos.transform(worldRotation);
-  absPos += world->bot.position.origin();
+  Ray absPos = world->bot.position.transformToAbsolute(relPos);
   return absPos;
 }
 
 float sim::Ultrasonic::getValue() {
   Ray absPos = getAbsolutePosition();
   static const vec2 origin(0.0, 0.0);
-  vec2 upperRay(1.0, specs.tanOfWidth);
-  upperRay.normalize();
-  vec2 lowerRay(1.0, -specs.tanOfWidth);
-  lowerRay.normalize();
+  Ray upperRay(vec2(0, 0), vec2(1.0,  specs.tanOfWidth).normalize());
+  Ray lowerRay(vec2(0, 0), vec2(1.0, -specs.tanOfWidth).normalize());
   
   // In the perfect simulation model,
   // find the nearest distance
@@ -46,21 +41,25 @@ float sim::Ultrasonic::getValue() {
     // see if this wall is in the cone of the pulse
     float firstTan = transWall[0].y/transWall[0].x;
     float secondTan = transWall[1].y/transWall[1].x;
-    if( ( firstTan >  specs.tanOfWidth && secondTan <  specs.tanOfWidth ) ||
-        ( firstTan < -specs.tanOfWidth && secondTan > -specs.tanOfWidth ) ||
-        ( fabsf(firstTan) < specs.tanOfWidth || fabsf(secondTan) < specs.tanOfWidth )
+    // either the wall crosses the boundary of the pulse, or both ends must be inside
+    if( ( fabsf(firstTan) < specs.tanOfWidth || fabsf(secondTan) < specs.tanOfWidth ) ||
+        ( distance(upperRay, transWall) > 0 || distance(lowerRay, transWall) > 0 )
       ) {
       float positionOnWall;
       vec2 disp = pointToSeg(origin, transWall, &positionOnWall);
+      Ray dispRay(origin, disp);
       if( disp.y / disp.x > specs.tanOfWidth ) {
-        curDist = distance(Ray(vec2(0.0, 0.0), upperRay), transWall);
+        curDist = distance(upperRay, transWall);
       }
       else if( disp.y / disp.x < -specs.tanOfWidth ) {
-        curDist = distance(Ray(vec2(0.0, 0.0), lowerRay), transWall);
+        curDist = distance(lowerRay, transWall);
       }
       else {
         curDist = disp.mag();
       }
+    }
+    else {
+      continue;
     }
 
     if( curDist > 0 && curDist < dist ) {
