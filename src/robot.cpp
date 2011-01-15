@@ -43,7 +43,6 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
         case UNKNOWN:
           break;
         case RANGE: {
-          std::cout << "adding a new sensor\n";
           Ray posRay;
           std::string position;
           input >> position;
@@ -68,9 +67,7 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
       }
     }
   }
-  
-  std::cout << "Robot has " << bot->rangeFinders.size() << " sensors\n";
-  
+    
   input.close();
   
   bot->motors = motors->newMotors();
