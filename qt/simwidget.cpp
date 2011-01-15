@@ -59,6 +59,11 @@ void SimWidget::paintGL() {
     return;
   }
 
+  robot::Robot * bot = dynamic_cast<robot::Robot*>(world->bot.bot);
+  const std::vector<math::vec2>& path = bot->path;
+  const std::vector<math::vec2>& edges = bot->edges;
+  const std::vector<math::vec2>& realPoints = bot->realPoints;
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glOrtho( - 25.0 , world->map->width + 25.0,
@@ -76,10 +81,20 @@ void SimWidget::paintGL() {
   //glTranslatef(-world->map->start.x, -world->map->start.y, 0);
   sim::draw_map(world->map, true, true);
 
-  glPushMatrix();
+  // fade the map
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glColor4f(WHITE, 0.5f);
   glRectf(0, 0, world->map->width, world->map->height);
+  
+  glPointSize(4.0);
+  glBegin(GL_POINTS);
+  glColor4f(RED, 1.0);
+  for( unsigned int i = 0; i < realPoints.size(); i++ ) {
+    glVertex2f(realPoints[i].x, realPoints[i].y);
+  }
+  glEnd();
+  
+  glPushMatrix();
   glTranslatef(world->bot.position.origin().x, world->bot.position.origin().y, 0.0);
   glRotatef((atan2(world->bot.position.dir().y, world->bot.position.dir().x))*180.0/M_PI, 0.0, 0.0, 1.0);
   glColor4f(BLUE, 1.0);
@@ -103,8 +118,6 @@ void SimWidget::paintGL() {
   glPushMatrix();
   glTranslatef(world->map->start.x, world->map->start.y, 0);
   glRotatef(-90.0, 0.0, 0.0, 1.0);
-  const std::vector<math::vec2>& path = world->bot.bot->path;
-  const std::vector<math::vec2>& edges = world->bot.bot->edges;
   glPointSize(4.0);
   glBegin(GL_POINTS);
   for( unsigned int i = 0; i < path.size(); i++ ) {
@@ -114,7 +127,6 @@ void SimWidget::paintGL() {
   for( unsigned int i = 0; i < edges.size(); i++ ) {
     glVertex2f(edges[i].x, edges[i].y);
   }
-
   glEnd();
   glPopMatrix();
   glFlush();
