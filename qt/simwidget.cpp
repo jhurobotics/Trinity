@@ -2,6 +2,11 @@
 #include "../src/simulation.h"
 #include "../src/robot.h"
 
+#define RED 1.0, 0.0, 0.0
+#define GREEN 0.0, 1.0, 0.0
+#define BLUE 0.0, 0.0, 1.0
+#define WHITE 1.0, 1.0, 1.0
+
 SimWidget::SimWidget(QWidget *parent) :
     QGLWidget(parent), world(NULL)
 {
@@ -73,11 +78,11 @@ void SimWidget::paintGL() {
 
   glPushMatrix();
   glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-  glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+  glColor4f(WHITE, 0.5f);
   glRectf(0, 0, world->map->width, world->map->height);
   glTranslatef(world->bot.position.origin().x, world->bot.position.origin().y, 0.0);
   glRotatef((atan2(world->bot.position.dir().y, world->bot.position.dir().x))*180.0/M_PI, 0.0, 0.0, 1.0);
-  glColor4f(0.0, 0.0, 1.0, 1.0);
+  glColor4f(BLUE, 1.0);
   glBegin(GL_LINE_LOOP);
   int angleCount = 32;
   for(int i = 0; i < angleCount; i++) {
@@ -105,7 +110,7 @@ void SimWidget::paintGL() {
   for( unsigned int i = 0; i < path.size(); i++ ) {
     glVertex2f(path[i].x, path[i].y);
   }
-  glColor4f(1.0, 0.0, 0.0, 1.0);
+  glColor4f(GREEN, 1.0);
   for( unsigned int i = 0; i < edges.size(); i++ ) {
     glVertex2f(edges[i].x, edges[i].y);
   }
