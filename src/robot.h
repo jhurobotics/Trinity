@@ -80,6 +80,7 @@ namespace robot {
     MotorControl * motors;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
+    std::vector<math::vec2> realPoints;
     
     static const std::string FRONT;
     static const std::string BACK;

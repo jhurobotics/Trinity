@@ -49,10 +49,12 @@ float sim::Ultrasonic::getValue() {
   // In the perfect simulation model,
   // find the nearest distance
   float dist = specs.maxRange;
+  vec2 realPoint(-10,0);
   const std::vector<sim::Wall>& walls = world->map->walls;
   for( unsigned int i = 0; i < walls.size(); i++ ) {
     float curDist = specs.maxRange;
     const Wall& curWall = walls[i];
+    vec2 curPoint(-10, 0);
     Wall transWall(absPos.transformToLocal(curWall[0]), absPos.transformToLocal(curWall[1]));
     // the wall must be in front of the sensor
     if( transWall[0].x < 0.0 && transWall[1].x < 0.0 ) {
@@ -78,6 +80,7 @@ float sim::Ultrasonic::getValue() {
       else {
         curDist = disp.mag();
       }
+      curPoint = disp;
       // if the angle of incidence is low enough, then the beam reflects away off of the wall, so discard the signal
       float cosOfAngle = disp.dot(transWall.direction()) / disp.mag() / transWall.direction().mag();
       if( fabsf(cosOfAngle) > maxDotProd ) {
@@ -94,8 +97,10 @@ float sim::Ultrasonic::getValue() {
       continue;
     }
 
+
     if( curDist > 0 && curDist < dist ) {
       dist = curDist;
+      realPoint = curPoint;
     }
   }
   
@@ -116,7 +121,7 @@ float sim::Ultrasonic::getValue() {
   
   // log this data point for visualization
   // log( absPos.origin() + (dist * absPos.dir()) );
-  
+  dynamic_cast<robot::Robot*>(world->bot.bot)->realPoints.push_back(absPos.transformToAbsolute(realPoint));
   return dist;
 }
 
