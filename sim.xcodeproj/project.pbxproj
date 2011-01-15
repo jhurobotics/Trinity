@@ -15,6 +15,24 @@
 		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
 		DAC760AF12C86B0500E7E711 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F4512C8598F00E7E711 /* main.cpp */; };
 		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
+		DAFD40AE12DECE4800E5D62C /* simwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD405412DECBDE00E5D62C /* simwidget.cpp */; };
+		DAFD40B612DECF5400E5D62C /* mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */; };
+		DAFD40B712DECF5400E5D62C /* mapwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD405112DECBDE00E5D62C /* mapwidget.cpp */; };
+		DAFD40B812DECF6400E5D62C /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
+		DAFD40B912DECF6400E5D62C /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
+		DAFD40BA12DECF6400E5D62C /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DAFD40BC12DECF6400E5D62C /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
+		DAFD40BD12DECF6400E5D62C /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
+		DAFD40BE12DECF6400E5D62C /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
+		DAFD40BF12DECF7A00E5D62C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD404D12DECBDE00E5D62C /* main.cpp */; };
+		DAFD40D312DED03300E5D62C /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFD40D012DED03300E5D62C /* QtCore.framework */; };
+		DAFD40D412DED03300E5D62C /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFD40D112DED03300E5D62C /* QtGui.framework */; };
+		DAFD40D512DED03300E5D62C /* QtOpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFD40D212DED03300E5D62C /* QtOpenGL.framework */; };
+		DAFD40DE12DED04500E5D62C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
+		DAFD40E012DED05400E5D62C /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DAFD40DF12DED05400E5D62C /* AGL.framework */; };
+		DAFD411F12DED24600E5D62C /* moc_mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD411C12DED24600E5D62C /* moc_mainwindow.cpp */; };
+		DAFD412012DED24600E5D62C /* moc_mapwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD411D12DED24600E5D62C /* moc_mapwidget.cpp */; };
+		DAFD412112DED24600E5D62C /* moc_simwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD411E12DED24600E5D62C /* moc_simwidget.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -50,6 +68,28 @@
 		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
 		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
+		DAFD403612DECB4500E5D62C /* QtSim-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QtSim-Info.plist"; path = "../QtSim-Info.plist"; sourceTree = "<group>"; };
+		DAFD404D12DECBDE00E5D62C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainwindow.cpp; sourceTree = "<group>"; };
+		DAFD404F12DECBDE00E5D62C /* mainwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mainwindow.h; sourceTree = "<group>"; };
+		DAFD405012DECBDE00E5D62C /* mainwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = mainwindow.ui; sourceTree = "<group>"; };
+		DAFD405112DECBDE00E5D62C /* mapwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapwidget.cpp; sourceTree = "<group>"; };
+		DAFD405212DECBDE00E5D62C /* mapwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapwidget.h; sourceTree = "<group>"; };
+		DAFD405312DECBDE00E5D62C /* mapwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = mapwindow.ui; sourceTree = "<group>"; };
+		DAFD405412DECBDE00E5D62C /* simwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simwidget.cpp; sourceTree = "<group>"; };
+		DAFD405512DECBDE00E5D62C /* simwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simwidget.h; sourceTree = "<group>"; };
+		DAFD405612DECBDE00E5D62C /* simwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = simwindow.ui; sourceTree = "<group>"; };
+		DAFD40A912DECDB700E5D62C /* QtSim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QtSim.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAFD40D012DED03300E5D62C /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtCore.framework; sourceTree = "<absolute>"; };
+		DAFD40D112DED03300E5D62C /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtGui.framework; sourceTree = "<absolute>"; };
+		DAFD40D212DED03300E5D62C /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtOpenGL.framework; sourceTree = "<absolute>"; };
+		DAFD40DF12DED05400E5D62C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
+		DAFD410F12DED1BB00E5D62C /* ui_mainwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_mainwindow.h; sourceTree = "<group>"; };
+		DAFD411012DED1BB00E5D62C /* ui_mapwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_mapwindow.h; sourceTree = "<group>"; };
+		DAFD411112DED1BB00E5D62C /* ui_simwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_simwindow.h; sourceTree = "<group>"; };
+		DAFD411C12DED24600E5D62C /* moc_mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_mainwindow.cpp; sourceTree = "<group>"; };
+		DAFD411D12DED24600E5D62C /* moc_mapwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_mapwidget.cpp; sourceTree = "<group>"; };
+		DAFD411E12DED24600E5D62C /* moc_simwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_simwidget.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,12 +101,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAFD40A712DECDB700E5D62C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAFD40DE12DED04500E5D62C /* OpenGL.framework in Frameworks */,
+				DAFD40D312DED03300E5D62C /* QtCore.framework in Frameworks */,
+				DAFD40D412DED03300E5D62C /* QtGui.framework in Frameworks */,
+				DAFD40D512DED03300E5D62C /* QtOpenGL.framework in Frameworks */,
+				DAFD40E012DED05400E5D62C /* AGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		08FB7794FE84155DC02AAC07 /* sim */ = {
 			isa = PBXGroup;
 			children = (
+				DAFD410E12DED1BB00E5D62C /* generated_sources */,
+				DAFD404C12DECBDE00E5D62C /* qt */,
 				DAC75F4412C8597F00E7E711 /* src */,
 				DAC75F4312C8597000E7E711 /* maps */,
 				DAC9AB9212CA5A9900691585 /* robots */,
@@ -105,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC760A712C86ACB00E7E711 /* sim */,
+				DAFD40A912DECDB700E5D62C /* QtSim.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,6 +202,57 @@
 			name = "Sim mocks";
 			sourceTree = "<group>";
 		};
+		DAFD404C12DECBDE00E5D62C /* qt */ = {
+			isa = PBXGroup;
+			children = (
+				DAFD403612DECB4500E5D62C /* QtSim-Info.plist */,
+				DAFD412812DED52D00E5D62C /* Frameworks */,
+				DAFD412912DED53500E5D62C /* UI */,
+				DAFD404D12DECBDE00E5D62C /* main.cpp */,
+				DAFD404F12DECBDE00E5D62C /* mainwindow.h */,
+				DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */,
+				DAFD405212DECBDE00E5D62C /* mapwidget.h */,
+				DAFD405112DECBDE00E5D62C /* mapwidget.cpp */,
+				DAFD405512DECBDE00E5D62C /* simwidget.h */,
+				DAFD405412DECBDE00E5D62C /* simwidget.cpp */,
+			);
+			path = qt;
+			sourceTree = "<group>";
+		};
+		DAFD410E12DED1BB00E5D62C /* generated_sources */ = {
+			isa = PBXGroup;
+			children = (
+				DAFD410F12DED1BB00E5D62C /* ui_mainwindow.h */,
+				DAFD411012DED1BB00E5D62C /* ui_mapwindow.h */,
+				DAFD411112DED1BB00E5D62C /* ui_simwindow.h */,
+				DAFD411C12DED24600E5D62C /* moc_mainwindow.cpp */,
+				DAFD411D12DED24600E5D62C /* moc_mapwidget.cpp */,
+				DAFD411E12DED24600E5D62C /* moc_simwidget.cpp */,
+			);
+			path = generated_sources;
+			sourceTree = "<group>";
+		};
+		DAFD412812DED52D00E5D62C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DAFD40D012DED03300E5D62C /* QtCore.framework */,
+				DAFD40DF12DED05400E5D62C /* AGL.framework */,
+				DAFD40D112DED03300E5D62C /* QtGui.framework */,
+				DAFD40D212DED03300E5D62C /* QtOpenGL.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DAFD412912DED53500E5D62C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				DAFD405012DECBDE00E5D62C /* mainwindow.ui */,
+				DAFD405312DECBDE00E5D62C /* mapwindow.ui */,
+				DAFD405612DECBDE00E5D62C /* simwindow.ui */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -166,6 +272,24 @@
 			productName = sim;
 			productReference = DAC760A712C86ACB00E7E711 /* sim */;
 			productType = "com.apple.product-type.tool";
+		};
+		DAFD40A812DECDB700E5D62C /* QtSim */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DAFD40AD12DECDD600E5D62C /* Build configuration list for PBXNativeTarget "QtSim" */;
+			buildPhases = (
+				DAFD40C412DECFBD00E5D62C /* Qt Preprocessors */,
+				DAFD40A512DECDB700E5D62C /* Resources */,
+				DAFD40A612DECDB700E5D62C /* Sources */,
+				DAFD40A712DECDB700E5D62C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QtSim;
+			productName = QtSim;
+			productReference = DAFD40A912DECDB700E5D62C /* QtSim.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -188,9 +312,37 @@
 			projectRoot = "";
 			targets = (
 				DAC760A612C86ACB00E7E711 /* sim */,
+				DAFD40A812DECDB700E5D62C /* QtSim */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DAFD40A512DECDB700E5D62C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		DAFD40C412DECFBD00E5D62C /* Qt Preprocessors */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Qt Preprocessors";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "make -C /Users/paul/Documents/Robotics/sim -f 'qt_preprocess.mak'";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DAC760A412C86ACB00E7E711 /* Sources */ = {
@@ -204,6 +356,26 @@
 				DAC760B012C86B0500E7E711 /* map.cpp in Sources */,
 				DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */,
 				DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DAFD40A612DECDB700E5D62C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAFD40BF12DECF7A00E5D62C /* main.cpp in Sources */,
+				DAFD40B812DECF6400E5D62C /* robot.cpp in Sources */,
+				DAFD40B912DECF6400E5D62C /* simmotors.cpp in Sources */,
+				DAFD40BA12DECF6400E5D62C /* simsensors.cpp in Sources */,
+				DAFD40BC12DECF6400E5D62C /* map.cpp in Sources */,
+				DAFD40BD12DECF6400E5D62C /* geometry.cpp in Sources */,
+				DAFD40BE12DECF6400E5D62C /* simulation.cpp in Sources */,
+				DAFD40B612DECF5400E5D62C /* mainwindow.cpp in Sources */,
+				DAFD40B712DECF5400E5D62C /* mapwidget.cpp in Sources */,
+				DAFD40AE12DECE4800E5D62C /* simwidget.cpp in Sources */,
+				DAFD411F12DED24600E5D62C /* moc_mainwindow.cpp in Sources */,
+				DAFD412012DED24600E5D62C /* moc_mapwidget.cpp in Sources */,
+				DAFD412112DED24600E5D62C /* moc_simwidget.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +394,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 			};
@@ -239,6 +413,8 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PREBINDING = NO;
 			};
 			name = Release;
@@ -273,6 +449,130 @@
 			};
 			name = Release;
 		};
+		DAFD40AB12DECDB700E5D62C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_ROOT = "$(SOURCE_ROOT)/build";
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/qt/4.7.1/lib,
+				);
+				GCC_DEBUGGING_SYMBOLS = full;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/qt/4.7.1/lib/QtCore.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtCore,
+					/usr/local/Cellar/qt/4.7.1/lib/QtGui.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtGui,
+					/usr/local/Cellar/qt/4.7.1/lib/QtOpenGL.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtOpenGL,
+					/usr/local/Cellar/qt/4.7.1/include,
+					/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers,
+					/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					.,
+					/usr/local/include,
+					/System/Library/Frameworks/CarbonCore.framework/Headers,
+					"/usr/local/Cellar/qt/4.7.1/mkspecs/macx-xcode",
+				);
+				INFOPLIST_FILE = "QtSim-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/qt/4.7.1/lib,
+					/usr/X11R6/lib,
+					/usr/local/Cellar/qt/4.7.1/lib,
+					/System/Library/Frameworks/,
+				);
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-O2",
+					"-Wall",
+					"-W",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = QtSim;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				YACCFLAGS = "-d";
+			};
+			name = Debug;
+		};
+		DAFD40AC12DECDB700E5D62C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUILD_ROOT = "$(SOURCE_ROOT)/build";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1.0;
+				DYLIB_CURRENT_VERSION = 1.0.0;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/qt/4.7.1/lib,
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/qt/4.7.1/lib/QtCore.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtCore,
+					/usr/local/Cellar/qt/4.7.1/lib/QtGui.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtGui,
+					/usr/local/Cellar/qt/4.7.1/lib/QtOpenGL.framework/Versions/4/Headers,
+					/usr/local/Cellar/qt/4.7.1/include/QtOpenGL,
+					/usr/local/Cellar/qt/4.7.1/include,
+					/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers,
+					/System/Library/Frameworks/AGL.framework/Headers,
+					.,
+					.,
+					/usr/local/include,
+					/System/Library/Frameworks/CarbonCore.framework/Headers,
+					"/usr/local/Cellar/qt/4.7.1/mkspecs/macx-xcode",
+				);
+				INFOPLIST_FILE = "QtSim-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/qt/4.7.1/lib,
+					/usr/X11R6/lib,
+					/usr/local/Cellar/qt/4.7.1/lib,
+					/System/Library/Frameworks/,
+				);
+				LLVM_LTO = YES;
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-Wall",
+					"-W",
+					"-DQT_NO_DEBUG",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED",
+				);
+				OTHER_LDFLAGS = (
+					"-headerpad_max_install_names",
+					"-L/usr/local/Cellar/qt/4.7.1/lib",
+					"-F/usr/local/Cellar/qt/4.7.1/lib",
+					"-L/usr/X11R6/lib",
+					"-L/usr/local/Cellar/qt/4.7.1/lib",
+					"-F/usr/local/Cellar/qt/4.7.1/lib",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = QtSim;
+				YACCFLAGS = "-d";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -290,6 +590,15 @@
 			buildConfigurations = (
 				DAC760AA12C86ACC00E7E711 /* Debug */,
 				DAC760AB12C86ACC00E7E711 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DAFD40AD12DECDD600E5D62C /* Build configuration list for PBXNativeTarget "QtSim" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DAFD40AB12DECDB700E5D62C /* Debug */,
+				DAFD40AC12DECDB700E5D62C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
