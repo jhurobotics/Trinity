@@ -13,6 +13,13 @@ static inline std::istream& operator>>(std::istream& input, math::vec2& vec) {
   return input >> vec.x >> vec.y;
 }
 
+static inline std::istream& operator>>(std::istream& input, math::Segment& seg) {
+  math::vec2 ends[2];
+  input >> ends[0] >> ends[1];
+  seg = math::Segment(ends[0], ends[1]);
+  return input;
+}
+
 static inline std::istream& operator>>(std::istream& input, math::Ray& ray) {
   math::vec2 vec;
   input >> vec;

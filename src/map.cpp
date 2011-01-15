@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <OpenGL/gl.h>
-
+#include "geometryio.h"
 #include "map.h"
 using namespace math;
 using namespace sim;
@@ -30,21 +30,21 @@ Map* sim::read_map(const char* path) {
       input >> result->height;
     }
     else if( astring == "start" ) {
-      input >> result->start[0] >> result->start[1];
+      input >> result->start;
     }
     else if( astring == "wall" ) {
       Wall w;
-      input >> w[0][0] >> w[0][1] >> w[1][0] >> w[1][1];
+      input >> w;
       result->walls.push_back(w);
     }
     else if( astring == "door" ) {
-      Door w;
-      input >> w[0][0] >> w[0][1] >> w[1][0] >> w[1][1];
-      result->doors.push_back(w);
+      Door d;
+      input >> d;
+      result->doors.push_back(d);
     }
     else if( astring == "candle" ) {
       Candle c;
-      input >> c[0] >> c[1];
+      input >> c;
       result->candles.push_back(c);
     }
     else {
