@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     openDialog(new QFileDialog(this)),
-    mapPreviewWindow(new QMainWindow(this)), mapDisplay(NULL),
-    simWindow(new QMainWindow(this)), simDisplay(NULL)
+    mapPreviewWindow(new QMainWindow()), mapDisplay(NULL),
+    simWindow(new QMainWindow()), simDisplay(NULL)
 {
   ui->setupUi(this);
 
@@ -47,6 +47,9 @@ MainWindow::MainWindow(QWidget *parent) :
   simUI->setupUi(simWindow);
   simDisplay = simUI->simDisplay;
   delete simUI;
+
+  setWindowTitle(QString("Simulation Setup"));
+  simWindow->setWindowTitle(QString("Simulation"));
 }
 
 MainWindow::~MainWindow()
