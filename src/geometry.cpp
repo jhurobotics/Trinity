@@ -50,7 +50,7 @@ vec2 math::pointToSeg(const vec2& c, const Segment& wall, float *param) throw() 
 bool math::intersect(const Circle& c, const Segment& wall) throw() {
   float t;
   vec2 disp = pointToSeg(c.center(), wall, &t);
-  if( t > 0 && t < 1.0 && disp.mag_sq() <= c.radius()*c.radius() ) {
+  if( disp.mag_sq() <= c.radius()*c.radius() ) {
     return true;
   }
   else {
