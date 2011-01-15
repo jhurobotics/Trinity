@@ -1,6 +1,7 @@
 #include "simwidget.h"
 #include "../src/simulation.h"
 #include "../src/robot.h"
+using namespace sim;
 
 #define RED 1.0, 0.0, 0.0
 #define GREEN 0.0, 1.0, 0.0

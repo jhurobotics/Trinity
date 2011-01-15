@@ -9,6 +9,8 @@ namespace Ui {
     class MainWindow;
 }
 
+namespace sim {
+
 #ifndef MAPWIDGET_H
 class MapWidget;
 #endif // MAPWIDGET_H
@@ -34,9 +36,11 @@ private:
 
     QMainWindow * mapPreviewWindow;
     MapWidget * mapDisplay;
+    void setupMapWindow();
 
     QMainWindow * simWindow;
     SimWidget * simDisplay;
+    void setupSimWindow();
 public:
     QString getRobotPath() const;
     QString getSensorPath() const;
@@ -44,8 +48,11 @@ public:
 
 public slots:
     void setRobotPath(const QString& path);
+    void updateRobotPath();
     void setSensorPath(const QString& path);
+    void updateSensorPath();
     void setMapPath(const QString& path);
+    void updateMapPath();
     void mapBrowse();
     void mapPreview();
     void sensorBrowse();
@@ -57,5 +64,7 @@ signals:
     void sensorPathChanged(const QString& path);
     void mapPathChanged(const QString& path);
 };
+
+} // namespace sim
 
 #endif // MAINWINDOW_H

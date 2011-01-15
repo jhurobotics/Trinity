@@ -30,6 +30,4 @@ HEADERS  += \
     qt/simwidget.h
 
 FORMS    += \
-    qt/mainwindow.ui \
-    qt/mapwindow.ui \
-    qt/simwindow.ui
+    qt/mainwindow.ui

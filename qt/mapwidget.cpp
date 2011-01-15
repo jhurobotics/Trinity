@@ -1,5 +1,6 @@
 #include "mapwidget.h"
 #include "../src/map.h"
+using namespace sim;
 
 MapWidget::MapWidget(QWidget *parent) :
     QGLWidget(parent), theMap(NULL)

@@ -3,10 +3,10 @@
 
 #include <QGLWidget>
 
-#ifndef __MAP_H__
 namespace sim {
+
+#ifndef __MAP_H__
   class Map;
-}
 #endif // __MAP_H__
 
 class MapWidget : public QGLWidget
@@ -28,5 +28,7 @@ public slots:
   void setMap(sim::Map * newMap);
 
 };
+
+} // namespace sim
 
 #endif // MAPWIDGET_H

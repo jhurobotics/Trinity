@@ -1,11 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ui_mapwindow.h"
 #include "mapwidget.h"
 #include "../src/map.h"
 #include "simwidget.h"
-#include "ui_simwindow.h"
 #include "../src/simulation.h"
+using namespace sim;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,35 +17,28 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(ui->robotBrowse, SIGNAL(clicked()), this, SLOT(robotBrowse()));
   connect(this, SIGNAL(robotPathChanged(QString)), ui->robotField, SLOT(setText(QString)));
-  connect(ui->robotField, SIGNAL(textChanged(QString)), this, SLOT(setRobotPath(QString)));
+  connect(ui->robotField, SIGNAL(editingFinished()), this, SLOT(updateRobotPath()));
   connect(ui->sensorBrowse, SIGNAL(clicked()), this, SLOT(sensorBrowse()));
   connect(this, SIGNAL(sensorPathChanged(QString)), ui->sensorField, SLOT(setText(QString)));
-  connect(ui->sensorField, SIGNAL(textChanged(QString)), this, SLOT(setSensorPath(QString)));
+  connect(ui->sensorField, SIGNAL(editingFinished()), this, SLOT(updateSensorPath()));
   connect(ui->mapBrowse, SIGNAL(clicked()), this, SLOT(mapBrowse()));
   connect(this, SIGNAL(mapPathChanged(QString)), ui->mapField, SLOT(setText(QString)));
-  connect(ui->mapField, SIGNAL(textChanged(QString)), this, SLOT(setMapPath(QString)));
+  connect(ui->mapField, SIGNAL(editingFinished()), this, SLOT(updateMapPath()));
 
   connect(ui->mapPreview, SIGNAL(clicked()), this, SLOT(mapPreview()));
   connect(ui->startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
 
-  setRobotPath(QString("/Users/paul/Documents/Robotics/sim/robots/first"));
-  setSensorPath(QString("/Users/paul/Documents/Robotics/sim/sensors"));
-  setMapPath(QString("/Users/paul/Documents/Robotics/sim/maps/basic_map"));
+  setRobotPath(QString("/Users/paul/Documents/Robotics/Trinity/robots/first"));
+  setSensorPath(QString("/Users/paul/Documents/Robotics/Trinity/sensors"));
+  setMapPath(QString("/Users/paul/Documents/Robotics/Trinity/maps/basic_map"));
 
   openDialog->setWindowModality(Qt::ApplicationModal);
   openDialog->setAcceptMode(QFileDialog::AcceptOpen);
   openDialog->setLabelText(QFileDialog::Accept, QString("Select"));
   openDialog->setDirectory(QString("/Users/paul/Document/Robotics/sim"));
 
-  Ui::MapWindow * mapUI = new Ui::MapWindow;
-  mapUI->setupUi(mapPreviewWindow);
-  mapDisplay = mapUI->centralwidget;
-  delete mapUI;
-
-  Ui::SimWindow * simUI = new Ui::SimWindow;
-  simUI->setupUi(simWindow);
-  simDisplay = simUI->simDisplay;
-  delete simUI;
+  setupMapWindow();
+  setupSimWindow();
 
   setWindowTitle(QString("Simulation Setup"));
   simWindow->setWindowTitle(QString("Simulation"));
@@ -58,6 +50,29 @@ MainWindow::~MainWindow()
   delete ui;
   delete mapPreviewWindow;
   delete simWindow;
+}
+
+void MainWindow::setupMapWindow() {
+  mapPreviewWindow->resize(258, 258);
+  mapDisplay = new MapWidget(mapPreviewWindow);
+  mapPreviewWindow->setCentralWidget(mapDisplay);
+}
+
+void MainWindow::setupSimWindow() {
+  simWindow->resize(750, 800);
+  QWidget * centralwidget = new QWidget(simWindow);
+  simDisplay = new sim::SimWidget(centralwidget);
+  simDisplay->setGeometry(QRect(0, 0, 750, 750));
+  QPushButton *pushButton = new QPushButton(centralwidget);
+  pushButton->setText("Step Once");
+  pushButton->setGeometry(QRect(120, 760, 114, 32));
+  QPushButton *pushButton_2 = new QPushButton(centralwidget);
+  pushButton_2->setText("Step 1 Second");
+  pushButton_2->setGeometry(QRect(370, 760, 121, 32));
+  simWindow->setCentralWidget(centralwidget);
+
+  QObject::connect(pushButton, SIGNAL(clicked()), simDisplay, SLOT(stepOnce()));
+  QObject::connect(pushButton_2, SIGNAL(clicked()), simDisplay, SLOT(stepSecond()));
 }
 
 QString MainWindow::getRobotPath() const {
@@ -79,6 +94,10 @@ void MainWindow::setRobotPath(const QString& path) {
   }
 }
 
+void MainWindow::updateRobotPath() {
+  setRobotPath(ui->robotField->text());
+}
+
 void MainWindow::setSensorPath(const QString& path) {
   if( sensorPath != path ) {
     sensorPath = path;
@@ -86,11 +105,19 @@ void MainWindow::setSensorPath(const QString& path) {
   }
 }
 
+void MainWindow::updateSensorPath() {
+  setSensorPath(ui->sensorField->text());
+}
+
 void MainWindow::setMapPath(const QString& path) {
   if( mapPath != path) {
     mapPath = path;
     emit mapPathChanged(mapPath);
   }
+}
+
+void MainWindow::updateMapPath() {
+  setMapPath(ui->mapField->text());
 }
 
 void MainWindow::mapBrowse()

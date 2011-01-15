@@ -3,10 +3,10 @@
 
 #include <QGLWidget>
 
-#ifndef __SIMULATION_H__
 namespace sim {
+
+#ifndef __SIMULATION_H__
   class Simulation;
-}
 #endif // __SIMULATION_H__
 
 class SimWidget : public QGLWidget
@@ -30,5 +30,7 @@ public slots:
   void stepSecond();
   void setWorld(sim::Simulation * newWorld);
 };
+
+} // namespace sim
 
 #endif // SIMWIDGET_H
