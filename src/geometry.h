@@ -55,57 +55,7 @@ namespace math {
   }; // class mat2
   
   mat2 getRotationMatrix(float angle) throw();
-  
-  class mat3 {
-  public:
-    // [row][col]
-    float data[3][3];
     
-    explicit mat3() throw() {
-      memset(data, 0, 9*sizeof(float));
-      data[0][0] = data[1][1] = data[2][2];
-    }
-
-    const float* operator[](unsigned int idx) const throw(InvalidIndexException) {
-      switch(idx) {
-        case 0:
-          return data[0];
-        case 1:
-          return data[1];
-        case 2:
-          return data[2];
-        default:
-          throw InvalidIndexException();
-      }
-    }
-    
-    mat2 minorExclude(unsigned int row, unsigned int col) const throw() {
-      mat2 result;
-      unsigned int inRow = 0;
-      unsigned int inCol = 0;
-      for(unsigned int r = 0; r < 3; r++) {
-        if( r == row ) {
-          continue;
-        }
-        for( unsigned int c = 0; c < 3; c++ ) {
-          if( c == col ) {
-            continue;
-          }
-          result.data[inRow][inCol] = data[r][c];
-          inCol++;
-        }
-        inRow++;
-      }
-      return result;
-    }
-    
-    float det() const throw() {
-      return data[0][0] * minorExclude(0, 0).det()
-           - data[0][1] * minorExclude(0, 1).det()
-           + data[0][2] * minorExclude(0, 2).det();
-    }
-  }; // class mat3
-  
   class vec2 {
     public:
     float x;
