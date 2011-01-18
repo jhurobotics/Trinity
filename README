@@ -14,7 +14,7 @@ Setup the build:
 cd Trinity
 mkdir build
 cd build
-qmake ..
+qmake ../sim.pro
 
 Alternately, you can open the sim.pro file with QtCreator, and build from there.
 The Xcode project may or may not be up to date.
