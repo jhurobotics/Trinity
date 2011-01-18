@@ -265,8 +265,9 @@ namespace math {
     explicit Ray(const vec2& o, const vec2& m) throw() : start(o), direction(m) {
       direction.normalize();
     }
+    explicit Ray(const vec2& o, float angle) throw() :
+    start(o), direction(cosf(angle), sinf(angle)) {}
     Ray(const Ray& other) throw() : start(other.start), direction(other.direction) {}
-    Ray(const vec2& o, float angle) : start(o), direction(cos(angle), sin(angle)) {}
     
     const vec2& origin() const throw() {
       return start;
