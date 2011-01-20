@@ -30,7 +30,7 @@ mocclean: compiler_moc_header_clean compiler_moc_source_clean
 
 mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
-compilers: $(GEN_DIR)/moc_mainwindow.cpp $(GEN_DIR)/moc_mapwidget.cpp $(GEN_DIR)/moc_simwidget.cpp $(GEN_DIR)/ui_mainwindow.h $(GEN_DIR)/ui_mapwindow.h $(GEN_DIR)/ui_simwindow.h
+compilers: $(GEN_DIR)/moc_mainwindow.cpp $(GEN_DIR)/moc_mapwidget.cpp $(GEN_DIR)/moc_simwidget.cpp $(GEN_DIR)/ui_mainwindow.h
 compiler_objective_c_make_all:
 compiler_objective_c_clean:
 compiler_moc_header_make_all: $(GEN_DIR)/moc_mainwindow.cpp $(GEN_DIR)/moc_mapwidget.cpp $(GEN_DIR)/moc_simwidget.cpp
@@ -54,17 +54,11 @@ compiler_moc_source_make_all:
 compiler_moc_source_clean:
 compiler_rez_source_make_all:
 compiler_rez_source_clean:
-compiler_uic_make_all: $(GEN_DIR)/ui_mainwindow.h $(GEN_DIR)/ui_mapwindow.h $(GEN_DIR)/ui_simwindow.h
+compiler_uic_make_all: $(GEN_DIR)/ui_mainwindow.h
 compiler_uic_clean:
 	-$(DEL_FILE) $(GEN_DIR)/ui_mainwindow.h $(GEN_DIR)/ui_mapwindow.h $(GEN_DIR)/ui_simwindow.h
-ui_mainwindow.h: qt/mainwindow.ui
+$(GEN_DIR)/ui_mainwindow.h: qt/mainwindow.ui
 	/usr/local/Cellar/qt/4.7.1/bin/uic qt/mainwindow.ui -o $(GEN_DIR)/ui_mainwindow.h
-
-ui_mapwindow.h: qt/mapwindow.ui
-	/usr/local/Cellar/qt/4.7.1/bin/uic qt/mapwindow.ui -o $(GEN_DIR)/ui_mapwindow.h
-
-ui_simwindow.h: qt/simwindow.ui
-	/usr/local/Cellar/qt/4.7.1/bin/uic qt/simwindow.ui -o $(GEN_DIR)/ui_simwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
