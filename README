@@ -1,5 +1,7 @@
 Dependencies:
 Qt 4 (including qmake)
+Python
+Boost Python
 
 Build Instructions:
 
