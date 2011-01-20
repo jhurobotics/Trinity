@@ -310,13 +310,13 @@ namespace math {
     // Takes the given vector in the coordinate system where
     // the origin of the ray is the origin and the ray points
     // along the positive x axis
-    vec2 transformToAbsolute(const vec2& vec) const throw() {
+    vec2 transformVecToAbsolute(const vec2& vec) const throw() {
       vec2 result = dir().getRotationMatrix() * vec;
       return (result += origin());
     }
-    Ray transformToAbsolute(const Ray& ray) const throw() {
+    Ray transformRayToAbsolute(const Ray& ray) const throw() {
       Ray result;
-      result.setOrigin(transformToAbsolute(ray.origin()));
+      result.setOrigin(transformVecToAbsolute(ray.origin()));
       result.setDir(direction.getRotationMatrix()*ray.direction);
       return result;
     }
@@ -350,20 +350,14 @@ namespace math {
   }; // class Ray
   
   class Circle {
+    public:
+    vec2 center;
     protected:
-    vec2 _center;
     float _radius;
     
     public:
-    explicit Circle(const vec2& c, float r) throw() : _center(c), _radius(fabsf(r)) {}
-    
-    const vec2& center() const throw() {
-      return _center;
-    }
-    void setCenter(const vec2& other) throw() {
-      _center = other;
-    }
-    
+    explicit Circle(const vec2& c, float r) throw() : center(c), _radius(fabsf(r)) {}
+        
     const float radius() const throw() {
       return _radius;
     }

@@ -19,7 +19,7 @@ using namespace math;
 static const float maxDotProd = cos(M_PI/2.0 - REFLECT_ANGLE);
 
 Ray sim::Ultrasonic::getAbsolutePosition() {
-  Ray absPos = world->bot.position.transformToAbsolute(relPos);
+  Ray absPos = world->bot.position.transformRayToAbsolute(relPos);
   return absPos;
 }
 
@@ -89,7 +89,7 @@ float sim::Ultrasonic::getValue() {
       }
 
       // is this actually the first thing that gets hit?
-      if( minDist(absPos.transformToAbsolute(dispRay)) < curDist ) {
+      if( minDist(absPos.transformRayToAbsolute(dispRay)) < curDist ) {
         continue;
       }
     }
@@ -121,7 +121,7 @@ float sim::Ultrasonic::getValue() {
   
   // log this data point for visualization
   // log( absPos.origin() + (dist * absPos.dir()) );
-  dynamic_cast<robot::Robot*>(world->bot.bot)->realPoints.push_back(absPos.transformToAbsolute(realPoint));
+  dynamic_cast<robot::Robot*>(world->bot.bot)->realPoints.push_back(absPos.transformVecToAbsolute(realPoint));
   return dist;
 }
 

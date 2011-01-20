@@ -84,7 +84,7 @@ void robot::Robot::act() {
   typedef std::set<RangeSensor*>::iterator RangeIterator;
   RangeIterator end = rangeFinders.end();
   for( RangeIterator iter = rangeFinders.begin(); iter != end; iter ++ ) {
-    edges.push_back(position.transformToAbsolute((*iter)->getCoordinate()));
+    edges.push_back(position.transformVecToAbsolute((*iter)->getCoordinate()));
   }
   
   float velocity = 10;
