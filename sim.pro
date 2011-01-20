@@ -3,6 +3,7 @@ QT       += core gui opengl
 TARGET = sim
 TEMPLATE = app
 
+INCLUDEPATH += /usr/local/include/python2.7
 
 SOURCES += \
     qt/mainwindow.cpp \
@@ -14,7 +15,9 @@ SOURCES += \
     src/map.cpp \
     src/geometry.cpp \
     qt/mapwidget.cpp \
-    qt/simwidget.cpp
+    qt/simwidget.cpp \
+    src/bindings/py_robot.cpp \
+    src/bindings/py_math.cpp
 
 HEADERS  += \
     qt/mainwindow.h \
@@ -31,3 +34,5 @@ HEADERS  += \
 
 FORMS    += \
     qt/mainwindow.ui
+
+LIBS  += -lpython2.7 -lboost_python-mt

@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA37FB2012E8B977004D6592 /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */; };
+		DA37FB2412E8B994004D6592 /* libboost_python-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */; };
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
 		DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
 		DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
 		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
+		DAC2F9F812E7C5130084052D /* py_math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC2F9F612E7C5130084052D /* py_math.cpp */; };
+		DAC2F9F912E7C5130084052D /* py_robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC2F9F712E7C5130084052D /* py_robot.cpp */; };
 		DAC760AF12C86B0500E7E711 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F4512C8598F00E7E711 /* main.cpp */; };
 		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
 		DAFD40AE12DECE4800E5D62C /* simwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD405412DECBDE00E5D62C /* simwidget.cpp */; };
@@ -50,6 +54,8 @@
 /* Begin PBXFileReference section */
 		DA29583B12CD1310003D4584 /* simmotors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simmotors.h; sourceTree = "<group>"; };
 		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
+		DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = /usr/local/lib/libpython2.7.dylib; sourceTree = "<absolute>"; };
+		DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_python-mt.dylib"; path = "/usr/local/lib/libboost_python-mt.dylib"; sourceTree = "<absolute>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
 		DA47B86012C922EE00A7A0AF /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		DA5F5BCD12C96A6800BEA4B0 /* robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot.h; sourceTree = "<group>"; };
@@ -57,6 +63,9 @@
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = qt_preprocess.mak; path = ../qt_preprocess.mak; sourceTree = "<group>"; };
+		DAC2F9F612E7C5130084052D /* py_math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_math.cpp; sourceTree = "<group>"; };
+		DAC2F9F712E7C5130084052D /* py_robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_robot.cpp; sourceTree = "<group>"; };
 		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
 		DAC75F4512C8598F00E7E711 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAC75F4612C859F900E7E711 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
@@ -110,6 +119,8 @@
 				DAFD40D412DED03300E5D62C /* QtGui.framework in Frameworks */,
 				DAFD40D512DED03300E5D62C /* QtOpenGL.framework in Frameworks */,
 				DAFD40E012DED05400E5D62C /* AGL.framework in Frameworks */,
+				DA37FB2012E8B977004D6592 /* libpython2.7.dylib in Frameworks */,
+				DA37FB2412E8B994004D6592 /* libboost_python-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +140,17 @@
 				DAC760A812C86ACB00E7E711 /* Products */,
 			);
 			name = sim;
+			sourceTree = "<group>";
+		};
+		DAC2F9F512E7C5130084052D /* bindings */ = {
+			isa = PBXGroup;
+			children = (
+				DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */,
+				DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */,
+				DAC2F9F612E7C5130084052D /* py_math.cpp */,
+				DAC2F9F712E7C5130084052D /* py_robot.cpp */,
+			);
+			path = bindings;
 			sourceTree = "<group>";
 		};
 		DAC75F4312C8597000E7E711 /* maps */ = {
@@ -151,6 +173,7 @@
 				DAC9AC6412CA890800691585 /* math */,
 				DAC9ADE612CAB49500691585 /* simulation.h */,
 				DAC9ADE712CAB49500691585 /* simulation.cpp */,
+				DAC2F9F512E7C5130084052D /* bindings */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -205,6 +228,7 @@
 		DAFD404C12DECBDE00E5D62C /* qt */ = {
 			isa = PBXGroup;
 			children = (
+				DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */,
 				DAFD403612DECB4500E5D62C /* QtSim-Info.plist */,
 				DAFD412812DED52D00E5D62C /* Frameworks */,
 				DAFD412912DED53500E5D62C /* UI */,
@@ -340,7 +364,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "make -C /Users/paul/Documents/Robotics/sim -f 'qt_preprocess.mak'";
+			shellScript = "make -C /Users/paul/Documents/Robotics/Trinity -f 'qt_preprocess.mak'";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -376,6 +400,8 @@
 				DAFD411F12DED24600E5D62C /* moc_mainwindow.cpp in Sources */,
 				DAFD412012DED24600E5D62C /* moc_mapwidget.cpp in Sources */,
 				DAFD412112DED24600E5D62C /* moc_simwidget.cpp in Sources */,
+				DAC2F9F812E7C5130084052D /* py_math.cpp in Sources */,
+				DAC2F9F912E7C5130084052D /* py_robot.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,9 +503,9 @@
 					/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers,
 					/System/Library/Frameworks/AGL.framework/Headers,
 					.,
-					.,
 					/usr/local/include,
 					/System/Library/Frameworks/CarbonCore.framework/Headers,
+					/usr/local/include/python2.7,
 					"/usr/local/Cellar/qt/4.7.1/mkspecs/macx-xcode",
 				);
 				INFOPLIST_FILE = "QtSim-Info.plist";
