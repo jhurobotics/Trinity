@@ -7,6 +7,7 @@
 #define __ROBOT_MATH_H__
 
 #include <climits>
+#include <cstdlib>
 
 namespace math {
   
