@@ -4,7 +4,12 @@
  */
 #include <iostream>
 #include <fstream>
+#include <climits>
+#ifndef __APPLE__
+#include <GL/gl.h>
+#else
 #include <OpenGL/gl.h>
+#endif
 #include "geometryio.h"
 #include "map.h"
 using namespace math;

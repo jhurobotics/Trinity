@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->mapPreview, SIGNAL(clicked()), this, SLOT(mapPreview()));
   connect(ui->startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
 
+  //change later for myself.
+
   setRobotPath(QString("/Users/paul/Documents/Robotics/Trinity/robots/first"));
   setSensorPath(QString("/Users/paul/Documents/Robotics/Trinity/sensors"));
   setMapPath(QString("/Users/paul/Documents/Robotics/Trinity/maps/basic_map"));
@@ -59,16 +61,16 @@ void MainWindow::setupMapWindow() {
 }
 
 void MainWindow::setupSimWindow() {
-  simWindow->resize(750, 800);
+  simWindow->resize(650, 700);
   QWidget * centralwidget = new QWidget(simWindow);
   simDisplay = new sim::SimWidget(centralwidget);
-  simDisplay->setGeometry(QRect(0, 0, 750, 750));
+  simDisplay->setGeometry(QRect(0, 0, 650, 650));
   QPushButton *pushButton = new QPushButton(centralwidget);
   pushButton->setText("Step Once");
-  pushButton->setGeometry(QRect(120, 760, 114, 32));
+  pushButton->setGeometry(QRect(120, 660, 114, 32));
   QPushButton *pushButton_2 = new QPushButton(centralwidget);
   pushButton_2->setText("Step 1 Second");
-  pushButton_2->setGeometry(QRect(370, 760, 121, 32));
+  pushButton_2->setGeometry(QRect(370, 660, 121, 32));
   simWindow->setCentralWidget(centralwidget);
 
   QObject::connect(pushButton, SIGNAL(clicked()), simDisplay, SLOT(stepOnce()));

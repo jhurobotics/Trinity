@@ -3,6 +3,8 @@
  *  sim
  */
 
+#include <climits>
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <string>
