@@ -72,24 +72,39 @@ namespace robot {
     AbstractRobot() {}
     virtual ~AbstractRobot() {}
     virtual void act() = 0; // do one iteration of its thang.
+    virtual void addRangeSensor(RangeSensor * sensor) = 0;
+    virtual void addMotors(MotorControl * motors) = 0;
   };
   
   class Robot : public AbstractRobot {
-    public:
-    float size;
     std::set<RangeSensor*> rangeFinders;
     MotorControl * motors;
+    public:
+    float size;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
     std::vector<math::vec2> realPoints;
     
     math::Ray position;
-    Robot();
+    Robot() throw();
     
-    virtual void act(); // do one iteration of its thang.
+    virtual void act() throw(); // do one iteration of its thang.
+    virtual void addRangeSensor(RangeSensor * sensor) {
+      rangeFinders.insert(sensor);
+    }
+
+    virtual void addMotors(MotorControl * m) {
+      motors = m;
+    }
   }; // class SensorLayout
   
-  Robot * read_robot(const char * path, SensorFactory * sensors, MotorFactory * motors);  
+  enum Implementation {
+    PYTHON,
+    CPP
+  };
+  class BadRobotImplementation : public std::exception {};
+  AbstractRobot * new_robot(Implementation imp, const char * path = NULL) throw(BadRobotImplementation);
+  void read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors);
 } // namespace robot
 
 #endif // __ROBOT_H__

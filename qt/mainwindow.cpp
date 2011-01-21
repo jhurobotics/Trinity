@@ -1,9 +1,11 @@
+#include <boost/python.hpp>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mapwidget.h"
 #include "../src/map.h"
 #include "simwidget.h"
 #include "../src/simulation.h"
+#include "../src/robot.h"
 using namespace sim;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -157,7 +159,25 @@ void MainWindow::robotBrowse()
 
 void MainWindow::startSimulation()
 {
-  simDisplay->setWorld(sim::create_simulation(mapPath.toAscii().data(),
+  robot::AbstractRobot * bot;
+  if( ui->pythonButton->isChecked() ) {
+    bot = new_robot(robot::PYTHON, ui->pyClass->text().toAscii().data());
+  }
+  else {
+    bot = new_robot(robot::CPP);
+  }
+  simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
                             robotPath.toAscii().data(), sensorPath.toAscii().data()));
   simWindow->show();
+}
+
+void MainWindow::addPython() {
+  openDialog->setFileMode(QFileDialog::ExistingFiles);
+  if( openDialog->exec() == QDialog::Accepted ) {
+    QStringList files = openDialog->selectedFiles();
+    QStringList::iterator end = files.end();
+    for( QStringList::iterator iter = files.begin(); iter != end; iter++) {
+      boost::python::exec_file(iter->toAscii().data());
+    }
+  }
 }

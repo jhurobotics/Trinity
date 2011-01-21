@@ -8,12 +8,30 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <climits>
+#include <cstdlib>
+#include <boost/python.hpp>
 #include "robot.h"
 #include "geometryio.h"
 using namespace robot;
 using namespace math;
 
-Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFactory * motors) {
+static AbstractRobot * python_robot(const std::string& pyName) {
+  return boost::python::extract<AbstractRobot*>(boost::python::eval((pyName+"()").c_str()));
+}
+
+AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) throw(BadRobotImplementation) {
+  switch( imp ) {
+  case PYTHON:
+    return python_robot(path);
+  case CPP:
+    return new Robot;
+  default:
+    throw BadRobotImplementation();
+  }
+}
+
+void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors) {
   enum SensorType {
     UNKNOWN = 0,
     RANGE
@@ -21,7 +39,6 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
   SensorType curSensType = UNKNOWN;
   std::map<std::string, math::Ray> sensorPositions;
   std::ifstream input(path);
-  Robot * bot = new Robot;
   std::string astring;
   while( input ) {
     input >> astring;
@@ -29,7 +46,7 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
       input.ignore(LONG_MAX, '\n');
     }
     else if( astring == "radius" ) {
-      input >> bot->size;
+      input >> astring; // ignored
     }
     else if( astring == "position" ) {
       math::Ray pos;
@@ -63,7 +80,7 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
           input >> astring;
           RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
           ranger->relPos = posRay;
-          bot->rangeFinders.insert(ranger);
+          bot->addRangeSensor(ranger);
           break;
         }
       }
@@ -72,17 +89,17 @@ Robot * robot::read_robot(const char * path, SensorFactory * sensors, MotorFacto
     
   input.close();
   
-  bot->motors = motors->newMotors();
+  bot->addMotors(motors->newMotors());
   
-  return bot;
+  //return bot;
 }
 
-Robot::Robot() :rangeFinders(), motors(), edges(), path(),
-                position()
+Robot::Robot() throw() : rangeFinders(), motors(), edges(), path(),
+                         position()
 {
 }
 
-void robot::Robot::act() {
+void robot::Robot::act() throw() {
   typedef std::set<RangeSensor*>::iterator RangeIterator;
   RangeIterator end = rangeFinders.end();
   for( RangeIterator iter = rangeFinders.begin(); iter != end; iter ++ ) {

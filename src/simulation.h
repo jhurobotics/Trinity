@@ -45,7 +45,7 @@ namespace sim {
     void step();  // do one iteration through the simulation
   };
   
-  Simulation * create_simulation(const char * mapPath,
+  Simulation * create_simulation(robot::AbstractRobot * bot, const char * mapPath,
                                 const char * botPath, const char * sensLibPath);
   
 } // namespace sim

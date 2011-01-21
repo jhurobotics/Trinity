@@ -64,6 +64,14 @@ class Python_AbstractRobot : public AbstractRobot {
   virtual void act() {
     call_method<void>(m_self, "act");
   }
+
+  virtual void addRangeSensor(RangeSensor *sensor) {
+    call_method<void>(m_self, "addRangeSensor", sensor);
+  }
+
+  virtual void addMotors(MotorControl *motors) {
+    call_method<void>(m_self, "addMotors", motors);
+  }
 };
 
 BOOST_PYTHON_MODULE(robot) {

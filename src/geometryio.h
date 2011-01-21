@@ -29,6 +29,13 @@ static inline std::istream& operator>>(std::istream& input, math::Ray& ray) {
   return input;
 }
 
+static inline std::istream& operator>>(std::istream& input, math::Circle& c) {
+  float radius;
+  input >> c.center >> radius;
+  c.setRadius(radius);
+  return input;
+}
+
 static inline std::ostream& operator<<(std::ostream& output, const math::vec2& vec) {
   return output << "(" << vec.x << ", " << vec.y << ")";
 }

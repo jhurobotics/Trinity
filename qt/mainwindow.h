@@ -58,6 +58,7 @@ public slots:
     void sensorBrowse();
     void robotBrowse();
     void startSimulation();
+    void addPython();
 
 signals:
     void robotPathChanged(const QString& path);

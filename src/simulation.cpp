@@ -11,12 +11,13 @@
 #include "geometryio.h"
 using namespace sim;
 
-Simulation * sim::create_simulation(const char *mapPath, const char *botPath, const char *sensLibPath) {
+Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapPath, const char *botPath, const char *sensLibPath) {
   Simulation * result = new Simulation();
   result->map = read_map(mapPath);
   robot::SensorFactory * sensors = new sim::SensorFactory(sensLibPath, result);
   robot::MotorFactory * motors = new sim::MotorFactory(result);
-  result->bot.bot = read_robot(botPath, sensors, motors);
+  result->bot.bot = bot;
+  read_robot(bot, botPath, sensors, motors);
   result->bot.position.setOrigin(result->map->start);
   result->bot.position.setDir(math::vec2(0, -1));
   delete motors;
