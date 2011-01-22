@@ -13,6 +13,11 @@
 #include <boost/python.hpp>
 #include "robot.h"
 #include "geometryio.h"
+#ifndef __APPLE__
+#include <GL/gl.h>
+#else
+#include <OpenGL/gl.h>
+#endif
 using namespace robot;
 using namespace math;
 
@@ -130,4 +135,24 @@ void robot::Robot::act() throw() {
   position += disp;
   //position.rotateAboutStart(math::vec2(cos(theta), sin(theta)).getRotationMatrix());
   
+}
+
+#define RED 1.0, 0.0, 0.0
+#define GREEN 0.0, 1.0, 0.0
+#define BLUE 0.0, 0.0, 1.0
+#define WHITE 1.0, 1.0, 1.0
+
+void Robot::draw() {
+  glRotatef(-90.0, 0.0, 0.0, 1.0);
+  glPointSize(4.0);
+  glColor4f(BLUE, 1.0);
+  glBegin(GL_POINTS);
+  for( unsigned int i = 0; i < path.size(); i++ ) {
+    glVertex2f(path[i].x, path[i].y);
+  }
+  glColor4f(GREEN, 1.0);
+  for( unsigned int i = 0; i < edges.size(); i++ ) {
+    glVertex2f(edges[i].x, edges[i].y);
+  }
+  glEnd();
 }

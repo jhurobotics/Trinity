@@ -5,7 +5,7 @@
 using namespace boost::python;
 using namespace robot;
 
-class Python_RangeSensor : public RangeSensor {
+class Python_RangeSensor : public RangeSensor, wrapper<RangeSensor> {
   public:
   Python_RangeSensor(PyObject* self, const RangeSpecs& s) : RangeSensor(s), m_self(self) {}
   
@@ -17,7 +17,7 @@ class Python_RangeSensor : public RangeSensor {
   PyObject* const m_self;
 };
 
-class Python_SensorFactory : public SensorFactory {
+class Python_SensorFactory : public SensorFactory, wrapper<SensorFactory> {
   public:
   Python_SensorFactory(PyObject* self) : m_self(self) {}
   
@@ -29,7 +29,7 @@ class Python_SensorFactory : public SensorFactory {
   PyObject* const m_self;
 };
 
-class Python_MotorControl : public MotorControl {
+class Python_MotorControl : public MotorControl, wrapper<MotorControl> {
   private:
   PyObject* const m_self;
   public:
@@ -44,7 +44,7 @@ class Python_MotorControl : public MotorControl {
   }
 };
 
-class Python_MotorFactory : public MotorFactory {
+class Python_MotorFactory : public MotorFactory, wrapper<MotorFactory> {
   private:
   PyObject* const m_self;
   public:
@@ -55,7 +55,7 @@ class Python_MotorFactory : public MotorFactory {
   }
 };
 
-class Python_AbstractRobot : public AbstractRobot {
+class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
   private:
   PyObject* const m_self;
   public:
@@ -71,6 +71,15 @@ class Python_AbstractRobot : public AbstractRobot {
 
   virtual void addMotors(MotorControl *motors) {
     call_method<void>(m_self, "addMotors", motors);
+  }
+
+  virtual void draw() {
+    if( override f = this->get_override("draw") ) {
+      f();
+    }
+    else {
+      AbstractRobot::draw();
+    }
   }
 };
 
@@ -103,5 +112,8 @@ BOOST_PYTHON_MODULE(robot) {
   
   class_<AbstractRobot, Python_AbstractRobot, boost::noncopyable>("AbstractRobot")
     .def("act", pure_virtual(&AbstractRobot::act))
+    .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
+    .def("addMotors", pure_virtual(&AbstractRobot::addMotors))
+    .def("draw", &AbstractRobot::draw, &Python_AbstractRobot::draw)
   ;
 }

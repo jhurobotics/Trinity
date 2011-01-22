@@ -74,6 +74,7 @@ namespace robot {
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
+    virtual void draw() { }
   };
   
   class Robot : public AbstractRobot {
@@ -96,6 +97,8 @@ namespace robot {
     virtual void addMotors(MotorControl * m) {
       motors = m;
     }
+
+    virtual void draw();
   }; // class SensorLayout
   
   enum Implementation {
