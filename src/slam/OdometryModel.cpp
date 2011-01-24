@@ -6,12 +6,14 @@
 #include "slam.h"
 using namespace robot;
 
+float odometryNoise[4]; // robot specific parameters
+
 float sample(float input) {
   return 0.0;
 }
 
 // Algorithm from Table 5.5 (p. 108) in Probabilistic Robotics 
-Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
+Pose robot::sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
   const math::vec2& x_bar = u_t.prev.origin();
   const math::vec2& x_bar_prime = u_t.next.origin();
   float dx = x_bar_prime.x - x_bar.x;

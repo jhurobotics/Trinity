@@ -16,7 +16,17 @@ namespace robot {
     math::Ray next;
   };
   
-  float odometryNoise[4]; // robot specific parameters
+  extern float odometryNoise[4]; // robot specific parameters
+  
+  Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
+  
+  struct Measurements {
+  };
+  
+  struct MeasurementMap {
+  };
+  
+  float sample_measurement_model(const Measurements& z, const Pose& x, const MeasurementMap& m);
 } // namespace robot
 
 #endif // __SLAM_H__
