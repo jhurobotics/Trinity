@@ -24,7 +24,7 @@ namespace robot {
     float error;
     // Tangent of half-of the angular width of the ultrasonic pulse in radians
     float tanOfWidth;
-  };    
+  }; // struct RangeSpecs
   
   class RangeSensor {
     public:
@@ -39,7 +39,7 @@ namespace robot {
     math::vec2 getCoordinate() {
       return relPos.getPoint(getValue());
     }
-  };
+  }; // class RangeSensor
   
   class SensorFactory {
     protected:
@@ -50,7 +50,7 @@ namespace robot {
     class WrongSensorKind {};
     
     virtual RangeSensor * rangeSensor(const std::string& name) = 0;
-  };
+  };  // class SensorFactory
   
   class MotorControl {
     public:
@@ -59,13 +59,13 @@ namespace robot {
     virtual void setVelocity(float velocity) = 0;
     // radians / s
     virtual void setAngularVelocity(float angVel) = 0;
-  };
+  };  // class MotorControl
   
   class MotorFactory {
     public:
     virtual ~MotorFactory() {}
     virtual MotorControl * newMotors() = 0;
-  };
+  };  // class MotorFactory
   
   class AbstractRobot {
     public:
@@ -75,7 +75,7 @@ namespace robot {
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
     virtual void draw() { }
-  };
+  }; // class AbstractRobot
   
   class Robot : public AbstractRobot {
     std::set<RangeSensor*> rangeFinders;
@@ -99,7 +99,7 @@ namespace robot {
     }
 
     virtual void draw();
-  }; // class SensorLayout
+  }; // class Robot
   
   enum Implementation {
     PYTHON,
