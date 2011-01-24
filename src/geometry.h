@@ -364,6 +364,12 @@ namespace math {
     void setRadius(float rad) throw() {
       _radius = fabsf(rad);
     }
+    
+    bool contains(const vec2& p) {
+      float dx = p.x - center.x;
+      float dy = p.y - center.y;
+      return dx*dx + dy*dy < _radius * _radius;
+    }
   }; // class Circle
   
   // doesn't have to be a wall, but I need a name...

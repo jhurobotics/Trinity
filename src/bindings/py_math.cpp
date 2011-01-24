@@ -76,6 +76,7 @@ BOOST_PYTHON_MODULE(math)
     .def_readwrite("center", &Circle::center)
     //.add_property("center", &Circle::center, &Circle::setCenter)
     .add_property("radius", &Circle::radius, &Circle::setRadius)
+    .def("contains", &Circle::contains)
   ;
   
   def("distance", &distance);
