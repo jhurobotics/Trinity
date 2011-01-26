@@ -121,7 +121,9 @@ float sim::Ultrasonic::getValue() {
   
   // log this data point for visualization
   // log( absPos.origin() + (dist * absPos.dir()) );
-  dynamic_cast<robot::Robot*>(world->bot.bot)->realPoints.push_back(absPos.transformVecToAbsolute(realPoint));
+  if( robot::SonarRobot * bot = dynamic_cast<robot::SonarRobot*> (world->bot.bot) ) {
+    bot->realPoints.push_back(absPos.transformVecToAbsolute(realPoint));
+  }
   return dist;
 }
 

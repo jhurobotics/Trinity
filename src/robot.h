@@ -77,7 +77,7 @@ namespace robot {
     virtual void draw() { }
   }; // class AbstractRobot
   
-  class Robot : public AbstractRobot {
+  class SonarRobot : public AbstractRobot {
     std::set<RangeSensor*> rangeFinders;
     MotorControl * motors;
     public:
@@ -87,7 +87,7 @@ namespace robot {
     std::vector<math::vec2> realPoints;
     
     math::Ray position;
-    Robot() throw();
+    SonarRobot() throw();
     
     virtual void act() throw(); // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) {

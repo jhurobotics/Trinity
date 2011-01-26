@@ -30,7 +30,7 @@ AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) t
   case PYTHON:
     return python_robot(path);
   case CPP:
-    return new Robot;
+    return new SonarRobot;
   default:
     throw BadRobotImplementation();
   }
@@ -99,12 +99,12 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   //return bot;
 }
 
-Robot::Robot() throw() : rangeFinders(), motors(), edges(), path(),
+SonarRobot::SonarRobot() throw() : rangeFinders(), motors(), edges(), path(),
                          position()
 {
 }
 
-void robot::Robot::act() throw() {
+void robot::SonarRobot::act() throw() {
   typedef std::set<RangeSensor*>::iterator RangeIterator;
   RangeIterator end = rangeFinders.end();
   for( RangeIterator iter = rangeFinders.begin(); iter != end; iter ++ ) {
@@ -142,7 +142,7 @@ void robot::Robot::act() throw() {
 #define BLUE 0.0, 0.0, 1.0
 #define WHITE 1.0, 1.0, 1.0
 
-void Robot::draw() {
+void SonarRobot::draw() {
   glRotatef(-90.0, 0.0, 0.0, 1.0);
   glPointSize(4.0);
   glColor4f(BLUE, 1.0);
