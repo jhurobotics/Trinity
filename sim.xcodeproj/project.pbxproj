@@ -84,18 +84,14 @@
 		DAFD405012DECBDE00E5D62C /* mainwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = mainwindow.ui; sourceTree = "<group>"; };
 		DAFD405112DECBDE00E5D62C /* mapwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapwidget.cpp; sourceTree = "<group>"; };
 		DAFD405212DECBDE00E5D62C /* mapwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapwidget.h; sourceTree = "<group>"; };
-		DAFD405312DECBDE00E5D62C /* mapwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = mapwindow.ui; sourceTree = "<group>"; };
 		DAFD405412DECBDE00E5D62C /* simwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simwidget.cpp; sourceTree = "<group>"; };
 		DAFD405512DECBDE00E5D62C /* simwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simwidget.h; sourceTree = "<group>"; };
-		DAFD405612DECBDE00E5D62C /* simwindow.ui */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = simwindow.ui; sourceTree = "<group>"; };
 		DAFD40A912DECDB700E5D62C /* QtSim.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QtSim.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAFD40D012DED03300E5D62C /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtCore.framework; sourceTree = "<absolute>"; };
 		DAFD40D112DED03300E5D62C /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtGui.framework; sourceTree = "<absolute>"; };
 		DAFD40D212DED03300E5D62C /* QtOpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtOpenGL.framework; path = /usr/local/Cellar/qt/4.7.1/lib/QtOpenGL.framework; sourceTree = "<absolute>"; };
 		DAFD40DF12DED05400E5D62C /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		DAFD410F12DED1BB00E5D62C /* ui_mainwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_mainwindow.h; sourceTree = "<group>"; };
-		DAFD411012DED1BB00E5D62C /* ui_mapwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_mapwindow.h; sourceTree = "<group>"; };
-		DAFD411112DED1BB00E5D62C /* ui_simwindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ui_simwindow.h; sourceTree = "<group>"; };
 		DAFD411C12DED24600E5D62C /* moc_mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_mainwindow.cpp; sourceTree = "<group>"; };
 		DAFD411D12DED24600E5D62C /* moc_mapwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_mapwidget.cpp; sourceTree = "<group>"; };
 		DAFD411E12DED24600E5D62C /* moc_simwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_simwidget.cpp; sourceTree = "<group>"; };
@@ -247,8 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				DAFD410F12DED1BB00E5D62C /* ui_mainwindow.h */,
-				DAFD411012DED1BB00E5D62C /* ui_mapwindow.h */,
-				DAFD411112DED1BB00E5D62C /* ui_simwindow.h */,
 				DAFD411C12DED24600E5D62C /* moc_mainwindow.cpp */,
 				DAFD411D12DED24600E5D62C /* moc_mapwidget.cpp */,
 				DAFD411E12DED24600E5D62C /* moc_simwidget.cpp */,
@@ -271,8 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				DAFD405012DECBDE00E5D62C /* mainwindow.ui */,
-				DAFD405312DECBDE00E5D62C /* mapwindow.ui */,
-				DAFD405612DECBDE00E5D62C /* simwindow.ui */,
 			);
 			name = UI;
 			sourceTree = "<group>";
