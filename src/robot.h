@@ -11,6 +11,7 @@
 #include <set>
 #include <string>
 #include "geometry.h"
+#include "graph.h"
 
 namespace robot {
   
@@ -68,12 +69,21 @@ namespace robot {
   };  // class MotorFactory
   
   class AbstractRobot {
+    Graph * graph;
+    
     public:
     AbstractRobot() {}
-    virtual ~AbstractRobot() {}
+    virtual ~AbstractRobot() {
+      if( graph ) {
+        delete graph;
+      }
+    }
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
+    virtual void addGraph(Graph * g) {
+      graph = g;
+    }
     virtual void draw() { }
   }; // class AbstractRobot
   
@@ -99,7 +109,7 @@ namespace robot {
     }
 
     virtual void draw();
-  }; // class Robot
+  }; // class SonarRobot
   
   enum Implementation {
     PYTHON,

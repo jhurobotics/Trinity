@@ -29,6 +29,7 @@ HEADERS  += \
     src/map.h \
     src/geometryio.h \
     src/geometry.h \
+    src/graph.h \
     qt/mapwidget.h \
     qt/simwidget.h
 

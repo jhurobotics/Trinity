@@ -1,4 +1,5 @@
 #include <boost/python.hpp>
+#include "../graph.h"
 #include "../robot.h"
 #include "../simulation.h"
 #include "../simsensors.h"
@@ -84,6 +85,15 @@ class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
 };
 
 BOOST_PYTHON_MODULE(robot) {
+  
+  class_<Node>("Node", init<const math::vec2&, bool>())
+    .def_readwrite("room", &Node::room)
+    .def_readwrite("loc", &Node::loc)
+  ;
+  
+  class_<Graph>("Graph")
+    .def("getObjective", &Graph::getObjective, return_value_policy< with_custodian_and_ward_postcall<1,0, reference_existing_object> >())
+  ;
   
   class_<RangeSpecs>("RangeSpecs")
     .def_readwrite("maxRange", &RangeSpecs::maxRange)

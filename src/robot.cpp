@@ -95,6 +95,7 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   input.close();
   
   bot->addMotors(motors->newMotors());
+  bot->addGraph(new Graph());
   
   //return bot;
 }

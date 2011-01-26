@@ -62,6 +62,7 @@
 		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DAA22FD612F0DEBE00B808AA /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = qt_preprocess.mak; path = ../qt_preprocess.mak; sourceTree = "<group>"; };
 		DAC2F9F612E7C5130084052D /* py_math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_math.cpp; sourceTree = "<group>"; };
@@ -160,6 +161,7 @@
 		DAC75F4412C8597F00E7E711 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				DAA22FD612F0DEBE00B808AA /* graph.h */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DAC9AC6612CA891E00691585 /* Sim mocks */,
