@@ -170,7 +170,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>C++</string>
+     <string>Sonar</string>
     </property>
     <property name="checked">
      <bool>true</bool>
@@ -223,6 +223,38 @@
     </property>
     <property name="text">
      <string>Add Python Classes</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="cppButton_2">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>130</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Other 1</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="cppButton_3">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>130</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Other 2</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

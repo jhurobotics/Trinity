@@ -103,7 +103,9 @@ namespace robot {
   
   enum Implementation {
     PYTHON,
-    CPP
+    SONAR,
+    CPP_1,
+    CPP_2
   };
   class BadRobotImplementation : public std::exception {};
   AbstractRobot * new_robot(Implementation imp, const char * path = NULL) throw(BadRobotImplementation);

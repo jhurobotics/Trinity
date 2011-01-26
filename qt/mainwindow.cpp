@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(ui->mapPreview, SIGNAL(clicked()), this, SLOT(mapPreview()));
   connect(ui->startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
+  connect(ui->addPython, SIGNAL(clicked()), this, SLOT(addPython()));
 
   //change later for myself.
 
@@ -163,8 +164,14 @@ void MainWindow::startSimulation()
   if( ui->pythonButton->isChecked() ) {
     bot = new_robot(robot::PYTHON, ui->pyClass->text().toAscii().data());
   }
-  else {
-    bot = new_robot(robot::CPP);
+  else if(ui->cppButton->isChecked() ) {
+    bot = new_robot(robot::SONAR);
+  }
+  else if( ui->cppButton_2->isChecked() ) {
+    bot = new_robot(robot::CPP_1);
+  }
+  else if( ui->cppButton_3->isChecked() ) {
+    bot = new_robot(robot::CPP_2);
   }
   simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
                             robotPath.toAscii().data(), sensorPath.toAscii().data()));

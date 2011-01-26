@@ -8,8 +8,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <climits>
-#include <cstdlib>
 #include <boost/python.hpp>
 #include "robot.h"
 #include "geometryio.h"
@@ -29,8 +27,10 @@ AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) t
   switch( imp ) {
   case PYTHON:
     return python_robot(path);
-  case CPP:
+  case SONAR:
     return new SonarRobot;
+  case CPP_1:
+  case CPP_2:
   default:
     throw BadRobotImplementation();
   }
