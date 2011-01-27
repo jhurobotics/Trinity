@@ -17,6 +17,7 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
   robot::SensorFactory * sensors = new sim::SensorFactory(sensLibPath, result);
   robot::MotorFactory * motors = new sim::MotorFactory(result);
   result->bot.bot = bot;
+  bot->addSlam(new robot::SimSLAM(&(result->bot)));
   read_robot(bot, botPath, sensors, motors);
   result->bot.position.setOrigin(result->map->start);
   result->bot.position.setDir(math::vec2(0, -1));

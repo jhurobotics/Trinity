@@ -56,6 +56,17 @@ class Python_MotorFactory : public MotorFactory, wrapper<MotorFactory> {
   }
 };
 
+class Python_SLAM : public SLAM, wrapper<SLAM> {
+  private:
+  PyObject* const m_self;
+  public:
+  Python_SLAM(PyObject* self) : m_self(self) {}
+  
+  virtual math::Ray getPose() {
+    return call_method<math::Ray>(m_self, "getPos");
+  }
+};
+
 class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
   private:
   PyObject* const m_self;
@@ -99,6 +110,10 @@ BOOST_PYTHON_MODULE(robot) {
     .def("getObjective", &Graph::getObjective, return_value_policy< with_custodian_and_ward_postcall<1,0, reference_existing_object> >())
   ;
   
+  class_<SLAM, Python_SLAM, boost::noncopyable>("SLAM")
+    .def("getPose", pure_virtual(&SLAM::getPose))
+  ;
+  
   class_<RangeSpecs>("RangeSpecs")
     .def_readwrite("maxRange", &RangeSpecs::maxRange)
     .def_readwrite("minRange", &RangeSpecs::minRange)
@@ -126,6 +141,7 @@ BOOST_PYTHON_MODULE(robot) {
   
   class_<AbstractRobot, Python_AbstractRobot, boost::noncopyable>("AbstractRobot")
     .def("graph", &AbstractRobot::getGraph, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
+    .def("slammer", &AbstractRobot::getSlam, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
     .def("act", pure_virtual(&AbstractRobot::act))
     .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
     .def("addMotors", pure_virtual(&AbstractRobot::addMotors))

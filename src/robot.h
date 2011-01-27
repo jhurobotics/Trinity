@@ -9,6 +9,7 @@
 #include <string>
 #include "geometry.h"
 #include "graph.h"
+#include "slam.h"
 
 #ifndef __ROBOT_H__
 #define __ROBOT_H__
@@ -71,6 +72,7 @@ namespace robot {
   class AbstractRobot {
     protected:
     Graph * graph;
+    SLAM * slammer;
     
     public:
     AbstractRobot() {}
@@ -78,15 +80,26 @@ namespace robot {
       if( graph ) {
         delete graph;
       }
+      if( slammer ) {
+        delete slammer;
+      }
     }
+    
     Graph * getGraph() const {
       return graph;
     }
+    SLAM * getSlam() const {
+      return slammer;
+    }
+    
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
     virtual void addGraph(Graph * g) {
       graph = g;
+    }
+    virtual void addSlam(SLAM * s) {
+      slammer = s;
     }
     virtual void draw() { }
   }; // class AbstractRobot

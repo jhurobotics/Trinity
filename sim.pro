@@ -30,6 +30,7 @@ HEADERS  += \
     src/geometryio.h \
     src/geometry.h \
     src/graph.h \
+    src/slam.h \
     qt/mapwidget.h \
     qt/simwidget.h
 
