@@ -69,6 +69,7 @@ namespace robot {
   };  // class MotorFactory
   
   class AbstractRobot {
+    protected:
     Graph * graph;
     
     public:
@@ -77,6 +78,9 @@ namespace robot {
       if( graph ) {
         delete graph;
       }
+    }
+    Graph * getGraph() const {
+      return graph;
     }
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;

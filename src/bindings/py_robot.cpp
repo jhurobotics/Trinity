@@ -74,6 +74,10 @@ class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
     call_method<void>(m_self, "addMotors", motors);
   }
 
+  virtual void addGraph(Graph * g) {
+    call_method<void>(m_self, "addGraph", g);
+  }
+  
   virtual void draw() {
     if( override f = this->get_override("draw") ) {
       f();
@@ -121,9 +125,11 @@ BOOST_PYTHON_MODULE(robot) {
   ;
   
   class_<AbstractRobot, Python_AbstractRobot, boost::noncopyable>("AbstractRobot")
+    .def("graph", &AbstractRobot::getGraph, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
     .def("act", pure_virtual(&AbstractRobot::act))
     .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
     .def("addMotors", pure_virtual(&AbstractRobot::addMotors))
+    .def("addGraph", &AbstractRobot::addGraph, &Python_AbstractRobot::addGraph)
     .def("draw", &AbstractRobot::draw, &Python_AbstractRobot::draw)
   ;
 }
