@@ -75,7 +75,7 @@ namespace robot {
     SLAM * slammer;
     
     public:
-    AbstractRobot() {}
+    AbstractRobot() : graph(NULL), slammer(NULL) {}
     virtual ~AbstractRobot() {
       if( graph ) {
         delete graph;
@@ -95,10 +95,18 @@ namespace robot {
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
+    // Takes ownership of the graph, will delete it if replaced
     virtual void addGraph(Graph * g) {
+      if( graph ) {
+        delete graph;
+      }
       graph = g;
     }
+    // Takes ownership of SLAM, will delete it if replaced
     virtual void addSlam(SLAM * s) {
+      if( slammer ) {
+        delete slammer;
+      }
       slammer = s;
     }
     virtual void draw() { }
