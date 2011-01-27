@@ -3,11 +3,11 @@
  *  sim
  */
 
-#ifndef __ROBOT_MATH_H__ // __MATH_H__ is taken by the real math.h
-#define __ROBOT_MATH_H__
-
 #include <climits>
 #include <cstdlib>
+
+#ifndef __ROBOT_MATH_H__ // __MATH_H__ is taken by the real math.h
+#define __ROBOT_MATH_H__
 
 namespace math {
   

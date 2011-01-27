@@ -3,11 +3,11 @@
  *  sim
  */
 
-#ifndef __GEOMETRY_IO__
-#define __GEOMETRY_IO__
-
 #include <iostream>
 #include "geometry.h"
+
+#ifndef __GEOMETRY_IO__
+#define __GEOMETRY_IO__
 
 static inline std::istream& operator>>(std::istream& input, math::vec2& vec) {
   return input >> vec.x >> vec.y;

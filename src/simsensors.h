@@ -3,14 +3,13 @@
  *  sim
  */
 
-#ifndef __SIMSENSORS_H__
-#define __SIMSENSORS_H__
-
 #include "robot.h"
 #include "simulation.h"
 #include "map.h"
-#include <fstream>
 #include <string>
+
+#ifndef __SIMSENSORS_H__
+#define __SIMSENSORS_H__
 
 namespace sim {
     

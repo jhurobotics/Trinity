@@ -3,12 +3,12 @@
  *  sim
  */
 
-#ifndef __GRAPH_H__
-#define __GRAPH_H__
-
 #include <set>
 #include <stack>
 #include "geometry.h"
+
+#ifndef __GRAPH_H__
+#define __GRAPH_H__
 
 namespace robot {
 

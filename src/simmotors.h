@@ -3,11 +3,11 @@
  *  sim
  */
 
-#ifndef __SIM_MOTORS_H__
-#define __SIM_MOTORS_H__
-
 #include "robot.h"
 #include "simulation.h"
+
+#ifndef __SIM_MOTORS_H__
+#define __SIM_MOTORS_H__
 
 namespace sim {
   

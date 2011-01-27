@@ -3,9 +3,6 @@
  *  sim
  */
 
-#ifndef __SIMULATION_H__
-#define __SIMULATION_H__
-
 #include "geometry.h"
 #include "map.h"
 
@@ -14,6 +11,9 @@ namespace robot {
   class AbstractRobot;
 }
 #endif
+
+#ifndef __SIMULATION_H__
+#define __SIMULATION_H__
 
 namespace sim {
   

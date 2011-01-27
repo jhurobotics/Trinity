@@ -3,11 +3,11 @@
  *  sim
  */
 
-#ifndef __GEOMETRY_H__
-#define __GEOMETRY_H__
-
 #include <cmath>
 #include <cstring>
+
+#ifndef __GEOMETRY_H__
+#define __GEOMETRY_H__
 
 namespace math {
   

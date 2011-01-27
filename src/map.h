@@ -3,11 +3,11 @@
  *  sim
  */
 
-#ifndef __MAP_H__
-#define __MAP_H__
-
 #include <vector>
 #include "geometry.h"
+
+#ifndef __MAP_H__
+#define __MAP_H__
 
 namespace sim {
     

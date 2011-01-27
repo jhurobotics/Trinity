@@ -3,15 +3,15 @@
  *  sim
  */
 
-#ifndef __ROBOT_H__
-#define __ROBOT_H__
-
 #include <vector>
 #include <map>
 #include <set>
 #include <string>
 #include "geometry.h"
 #include "graph.h"
+
+#ifndef __ROBOT_H__
+#define __ROBOT_H__
 
 namespace robot {
   
