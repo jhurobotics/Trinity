@@ -28,6 +28,9 @@ namespace sim {
     math::vec2 velocity;
     // angular velocity in radians / sec
     float angularVelocity;
+    
+    Robot() : bot(NULL), position(), velocity(), angularVelocity(0) {}
+    virtual ~Robot();
   };
   
   class Simulation {

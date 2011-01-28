@@ -123,6 +123,15 @@ namespace robot {
     
     math::Ray position;
     SonarRobot() throw();
+    virtual ~SonarRobot() {
+      if( motors ) {
+        delete motors;
+      }
+      std::set<RangeSensor*>::iterator end = rangeFinders.end();
+      for( std::set<RangeSensor*>::iterator iter = rangeFinders.begin(); iter != end; iter++ ) {
+        delete *iter;
+      }
+    }
     
     virtual void act() throw(); // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) {

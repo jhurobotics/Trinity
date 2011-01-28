@@ -12,6 +12,12 @@
 #include "timers.h"
 using namespace sim;
 
+sim::Robot::~Robot() {
+  if( bot ) {
+    delete bot;
+  }
+}
+
 Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapPath, const char *botPath, const char *sensLibPath) {
   Simulation * result = new Simulation();
   result->map = read_map(mapPath);
