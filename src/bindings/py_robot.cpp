@@ -3,6 +3,7 @@
 #include "../robot.h"
 #include "../simulation.h"
 #include "../simsensors.h"
+#include "../timers.h"
 using namespace boost::python;
 using namespace robot;
 
@@ -148,4 +149,8 @@ BOOST_PYTHON_MODULE(robot) {
     .def("addGraph", &AbstractRobot::addGraph, &Python_AbstractRobot::addGraph)
     .def("draw", &AbstractRobot::draw, &Python_AbstractRobot::draw)
   ;
+  
+  def("micro_time", &robot::micro_time);
+  def("milli_time", &robot::milli_time);
+  def("time", &robot::time);
 }
