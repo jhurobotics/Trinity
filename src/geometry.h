@@ -266,6 +266,7 @@ namespace math {
       direction.normalize();
     }
     Ray(const Ray& other) throw() : start(other.start), direction(other.direction) {}
+    Ray(const vec2& o, float angle) : start(o), direction(cos(angle), sin(angle)) {}
     
     const vec2& origin() const throw() {
       return start;
@@ -279,6 +280,13 @@ namespace math {
     void setDir(const vec2& other) throw() {
       direction = other;
       direction.normalize();
+    }
+    float angle() const throw() {
+      return atan2(direction.y, direction.x);
+    }
+    void setAngle(float angle) throw() {
+      direction.x = cos(angle);
+      direction.y = sin(angle);
     }
     // gets the point x units along the ray
     vec2 getPoint(float x) const throw() {
