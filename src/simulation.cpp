@@ -9,6 +9,7 @@
 #include "simsensors.h"
 #include "simmotors.h"
 #include "geometryio.h"
+#include "timers.h"
 using namespace sim;
 
 Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapPath, const char *botPath, const char *sensLibPath) {
@@ -27,6 +28,9 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
 }
 
 void sim::Simulation::step() {
+#ifdef REAL_ROBOT
+  curSim = this;
+#endif
   bot.bot->act();
   
   // find the displacement in the robot's coordinate system

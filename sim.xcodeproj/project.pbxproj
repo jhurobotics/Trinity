@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC8D912F3747A0029F044 /* timers.cpp */; };
 		DA37FB2012E8B977004D6592 /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */; };
 		DA37FB2412E8B994004D6592 /* libboost_python-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */; };
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
@@ -54,6 +55,8 @@
 /* Begin PBXFileReference section */
 		DA29583B12CD1310003D4584 /* simmotors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simmotors.h; sourceTree = "<group>"; };
 		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
+		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
+		DA2EC8D912F3747A0029F044 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timers.cpp; sourceTree = "<group>"; };
 		DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = /usr/local/lib/libpython2.7.dylib; sourceTree = "<absolute>"; };
 		DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_python-mt.dylib"; path = "/usr/local/lib/libboost_python-mt.dylib"; sourceTree = "<absolute>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 		DAC75F4412C8597F00E7E711 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				DA2EC8D812F3747A0029F044 /* timers.h */,
+				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
 				DAF313F412F218B900579D33 /* slam.h */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
@@ -398,6 +403,7 @@
 				DAFD412112DED24600E5D62C /* moc_simwidget.cpp in Sources */,
 				DAC2F9F812E7C5130084052D /* py_math.cpp in Sources */,
 				DAC2F9F912E7C5130084052D /* py_robot.cpp in Sources */,
+				DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
