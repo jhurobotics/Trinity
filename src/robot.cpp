@@ -18,6 +18,7 @@
 #include "arduino.h"
 #include "maestro.h"
 #include "timers.h"
+#include "CandleScan.h"
 using namespace robot;
 using namespace math;
 
@@ -26,6 +27,7 @@ AbstractRobot * robot::new_robot(robot::Implementation imp) throw(BadRobotImplem
   case SONAR:
     return new SonarRobot;
   case CPP_1:
+    return new CandleScanner;
   case CPP_2:
   default:
     throw BadRobotImplementation();

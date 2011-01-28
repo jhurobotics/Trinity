@@ -12,6 +12,7 @@
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DA683FE413401F4C001781D4 /* CandleScan.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA683FE213401F4C001781D4 /* CandleScan.cpp */; };
 		DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */; };
 		DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC052132AEEF6003DD620 /* moc_robotwidget.cpp */; };
 		DA72DC981329C4D600493D34 /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC921329C4D600493D34 /* arduino.cpp */; };
@@ -71,6 +72,8 @@
 		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DA683FE213401F4C001781D4 /* CandleScan.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CandleScan.cpp; sourceTree = "<group>"; };
+		DA683FE313401F4C001781D4 /* CandleScan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CandleScan.h; sourceTree = "<group>"; };
 		DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robotwidget.cpp; sourceTree = "<group>"; };
 		DA6AC050132AE9B4003DD620 /* robotwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robotwidget.h; sourceTree = "<group>"; };
 		DA6AC052132AEEF6003DD620 /* moc_robotwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_robotwidget.cpp; sourceTree = "<group>"; };
@@ -194,6 +197,8 @@
 				DAC75F7012C85E1600E7E711 /* map.cpp */,
 				DA72DC941329C4D600493D34 /* Nodel.h */,
 				DA35B15E13020DCD00DAD788 /* Nodel.cpp */,
+				DA683FE213401F4C001781D4 /* CandleScan.cpp */,
+				DA683FE313401F4C001781D4 /* CandleScan.h */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DA72DC961329C4D600493D34 /* serial.h */,
@@ -436,6 +441,7 @@
 				DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */,
 				DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */,
 				DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */,
+				DA683FE413401F4C001781D4 /* CandleScan.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +459,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
@@ -472,6 +479,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;

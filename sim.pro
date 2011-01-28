@@ -21,6 +21,7 @@ SOURCES += \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
+    src/CandleScan.cpp
     qt/mapwidget.cpp \
     qt/robotwidget.cpp \
 
@@ -40,6 +41,7 @@ HEADERS  += \
     src/controllers.h \
     src/slam/slam.h \
     src/slam/simslam.h \
+    src/CandleScan.h \
     qt/mapwidget.h \
     qt/robotwidget.h \
 
