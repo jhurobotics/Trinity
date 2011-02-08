@@ -30,26 +30,11 @@ namespace robot {
   
   float sample_measurement_model(const Measurements& z, const Pose& x, const MeasurementMap& m);
   
-  template<typename T>
-  void low_variance_sampler(const std::vector< std::pair<T, float> > & input,
-                            std::vector< T > * o) {
-    assert(o);
-    std::vector< std::pair<T, float> > & output = (*o);
-    output.reserve(input.size());
-    
-    float r = math::randFloat(0.5, 0.5);
-    float c = input[0].second;
-    unsigned int i = 0;
-    float M_inverse = 1.0 / ((float) input.size());
-    for( unsigned int m = 0; m < input.size(); m++ ) {
-      float u = r + m * M_inverse;
-      while( u > c ) {
-        i++;
-        c += input[i].second;
-      }
-      output.push_back(input[i].first);
-    }
-  }
+  typedef std::vector<Pose> belief_t;
+  typedef std::vector< std::pair<Pose, float> > weighted_belief_t;
+  void mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
+           const MeasurementMap map, belief_t * new_bel);
+  Pose getAverage(const robot::belief_t & bel);
 } // namespace robot
 
 #endif // __SLAM_H__

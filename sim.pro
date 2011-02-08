@@ -16,6 +16,8 @@ SOURCES += \
     src/geometry.cpp \
     src/timers.cpp \
     src/slam/OdometryModel.cpp \
+    src/slam/mcl.cpp \
+    src/slam/MeasurementModel.cpp \
     qt/mapwidget.cpp \
     qt/simwidget.cpp \
     src/bindings/py_robot.cpp \
