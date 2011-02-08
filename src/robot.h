@@ -9,7 +9,7 @@
 #include <string>
 #include "geometry.h"
 #include "graph.h"
-#include "slam.h"
+#include "slam/slam.h"
 
 #ifndef __ROBOT_H__
 #define __ROBOT_H__

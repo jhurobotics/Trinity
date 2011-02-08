@@ -60,6 +60,7 @@
 		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
 		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
 		DA2EC8D912F3747A0029F044 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timers.cpp; sourceTree = "<group>"; };
+		DA35B15D13020DBE00DAD788 /* simslam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simslam.h; sourceTree = "<group>"; };
 		DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = /usr/local/lib/libpython2.7.dylib; sourceTree = "<absolute>"; };
 		DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_python-mt.dylib"; path = "/usr/local/lib/libboost_python-mt.dylib"; sourceTree = "<absolute>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
 		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
-		DAF313F412F218B900579D33 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
 		DAFD403612DECB4500E5D62C /* QtSim-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QtSim-Info.plist"; path = "../QtSim-Info.plist"; sourceTree = "<group>"; };
 		DAFD404D12DECBDE00E5D62C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainwindow.cpp; sourceTree = "<group>"; };
@@ -154,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */,
+				DA35B15D13020DBE00DAD788 /* simslam.h */,
 				DAADDDBF12FCC09800B11B07 /* slam.h */,
 				DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */,
 				DAADDE2012FCD57A00B11B07 /* mcl.cpp */,
@@ -186,7 +187,6 @@
 				DA2EC8D812F3747A0029F044 /* timers.h */,
 				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
-				DAF313F412F218B900579D33 /* slam.h */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DAC9AC6612CA891E00691585 /* Sim mocks */,

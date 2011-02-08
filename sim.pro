@@ -36,6 +36,8 @@ HEADERS  += \
     src/graph.h \
     src/slam.h \
     src/timers.h \
+    src/slam/slam.h \
+    src/slam/simslam.h \
     qt/mapwidget.h \
     qt/simwidget.h
 

@@ -10,6 +10,7 @@
 #include "simmotors.h"
 #include "geometryio.h"
 #include "timers.h"
+#include "slam/simslam.h"
 using namespace sim;
 
 sim::Robot::~Robot() {

@@ -2,6 +2,7 @@
  *  mcl.cpp
  */
 #include <assert.h>
+#include "../math.h"
 #include "slam.h"
 using namespace robot;
 using namespace math;

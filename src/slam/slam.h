@@ -28,6 +28,11 @@ namespace robot {
   struct MeasurementMap {
   };
   
+  class SLAM { 
+  public:
+    virtual math::Ray getPose() = 0;
+  }; // class SLAM
+  
   float sample_measurement_model(const Measurements& z, const Pose& x, const MeasurementMap& m);
   
   typedef std::vector<Pose> belief_t;
