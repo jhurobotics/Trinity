@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC8D912F3747A0029F044 /* timers.cpp */; };
+		DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA35B15E13020DCD00DAD788 /* Nodel.cpp */; };
 		DA37FB2012E8B977004D6592 /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */; };
 		DA37FB2412E8B994004D6592 /* libboost_python-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */; };
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
@@ -61,6 +62,7 @@
 		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
 		DA2EC8D912F3747A0029F044 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timers.cpp; sourceTree = "<group>"; };
 		DA35B15D13020DBE00DAD788 /* simslam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simslam.h; sourceTree = "<group>"; };
+		DA35B15E13020DCD00DAD788 /* Nodel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Nodel.cpp; sourceTree = "<group>"; };
 		DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = /usr/local/lib/libpython2.7.dylib; sourceTree = "<absolute>"; };
 		DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_python-mt.dylib"; path = "/usr/local/lib/libboost_python-mt.dylib"; sourceTree = "<absolute>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				DA2EC8D812F3747A0029F044 /* timers.h */,
 				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
+				DA35B15E13020DCD00DAD788 /* Nodel.cpp */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DAC9AC6612CA891E00691585 /* Sim mocks */,
@@ -426,6 +429,7 @@
 				DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */,
 				DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */,
 				DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */,
+				DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

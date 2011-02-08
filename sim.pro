@@ -15,6 +15,7 @@ SOURCES += \
     src/map.cpp \
     src/geometry.cpp \
     src/timers.cpp \
+    src/Nodel.cpp \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
