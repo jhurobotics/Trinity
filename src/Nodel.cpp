@@ -220,6 +220,8 @@ char relativeDirString(int dir) {
      return '!';
 }
 
+#ifdef NODE_TEST
+
 int main()
 {
   graph* g = new graph(0,0,1,0);
@@ -258,3 +260,5 @@ int main()
   //cout << "\n\nDONE";
   //cin.get();    
 }
+
+#endif

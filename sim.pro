@@ -15,7 +15,10 @@ SOURCES += \
     src/map.cpp \
     src/geometry.cpp \
     src/timers.cpp \
+    src/Nodel.cpp \
     src/slam/OdometryModel.cpp \
+    src/slam/mcl.cpp \
+    src/slam/MeasurementModel.cpp \
     qt/mapwidget.cpp \
     qt/simwidget.cpp \
     src/bindings/py_robot.cpp \
@@ -34,6 +37,8 @@ HEADERS  += \
     src/graph.h \
     src/slam.h \
     src/timers.h \
+    src/slam/slam.h \
+    src/slam/simslam.h \
     qt/mapwidget.h \
     qt/simwidget.h
 

@@ -13,7 +13,7 @@ float sample(float input) {
 }
 
 // Algorithm from Table 5.5 (p. 108) in Probabilistic Robotics 
-Pose robot::sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
+Pose MCL::sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
   const math::vec2& x_bar = u_t.prev.origin();
   const math::vec2& x_bar_prime = u_t.next.origin();
   float dx = x_bar_prime.x - x_bar.x;

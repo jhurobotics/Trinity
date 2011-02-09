@@ -10,6 +10,7 @@
 #include "simmotors.h"
 #include "geometryio.h"
 #include "timers.h"
+#include "slam/simslam.h"
 using namespace sim;
 
 sim::Robot::~Robot() {
@@ -24,10 +25,12 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
   robot::SensorFactory * sensors = new sim::SensorFactory(sensLibPath, result);
   robot::MotorFactory * motors = new sim::MotorFactory(result);
   result->bot.bot = bot;
-  bot->addSlam(new robot::SimSLAM(&(result->bot)));
+  robot::MCL * mcl = new robot::MCL();
+  bot->addSlam(mcl);
   read_robot(bot, botPath, sensors, motors);
   result->bot.position.setOrigin(result->map->start);
   result->bot.position.setDir(math::vec2(0, -1));
+  mcl->initialize(robot::Pose(result->map->start, math::vec2(0,-1)), 5);
   delete motors;
   delete sensors;
   return result;

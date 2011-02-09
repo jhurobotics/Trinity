@@ -5,18 +5,14 @@
 
 #include "geometry.h"
 #include "simulation.h"
+#include "slam.h"
 
-#ifndef __SLAM_H__
-#define __SLAM_H__
+#ifndef __SIM_SLAM_H__
+#define __SIM_SLAM_H__
 
-namespace robot {
-  
-  class SLAM { 
-    public:
-    virtual math::Ray getPose() = 0;
-  }; // class SLAM
-  
-  class SimSLAM : public SLAM {
+namespace sim {
+    
+  class SimSLAM : public robot::SLAM {
     sim::Robot * bot;
     public:
     SimSLAM(sim::Robot * r) : SLAM(), bot(r) {}
@@ -26,6 +22,6 @@ namespace robot {
     }
   }; // class SimSLAM
   
-} // namespace robot
+} // namespace sim
 
-#endif // __SLAM_H__
+#endif // __SIM_SLAM_H__

@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC8D912F3747A0029F044 /* timers.cpp */; };
+		DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA35B15E13020DCD00DAD788 /* Nodel.cpp */; };
 		DA37FB2012E8B977004D6592 /* libpython2.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */; };
 		DA37FB2412E8B994004D6592 /* libboost_python-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */; };
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
 		DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */; };
+		DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE2012FCD57A00B11B07 /* mcl.cpp */; };
+		DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */; };
 		DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
 		DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
 		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
@@ -58,6 +61,8 @@
 		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
 		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
 		DA2EC8D912F3747A0029F044 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timers.cpp; sourceTree = "<group>"; };
+		DA35B15D13020DBE00DAD788 /* simslam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simslam.h; sourceTree = "<group>"; };
+		DA35B15E13020DCD00DAD788 /* Nodel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Nodel.cpp; sourceTree = "<group>"; };
 		DA37FB1F12E8B977004D6592 /* libpython2.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpython2.7.dylib; path = /usr/local/lib/libpython2.7.dylib; sourceTree = "<absolute>"; };
 		DA37FB2312E8B994004D6592 /* libboost_python-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_python-mt.dylib"; path = "/usr/local/lib/libboost_python-mt.dylib"; sourceTree = "<absolute>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
@@ -69,6 +74,8 @@
 		DAA22FD612F0DEBE00B808AA /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OdometryModel.cpp; sourceTree = "<group>"; };
 		DAADDDBF12FCC09800B11B07 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
+		DAADDE2012FCD57A00B11B07 /* mcl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mcl.cpp; sourceTree = "<group>"; };
+		DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeasurementModel.cpp; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = qt_preprocess.mak; path = ../qt_preprocess.mak; sourceTree = "<group>"; };
 		DAC2F9F612E7C5130084052D /* py_math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_math.cpp; sourceTree = "<group>"; };
@@ -84,7 +91,6 @@
 		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
 		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
-		DAF313F412F218B900579D33 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
 		DAFD403612DECB4500E5D62C /* QtSim-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QtSim-Info.plist"; path = "../QtSim-Info.plist"; sourceTree = "<group>"; };
 		DAFD404D12DECBDE00E5D62C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainwindow.cpp; sourceTree = "<group>"; };
@@ -150,7 +156,10 @@
 			isa = PBXGroup;
 			children = (
 				DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */,
+				DA35B15D13020DBE00DAD788 /* simslam.h */,
 				DAADDDBF12FCC09800B11B07 /* slam.h */,
+				DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */,
+				DAADDE2012FCD57A00B11B07 /* mcl.cpp */,
 			);
 			path = slam;
 			sourceTree = "<group>";
@@ -180,7 +189,7 @@
 				DA2EC8D812F3747A0029F044 /* timers.h */,
 				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
-				DAF313F412F218B900579D33 /* slam.h */,
+				DA35B15E13020DCD00DAD788 /* Nodel.cpp */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DAC9AC6612CA891E00691585 /* Sim mocks */,
@@ -418,6 +427,9 @@
 				DAC2F9F912E7C5130084052D /* py_robot.cpp in Sources */,
 				DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */,
 				DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */,
+				DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */,
+				DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */,
+				DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,7 +546,6 @@
 				);
 				OTHER_CFLAGS = (
 					"-pipe",
-					"-O2",
 					"-Wall",
 					"-W",
 					"-DQT_OPENGL_LIB",

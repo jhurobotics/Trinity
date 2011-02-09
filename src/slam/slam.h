@@ -18,38 +18,47 @@ namespace robot {
     math::Ray next;
   };
   
-  extern float odometryNoise[4]; // robot specific parameters
-  
-  Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
-  
   struct Measurements {
   };
   
   struct MeasurementMap {
   };
   
-  float sample_measurement_model(const Measurements& z, const Pose& x, const MeasurementMap& m);
+  class SLAM { 
+  public:
+    virtual Pose getPose() = 0;
+    virtual void draw() { }
+  }; // class SLAM
   
-  template<typename T>
-  void low_variance_sampler(const std::vector< std::pair<T, float> > & input,
-                            std::vector< T > * o) {
-    assert(o);
-    std::vector< std::pair<T, float> > & output = (*o);
-    output.reserve(input.size());
+  class MCL : public SLAM {
+    protected:
+    typedef std::vector<Pose> belief_t;
+    typedef std::vector< std::pair<Pose, float> > weighted_belief_t;
     
-    float r = math::randFloat(0.5, 0.5);
-    float c = input[0].second;
-    unsigned int i = 0;
-    float M_inverse = 1.0 / ((float) input.size());
-    for( unsigned int m = 0; m < input.size(); m++ ) {
-      float u = r + m * M_inverse;
-      while( u > c ) {
-        i++;
-        c += input[i].second;
-      }
-      output.push_back(input[i].first);
+    float odometryNoise[4]; // robot specific parameters
+    
+    belief_t bels[2];
+    unsigned char cur_bel;
+    MeasurementMap map;
+   
+    Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
+    float sample_measurement_model(const Measurements& z, const Pose& x);
+    
+    void low_variance_sampler(const weighted_belief_t & input, float total,
+                         belief_t * output);
+    void mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
+              belief_t * new_bel);
+    Pose getAverage(const belief_t & bel);
+    
+    public:
+    explicit MCL() {
+      cur_bel = 0;
     }
-  }
+    void initialize(Pose cur, float range);
+    virtual Pose getPose();
+    virtual void draw();
+  };
+  
 } // namespace robot
 
 #endif // __SLAM_H__
