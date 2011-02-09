@@ -10,9 +10,9 @@
 #ifndef __SIM_SLAM_H__
 #define __SIM_SLAM_H__
 
-namespace robot {
+namespace sim {
     
-  class SimSLAM : public SLAM {
+  class SimSLAM : public robot::SLAM {
     sim::Robot * bot;
     public:
     SimSLAM(sim::Robot * r) : SLAM(), bot(r) {}
@@ -22,6 +22,6 @@ namespace robot {
     }
   }; // class SimSLAM
   
-} // namespace robot
+} // namespace sim
 
 #endif // __SIM_SLAM_H__
