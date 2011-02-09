@@ -1,5 +1,30 @@
 #include <iostream>
 #include <vector>
+
+/*
+// Minimal class to replace std::vector in Arduino
+template<typename Data>
+class Vector {
+   size_t d_size; // Stores no. of actually stored objects
+   size_t d_capacity; // Stores allocated capacity
+   Data *d_data; // Stores data
+   public:
+     Vector() : d_size(0), d_capacity(0), d_data(0) {}; // Default constructor
+     Vector(Vector const &other) : d_size(other.d_size), d_capacity(other.d_capacity), d_data(0) { d_data = (Data *)malloc(d_capacity*sizeof(Data)); memcpy(d_data, other.d_data, d_size*sizeof(Data)); }; // Copy constuctor
+     ~Vector() { free(d_data); }; // Destructor
+     Vector &operator=(Vector const &other) { free(d_data); d_size = other.d_size; d_capacity = other.d_capacity; d_data = (Data *)malloc(d_capacity*sizeof(Data)); memcpy(d_data, other.d_data, d_size*sizeof(Data)); return *this; }; // Needed for memory management
+     void push_back(Data const &x) { if (d_capacity == d_size) resize(); d_data[d_size++] = x; }; // Adds new value. If needed, allocates more space
+     size_t size() const { return d_size; }; // Size getter
+     Data const &operator[](size_t idx) const { return d_data[idx]; }; // Const getter
+     Data &operator[](size_t idx) { return d_data[idx]; }; // Changeable getter
+   private:
+     void resize() { d_capacity = d_capacity ? d_capacity*2 : 1; Data *newdata = (Data *)malloc(d_capacity*sizeof(Data)); memcpy(newdata, d_data, d_size * sizeof(Data)); free(d_data); d_data = newdata; };// Allocates double the old space
+}; 
+
+
+*/
+
+
 #define boolean bool
 #define LFIR 2  // left front
 #define RFIR 3  // right front
@@ -18,16 +43,15 @@
 
 using namespace std; 
 
-int nodecount=1;
+static int nodecount=1;
 
 class node{
-  private:
-    node* paths[4];
   public:
-    int checked;
+    node* paths[4];
+    int checked;   // true when robot has passed through this node
     node* parent;
-    int number; // trouble shooting
-    boolean searched;  // troule shooting
+    int number; // node id for trouble shooting
+    int searched;  // for traversing the graph
     node() {paths[0]=0; paths[1]=0; paths[2]=0; paths[3]=0;checked=0;
        parent=0;
        number=nodecount++;
@@ -38,30 +62,30 @@ class node{
       paths[dir]=obj;
     }
     node* getnode(int dir) {
-      return paths[dir]; 
+      return paths[(dir)%4]; 
     }
     void Connect(node* n, int dir) {
-       paths[dir]=n;
+       paths[(dir)%4]=n;
        n->setnode((dir+2)%4,this);
     } 
     void add(int dir){
       Connect(new node(), dir);
-      paths[dir]->parent=this;
+      paths[(dir)%4]->parent=this;
     }
 };
 
 // represents the entire known maze and the bot inside it
 class graph {
-  private:
-  
   public:
     node* H;  // home node
     node* cur;  // current node
     int dir;  // current direction (N,S,E,W)
+    vector<node*> route;   // route will be filled when traverse is called
     graph(boolean left, boolean right, boolean front, boolean back=false) {
         H=new node(); 
         cur=H; 
         dir=0;
+        route = vector<node*>();
         if(left) H->add(W);
         if(right) H->add(E);
         if(front) H->add(N);
@@ -69,63 +93,57 @@ class graph {
         H->checked=true;
     }
     
-    // adds information to a node next to the current node
+    // adds nodes to the current node
+    // TODO:  What happens if nodes already exist?  this means the robot got confused, but what should we do about it?
     void update(boolean left, boolean right, boolean front) {
-      node* next = cur->getnode(dir);
-      next->checked=true;
      if(front){
-       next->add(dir);
+       cur->add(dir);
      } 
      if(left){
-       next->add((dir+W)%4);
+       cur->add(dir+W);
      }      
      if(right){
-       next->add((dir+E)%4);
+       cur->add(dir+E);
      }       
-     cur=next;
     }
     
     void turn(int Direction) {
       dir+=Direction; 
       dir%=4;
     }
+    
+    // returns false if the robot is facing a wall
     boolean move() {
-        if(cur->getnode(dir)) {cur=cur->getnode(dir); return true;}
+        node *next = cur->getnode(dir);
+        if(next) {
+            cur=next;
+            cur->checked=true;
+            return true;
+        }
         return false;
         
     }
     
     node * getNode(int Direction) {
-        return cur->paths[(dir+Direction)%4];
+        return cur->getnode((dir+Direction)%4);
     }
     
-    /*
-    // looks for closest unchecked nodes
-    // returns a direction (-1,0,1,2)
-    int traverse() {
-      int parentdir=0;
-      for(int i=0; i<4; ++i) {   // find direction of parent
-        if(cur->getnode(i)==cur->parent) 
-        {parentdir=i; break;}
-        
-      }
-      int left = (parentdir-1)%4;
-      int right= (parentdir+1)%4;
-      int front= (parentdir+2)%4;
-      if(cur->getnode(left)&&!cur->getnode(left)->checked) return -1;
-      if(cur->getnode(right)&&!cur->getnode(right)->checked) return 1;
-      if(cur->getnode(front)&&!cur->getnode(front)->checked) return 0;
-      // if at dead end??
-    }  */
     
-    
-    int traverse(node *n, int level, int maxdepth=0) {
-        if(!n->checked) {return level;}  // return the distance to the unchecked node
-        if(maxdepth>0 && level>=maxdepth) {return -1;} // there is no unchecked node here
+    int traverse(node *n, int level, int searched, int maxdepth=0) {
+        if(!n) {return 0;}
+        if(n->searched==searched)  {  // this node was already traversed
+            if(!n->checked) {return level;}
+            return 0;
+        }
+        // cout << "traverse:  checking node " << n->number << endl;
+        n->searched++;
+        // if(!n->checked) {return level;}  // return the distance to the unchecked node
+        // if(maxdepth>0 && level>=maxdepth) {return 0;} // there is no unchecked node here
         int maxdist = 0;
+        if(!n->checked) {maxdist = level;}
         for(int i=0; i<4; ++i) {
             if(n->paths[i]) {
-                int dist = traverse(n->paths[i], level+1, maxdepth);
+                int dist = traverse(n->paths[i], level+1, n->searched, maxdepth);
                 maxdist = (dist>maxdist)?dist:maxdist;   // take maximum
                 if(maxdist>maxdepth) {maxdepth=maxdist;}
             }
@@ -139,10 +157,12 @@ class graph {
     int traverse() {
       int maxdist = 0;
       int Direction = 0;
+      // vector<node*> searched = vector<node*>;
+      cur->searched++;
       for(int i=0; i<4; ++i) {
-        int dist = traverse(getNode(i),1);
+        int dist = traverse(getNode(i),1,cur->searched);
         if(dist>maxdist) {
-            Direction = i-1;
+            Direction = i;
             maxdist=dist;
         }
       }
@@ -153,11 +173,15 @@ class graph {
       return Direction;
     }
     
+    // returns false if there are no nodes left on the queue
+    // traverse() needs to be called to fill the queue
+    bool nextDirection() {}
+    
 };
 
 
 // for trouble shooting
-void outputGraph(node* n) {
+void outputGraph(node* n, boolean unsearched) {
      cout << n->number;
      if(n->checked) cout << " CHECKED";
      cout << "\n";
@@ -166,12 +190,15 @@ void outputGraph(node* n) {
      if(n->getnode(S)) cout << "  S " << n->getnode(S)->number << "\n";
      if(n->getnode(E)) cout << "  E " << n->getnode(E)->number << "\n";
      cout << "\n";
-     n->searched=true;
+     n->searched=!unsearched;
      for(int i=0; i<4; ++i) {
          node* p=n->getnode(i);
-         if(!p||p->searched) continue;
-         outputGraph(n->getnode(i));
+         if(!p||p->searched^unsearched) continue;
+         outputGraph(n->getnode(i),unsearched);
      }
+}
+void outputGraph(node* n) {
+    outputGraph(n,n->searched);
 }
 
 char directionString(int dir) {
@@ -196,22 +223,38 @@ char relativeDirString(int dir) {
 int main()
 {
   graph* g = new graph(0,0,1,0);
+  g->move();
   g->update(1,0,1);
   g->turn(W);
+  g->move();
   g->update(0,0,1);
+  g->move();
   g->update(0,0,0);
-  g->turn(2);
-  g->move();
-  g->move();
   
   
   outputGraph(g->H);
   cout << "current = " << g->cur->number << "\n";
-  cout << "heading = " << directionString(g->dir) << "\n";
-  cout << "go " << relativeDirString(g->traverse()) << "\n";
+  cout << "heading = " << directionString(g->dir) << "\n" << "\n";
+  //int dir = g->traverse();
+  //cout << "go " << relativeDirString(dir) << "("<<directionString(dir+g->dir)<<")" << "\n";
   //cout << "go " << g->traverse() << "\n";
   
+  // traverse
+  //for(int i=0; i<3; ++i) {
+  while(1) {
+    int dir = g->traverse();
+    cout << "@" << g->cur->number << endl;
+    cout << "go " << relativeDirString(g->traverse()) << "("<<directionString(dir+g->dir)<<")" << "\n";
+    g->turn(dir);
+    if(!g->getNode(0)->checked) {g->move(); break;}
+    g->move();
+  }
   
-  cout << "\n\nDONE";
-  cin.get();    
+  cout << "@" << g->cur->number << endl;
+  
+  //outputGraph(g->H);
+  
+  
+  //cout << "\n\nDONE";
+  //cin.get();    
 }
