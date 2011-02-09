@@ -7,12 +7,7 @@
 using namespace robot;
 using namespace math;
 
-namespace robot {
-  void low_variance_sampler(const weighted_belief_t & input, float total,
-                                   belief_t * output);
-}
-
-void robot::low_variance_sampler(const weighted_belief_t & input, float total,
+void MCL::low_variance_sampler(const weighted_belief_t & input, float total,
                                  belief_t * output) {
   assert(output);
   output->reserve(input.size());
@@ -31,8 +26,8 @@ void robot::low_variance_sampler(const weighted_belief_t & input, float total,
   }
 }
 
-void robot::mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
-         const MeasurementMap map, belief_t * new_bel)
+void MCL::mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
+         belief_t * new_bel)
 {
   assert(new_bel);
   unsigned int M = last_bel.size();
@@ -41,14 +36,14 @@ void robot::mcl( const belief_t& last_bel, const Odometry& u, const Measurements
   float totalWeight = 0.0;
   for( unsigned int m = 0; m < M; m++ ) {
     Pose x = sample_motion_model_odometry(u, last_bel[m]);
-    float w = sample_measurement_model(z, x, map);
+    float w = sample_measurement_model(z, x);
     bel_bar.push_back(std::pair<Pose, float>(x, w));
     totalWeight += w;
   }
   low_variance_sampler(bel_bar, totalWeight, new_bel);
 }
 
-Pose robot::getAverage(const belief_t& bel) {
+Pose MCL::getAverage(const belief_t& bel) {
   vec2 pos(0,0);
   vec2 dir(0,0);
   unsigned int count = 0;
@@ -59,4 +54,22 @@ Pose robot::getAverage(const belief_t& bel) {
     count ++;
   }
   return Pose( pos/((float)count), dir/((float)count));
+}
+
+Pose MCL::getPose() {
+  belief_t * belief;
+  belief_t * next_belief;
+  if( cur_bel == 0 ) {
+    belief = &(bels[0]);
+    next_belief = &(bels[1]);
+  }
+  else {
+    belief = &(bels[1]);
+    next_belief = &(bels[0]);
+  }
+  // get the sensor / odometry data somehow
+  Odometry u;
+  Measurements z;
+  mcl(*belief, u, z, next_belief);
+  return getAverage(*next_belief);
 }

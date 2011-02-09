@@ -18,10 +18,6 @@ namespace robot {
     math::Ray next;
   };
   
-  extern float odometryNoise[4]; // robot specific parameters
-  
-  Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
-  
   struct Measurements {
   };
   
@@ -30,16 +26,36 @@ namespace robot {
   
   class SLAM { 
   public:
-    virtual math::Ray getPose() = 0;
+    virtual Pose getPose() = 0;
   }; // class SLAM
   
-  float sample_measurement_model(const Measurements& z, const Pose& x, const MeasurementMap& m);
+  class MCL : public SLAM {
+    protected:
+    typedef std::vector<Pose> belief_t;
+    typedef std::vector< std::pair<Pose, float> > weighted_belief_t;
+    
+    float odometryNoise[4]; // robot specific parameters
+    
+    belief_t bels[2];
+    unsigned char cur_bel;
+    MeasurementMap map;
+   
+    Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
+    float sample_measurement_model(const Measurements& z, const Pose& x);
+    
+    void low_variance_sampler(const weighted_belief_t & input, float total,
+                         belief_t * output);
+    void mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
+              belief_t * new_bel);
+    Pose getAverage(const belief_t & bel);
+    
+    public:
+    explicit MCL() {
+      cur_bel = 0;
+    }
+    virtual Pose getPose();
+  };
   
-  typedef std::vector<Pose> belief_t;
-  typedef std::vector< std::pair<Pose, float> > weighted_belief_t;
-  void mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
-           const MeasurementMap map, belief_t * new_bel);
-  Pose getAverage(const robot::belief_t & bel);
 } // namespace robot
 
 #endif // __SLAM_H__

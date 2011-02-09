@@ -3,8 +3,8 @@
  */
 
 #include "slam.h"
+using namespace robot;
 
-float robot::sample_measurement_model(const Measurements& z, const Pose& x,
-                                      const MeasurementMap& m) {
+float MCL::sample_measurement_model(const Measurements& z, const Pose& x) {
   return 1.0;
 }
