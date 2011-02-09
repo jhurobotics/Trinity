@@ -27,6 +27,7 @@ namespace robot {
   class SLAM { 
   public:
     virtual Pose getPose() = 0;
+    virtual void draw() { }
   }; // class SLAM
   
   class MCL : public SLAM {
@@ -53,7 +54,9 @@ namespace robot {
     explicit MCL() {
       cur_bel = 0;
     }
+    void initialize(Pose cur, float range);
     virtual Pose getPose();
+    virtual void draw();
   };
   
 } // namespace robot

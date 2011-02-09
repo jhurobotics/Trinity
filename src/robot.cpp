@@ -157,4 +157,6 @@ void SonarRobot::draw() {
     glVertex2f(edges[i].x, edges[i].y);
   }
   glEnd();
+  
+  slammer->draw();
 }
