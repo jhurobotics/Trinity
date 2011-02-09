@@ -546,7 +546,6 @@
 				);
 				OTHER_CFLAGS = (
 					"-pipe",
-					"-O2",
 					"-Wall",
 					"-W",
 					"-DQT_OPENGL_LIB",
