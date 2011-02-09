@@ -8,8 +8,8 @@
 #define FIR  6  // front
 #define BIR  7  // back
 #define LED 13
-#define Left   90   // turn left
-#define Right -90   // turn right
+#define Left   1   // turn left
+#define Right -1   // turn right
 #define N 0
 #define W 1
 #define S 2
@@ -95,6 +95,10 @@ class graph {
         
     }
     
+    node * getNode(int Direction) {
+        return cur->paths[(dir+Direction)%4];
+    }
+    
     /*
     // looks for closest unchecked nodes
     // returns a direction (-1,0,1,2)
@@ -114,27 +118,39 @@ class graph {
       // if at dead end??
     }  */
     
+    
+    int traverse(node *n, int level, int maxdepth=0) {
+        if(!n->checked) {return level;}  // return the distance to the unchecked node
+        if(maxdepth>0 && level>=maxdepth) {return -1;} // there is no unchecked node here
+        int maxdist = 0;
+        for(int i=0; i<4; ++i) {
+            if(n->paths[i]) {
+                int dist = traverse(n->paths[i], level+1, maxdepth);
+                maxdist = (dist>maxdist)?dist:maxdist;   // take maximum
+                if(maxdist>maxdepth) {maxdepth=maxdist;}
+            }
+        }
+        return maxdist;
+    }
+    
     // looks for closest unchecked nodes
     // returns a direction (-1,0,1,2)
     // returns a direction to turn in relative to the current direction
     int traverse() {
-      int parentdir=0;
-      for(int i=0; i<4; ++i) {   // find direction of parent
-        if(cur->getnode(i)==cur->parent) 
-        {parentdir=i; break;}
-        
+      int maxdist = 0;
+      int Direction = 0;
+      for(int i=0; i<4; ++i) {
+        int dist = traverse(getNode(i),1);
+        if(dist>maxdist) {
+            Direction = i-1;
+            maxdist=dist;
+        }
       }
-      int left = (dir+W)%4;
-      int right= (dir+E)%4;
-      int front= (dir+N)%4;
-      int back = (dir+S)%4;
-      if(cur->getnode(left)&&!cur->getnode(left)->checked) return 1;  // first try left
-      if(cur->getnode(right)&&!cur->getnode(right)->checked) return 3; // then right
-      if(cur->getnode(front)&&!cur->getnode(front)->checked) return 0; // then fowards
-      if(cur->getnode(back)&&!cur->getnode(back)->checked) return 2; // then backwards
+      if(maxdist==0) {  // there are no more unchecked nodes
+         // what do??
+      }
       
-      // if at dead end go to parent
-      return (parentdir-dir)%4;
+      return Direction;
     }
     
 };
