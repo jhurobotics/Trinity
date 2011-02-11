@@ -1,10 +1,10 @@
 /*
- *  slam.h
+ *  simslam.h
  *  sim
  */
 
-#include "geometry.h"
-#include "simulation.h"
+#include "../geometry.h"
+#include "../simulation.h"
 #include "slam.h"
 
 #ifndef __SIM_SLAM_H__

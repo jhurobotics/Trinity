@@ -1,9 +1,9 @@
 QT       += core gui opengl
-
+CONFIG += debug
 TARGET = sim
 TEMPLATE = app
 
-INCLUDEPATH += /usr/local/include/python2.7
+INCLUDEPATH += /usr/include/python2.6
 
 SOURCES += \
     qt/mainwindow.cpp \
@@ -35,7 +35,6 @@ HEADERS  += \
     src/geometryio.h \
     src/geometry.h \
     src/graph.h \
-    src/slam.h \
     src/timers.h \
     src/slam/slam.h \
     src/slam/simslam.h \
@@ -45,4 +44,4 @@ HEADERS  += \
 FORMS    += \
     qt/mainwindow.ui
 
-LIBS  += -lpython2.7 -lboost_python-mt
+LIBS  += -lpython2.6 -lboost_python
