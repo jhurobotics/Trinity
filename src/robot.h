@@ -51,7 +51,7 @@ namespace robot {
     
     class WrongSensorKind {};
     
-    virtual RangeSensor * rangeSensor(const std::string& name) = 0;
+    virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind) = 0;
   };  // class SensorFactory
   
   class MotorControl {
