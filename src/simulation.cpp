@@ -28,8 +28,7 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
   robot::MCL * mcl = new robot::MCL();
   bot->addSlam(mcl);
   read_robot(bot, botPath, sensors, motors);
-  result->bot.position.setOrigin(result->map->start);
-  result->bot.position.setDir(math::vec2(0, -1));
+  result->bot.position = result->map->start;
   result->bot.lastPosition = result->bot.position;
   mcl->initialize(5);
   delete motors;

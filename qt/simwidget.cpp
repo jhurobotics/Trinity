@@ -102,7 +102,8 @@ void SimWidget::paintGL() {
   glPopMatrix();
 
   glPushMatrix();
-  glTranslatef(world->map->start.x, world->map->start.y, 0);
+  glTranslatef(world->map->start.origin().x, world->map->start.origin().y, 0);
+  glRotatef(world->map->start.angle()*180.0/M_PI, 0.0, 0.0, 1.0);
   world->bot.bot->draw();
   glPopMatrix();
 

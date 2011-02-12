@@ -165,7 +165,6 @@ void robot::SonarRobot::act() throw() {
 #define WHITE 1.0, 1.0, 1.0
 
 void SonarRobot::draw() {
-  glRotatef(-90.0, 0.0, 0.0, 1.0);
   glPointSize(4.0);
   glColor4f(BLUE, 1.0);
   glBegin(GL_POINTS);

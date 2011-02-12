@@ -3,12 +3,12 @@
 # units = centimeters
 # wall startX startY endX endY
 # door startX startY endX endY
-# start x y
+# start x y dirx diry
 # candle x y
 
 width 248
 height 248
-start 95 225
+start 95 225 0 -1
 
 # Room 2
 wall 0 91 72 91

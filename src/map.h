@@ -19,7 +19,7 @@ namespace sim {
   struct Map {
     int width;
     int height;
-    math::vec2 start;
+    math::Ray start;
     std::vector<Wall> walls;
     std::vector<Door> doors;
     std::vector<Candle> candles;

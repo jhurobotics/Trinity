@@ -93,7 +93,7 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
   if( start ) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glPushMatrix();
-    glTranslatef(map->start[0], map->start[1], 0.0);
+    glTranslatef(map->start.origin().x, map->start.origin().y, 0.0);
     glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
     glRectd(-10, -10, 10, 10);
     glPopMatrix();
