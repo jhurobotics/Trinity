@@ -30,7 +30,8 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
   read_robot(bot, botPath, sensors, motors);
   result->bot.position = result->map->start;
   result->bot.lastPosition = result->bot.position;
-  mcl->initialize(5);
+  result->bot.bot->setStart(result->map->start);
+  mcl->initialize(result->map->start, 10, *result->map);
   delete motors;
   delete sensors;
   return result;

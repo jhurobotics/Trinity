@@ -23,6 +23,16 @@ namespace sim {
     std::vector<Wall> walls;
     std::vector<Door> doors;
     std::vector<Candle> candles;
+    
+    Map& operator=(const Map& other) {
+      width = other.width;
+      height = other.height;
+      start = other.start;
+      walls = other.walls;
+      doors = other.doors;
+      candles = other.candles;
+      return *this;
+    }
   }; // class Map
   
   Map* read_map(const char * path);

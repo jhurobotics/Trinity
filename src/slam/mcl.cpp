@@ -8,25 +8,26 @@
 using namespace robot;
 using namespace math;
 
-#define PARTICLE_COUNT  20
+#define PARTICLE_COUNT  100
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
-void MCL::initialize(float range) {
+void MCL::initialize(Pose start, float range, const sim::Map& m) {
   bels[0].clear();
   bels[0].reserve(PARTICLE_COUNT);
   bels[1].clear();
   cur_bel = 0;
   for( unsigned int i = 0; i < PARTICLE_COUNT; i++ ) {
-    float x = randFloat(range, 0);
-    float y = randFloat(range, 0);
-    float angle = randFloat(M_PI/8.0, 0);
+    float x = randFloat(range, start.origin().x);
+    float y = randFloat(range, start.origin().y);
+    float angle = randFloat(M_PI, start.angle());
     bels[0].push_back(Pose(vec2(x,y), angle));
   }
-  lastPose = Pose();
+  lastPose = start;
   lastCount[0] = lastCount[1] = 0;
+  map = m;
 }
 
 void MCL::low_variance_sampler(const weighted_belief_t & input, float total,

@@ -7,6 +7,7 @@
 #include <set>
 #include "math.h"
 #include "../geometry.h"
+#include "../map.h"
 
 #ifndef __SLAM_H__
 #define __SLAM_H__
@@ -49,10 +50,11 @@ namespace robot {
     
     belief_t bels[2];
     unsigned char cur_bel;
-    MeasurementMap map;
+    sim::Map map;
     Pose lastPose;
     unsigned long lastCount[2];
    
+    float minDist(const math::Ray& ray, const Pose& x);
     Pose determineNext(Pose curPose);
     Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
     float sample_measurement_model(const Measurements& z, const Pose& x);
@@ -66,8 +68,10 @@ namespace robot {
     public:
     explicit MCL() {
       cur_bel = 0;
+      odometryNoise[0] = odometryNoise[1] =
+      odometryNoise[2] = odometryNoise[3] = 0.1;
     }
-    void initialize(float range);
+    void initialize(Pose start, float range, const sim::Map& m);
     virtual Pose getPose();
     virtual void draw();
     virtual void addRangeSensor(RangeSensor * sensor) {

@@ -102,6 +102,7 @@ namespace robot {
       return slammer;
     }
     
+    virtual void setStart(math::Ray start) = 0;
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addEncoder(Encoder * encoder) = 0;
@@ -145,6 +146,9 @@ namespace robot {
       }
     }
     
+    virtual void setStart(math::Ray start) {
+      position = start;
+    }
     virtual void act() throw(); // do one iteration of its thang.
     // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {
