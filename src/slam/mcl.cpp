@@ -25,7 +25,7 @@ void MCL::initialize(float range) {
     float angle = randFloat(M_PI/8.0, 0);
     bels[0].push_back(Pose(vec2(x,y), angle));
   }
-  lastPose = Pose(vec2(0,0), vec2(1,0));
+  lastPose = Pose();
   lastCount[0] = lastCount[1] = 0;
 }
 
@@ -36,13 +36,13 @@ void MCL::low_variance_sampler(const weighted_belief_t & input, float total,
   
   float M_inverse = 1.0 / ((float) input.size());
   float r = math::randFloat(M_inverse/2.0, M_inverse/2.0);
-  float c = input[0].second / total;
+  float c = input[0].second;
   unsigned int i = 0;
   for( unsigned int m = 0; m < input.size(); m++ ) {
-    float u = r + ((float)m) * M_inverse;
-    while( u > c && u < 1.0 ) {
+    float u = (r + ((float)m) * M_inverse) * total;
+    while( u > c && u < total ) {
       i++;
-      c += input[i].second / total;
+      c += input[i].second;
     }
     output->push_back(input[i].first);
   }
@@ -103,7 +103,7 @@ Pose MCL::determineNext(Pose curPose)
   float R = r + d / 2;
   vec2 disp;
   disp.x = ( 1 - cos(theta) ) * R;
-  disp.y = sin(theta) * r;
+  disp.y = sin(theta) * R;
   angle = curPose.angle() + theta;
   return Ray( curPose.origin() + disp, angle);
 }

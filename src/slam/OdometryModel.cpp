@@ -6,23 +6,23 @@
 #include "slam.h"
 using namespace robot;
 
-float odometryNoise[4]; // robot specific parameters
-
-float sample(float input) {
+static float sample(float input) {
   return 0.0;
 }
 
-// Algorithm from Table 5.5 (p. 108) in Probabilistic Robotics 
 Pose MCL::sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
   const math::vec2& x_bar = u_t.prev.origin();
   const math::vec2& x_bar_prime = u_t.next.origin();
-  float dx = x_bar_prime.x - x_bar.x;
-  float dy = x_bar_prime.y - x_bar.y;
+  float dx = x_bar.x - x_bar_prime.x;
+  float dy = x_bar.y - x_bar_prime.y;
   
-  float delta_rot1 = atan2( x_bar_prime.y - x_bar.y, x_bar_prime.x - x_bar.x) - lastPose.angle();
+  // On the first and third angles, the book subtracts the angle of the last pose
+  // But, the odometry data is in the coordinate system of the last pose, so that
+  // would just cancel everything out...
+  float delta_rot1 = atan2( x_bar_prime.y - x_bar.y, x_bar_prime.x - x_bar.x);
   float delta_trans = sqrt( dx * dx + dy * dy );
-  float delta_rot2 = u_t.next.angle() - u_t.prev.angle() - delta_rot1;
-  
+  float delta_rot2 = u_t.next.angle() - u_t.prev.angle();
+    
   float delta_rot1_hat = delta_rot1 - sample(odometryNoise[0]*delta_rot1 + odometryNoise[1]*delta_trans);
   float delta_trans_hat = delta_trans - sample(odometryNoise[2]*delta_trans + odometryNoise[3]*(delta_rot1 + delta_rot2));
   float delta_rot2_hat = delta_rot2 - sample(odometryNoise[0]*delta_rot2 + odometryNoise[1]*delta_trans);
