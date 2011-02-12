@@ -7,11 +7,17 @@
 #define __SLAM_H__
 
 #include <vector>
+#include <set>
 #include "math.h"
 #include "../geometry.h"
 
 namespace robot {
   typedef math::Ray Pose;
+  
+#ifndef __ROBOT_H__
+  class RangeSensor;
+  class Encoder;
+#endif
   
   struct Odometry {
     math::Ray prev;
@@ -28,10 +34,14 @@ namespace robot {
   public:
     virtual Pose getPose() = 0;
     virtual void draw() { }
+    virtual void addRangeSensor(RangeSensor * r) = 0;
+    virtual void addEncoder(Encoder * r) = 0;
   }; // class SLAM
   
   class MCL : public SLAM {
     protected:
+    std::set<RangeSensor*> rangeFinders;
+    std::vector<Encoder*> encoders;
     typedef std::vector<Pose> belief_t;
     typedef std::vector< std::pair<Pose, float> > weighted_belief_t;
     
@@ -57,6 +67,12 @@ namespace robot {
     void initialize(Pose cur, float range);
     virtual Pose getPose();
     virtual void draw();
+    virtual void addRangeSensor(RangeSensor * sensor) {
+      rangeFinders.insert(sensor);
+    }
+    virtual void addEncoder(Encoder * encoder) {
+      encoders.push_back(encoder);
+    }
   };
   
 } // namespace robot

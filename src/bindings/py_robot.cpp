@@ -23,8 +23,12 @@ class Python_SensorFactory : public SensorFactory, wrapper<SensorFactory> {
   public:
   Python_SensorFactory(PyObject* self) : m_self(self) {}
   
-  virtual RangeSensor * rangeSensor(const std::string& name) {
+  virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind) {
     return call_method<RangeSensor*>(m_self, "rangeSensor", name);
+  }
+  
+  virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind) {
+    return call_method<Encoder*>(m_self, "encoder", name);
   }
   
   private:
@@ -66,6 +70,12 @@ class Python_SLAM : public SLAM, wrapper<SLAM> {
   virtual math::Ray getPose() {
     return call_method<math::Ray>(m_self, "getPos");
   }
+  virtual void addRangeSensor(RangeSensor * sensor) {
+    call_method<void>(m_self, "addRangeSensor", sensor);
+  }
+  virtual void addEncoder(Encoder * encoder) {
+    call_method<void>(m_self, "addEncoder", encoder);
+  }
 };
 
 class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
@@ -80,6 +90,10 @@ class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
 
   virtual void addRangeSensor(RangeSensor *sensor) {
     call_method<void>(m_self, "addRangeSensor", sensor);
+  }
+  
+  virtual void addEncoder(Encoder * encoder) {
+    call_method<void>(m_self, "addEncoder", encoder);
   }
 
   virtual void addMotors(MotorControl *motors) {
@@ -113,6 +127,8 @@ BOOST_PYTHON_MODULE(robot) {
   
   class_<SLAM, Python_SLAM, boost::noncopyable>("SLAM")
     .def("getPose", pure_virtual(&SLAM::getPose))
+    .def("addRangeSensor", pure_virtual(&SLAM::addRangeSensor))
+    .def("addEncoder", pure_virtual(&SLAM::addEncoder))
   ;
   
   class_<RangeSpecs>("RangeSpecs")
@@ -129,6 +145,7 @@ BOOST_PYTHON_MODULE(robot) {
   
   class_<SensorFactory, Python_SensorFactory, boost::noncopyable>("SensorFactory")
     .def("rangeSensor", pure_virtual(&SensorFactory::rangeSensor), return_value_policy<manage_new_object>())
+    .def("encoder", pure_virtual(&SensorFactory::encoder), return_value_policy<manage_new_object>())
   ;
   
   class_<MotorControl, Python_MotorControl, boost::noncopyable>("MotorControl")
@@ -145,6 +162,7 @@ BOOST_PYTHON_MODULE(robot) {
     .def("slammer", &AbstractRobot::getSlam, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
     .def("act", pure_virtual(&AbstractRobot::act))
     .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
+    .def("addEncoder", pure_virtual(&AbstractRobot::addEncoder))
     .def("addMotors", pure_virtual(&AbstractRobot::addMotors))
     .def("addGraph", &AbstractRobot::addGraph, &Python_AbstractRobot::addGraph)
     .def("draw", &AbstractRobot::draw, &Python_AbstractRobot::draw)

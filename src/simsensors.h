@@ -12,8 +12,9 @@
 #define __SIMSENSORS_H__
 
 namespace sim {
-    
+
   class Ultrasonic : public robot::RangeSensor {
+    protected:
     Simulation * world;
     
     public:
@@ -30,6 +31,20 @@ namespace sim {
     // Generate a noisy data point
     virtual float getValue();
   }; // class Ultrasonic
+  
+  class Encoder : public robot::Encoder {
+    protected:
+    unsigned long count;
+    math::vec2 lastPos;
+    Simulation * world;
+    math::vec2 getAbsolutePosition();
+    public:
+    Encoder(sim::Simulation * w, float td)
+      : robot::Encoder(td), count(0), lastPos(), world(w)
+    {}
+    
+    virtual unsigned long getCount();
+  };
 
   class SensorFactory : public robot::SensorFactory {
     std::string libPath;
@@ -40,6 +55,7 @@ namespace sim {
     virtual ~SensorFactory() {}
     
     virtual robot::RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind);
+    virtual robot::Encoder * encoder(const std::string& name) throw(WrongSensorKind);
   };
 } // namespace sim
 

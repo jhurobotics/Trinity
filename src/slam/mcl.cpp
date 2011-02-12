@@ -4,6 +4,7 @@
 #include <assert.h>
 #include "../math.h"
 #include "slam.h"
+#include "../robot.h"
 using namespace robot;
 using namespace math;
 

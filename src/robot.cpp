@@ -36,13 +36,34 @@ AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) t
   }
 }
 
+typedef std::map<std::string, math::Ray> StrToRay_t;
+
+static Ray read_position(std::istream& input, StrToRay_t& sensorPositions) {
+  Ray posRay;
+  std::string position;
+  input >> position;
+  if( sensorPositions.find(position) != sensorPositions.end() ) {
+    return sensorPositions[position];
+  }
+  else {
+    float x, y;
+    x = atof(position.c_str());
+    input >> y;
+    vec2 pos(x,y);
+    vec2 dir;
+    input >> dir;
+    return Ray(pos, dir);
+  }
+}
+
 void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors) {
   enum SensorType {
     UNKNOWN = 0,
-    RANGE
+    RANGE,
+    ENCODER
   };
   SensorType curSensType = UNKNOWN;
-  std::map<std::string, math::Ray> sensorPositions;
+  StrToRay_t sensorPositions;
   std::ifstream input(path);
   std::string astring;
   while( input ) {
@@ -62,30 +83,27 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
     else if( astring == "range:" ) {
       curSensType = RANGE;
     }
+    else if( astring == "encoder:" ) {
+      curSensType = ENCODER;
+    }
     else if( astring == "sensor" ) {
       switch( curSensType ) {
         case UNKNOWN:
           break;
         case RANGE: {
-          Ray posRay;
-          std::string position;
-          input >> position;
-          if( sensorPositions.find(position) != sensorPositions.end() ) {
-            posRay = sensorPositions[position];
-          }
-          else {
-            float x, y;
-            x = atof(position.c_str());
-            input >> y;
-            vec2 pos(x,y);
-            vec2 dir;
-            input >> dir;
-            posRay = Ray(pos, dir);
-          }
+          Ray posRay = read_position(input, sensorPositions);
           input >> astring;
           RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
           ranger->relPos = posRay;
           bot->addRangeSensor(ranger);
+          break;
+        }
+        case ENCODER: {
+          vec2 pos = read_position(input, sensorPositions).origin();
+          input >> astring;
+          Encoder * encoder = sensors->encoder(astring.c_str());
+          encoder->relPos = pos;
+          bot->addEncoder(encoder);
           break;
         }
       }

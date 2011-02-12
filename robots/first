@@ -8,3 +8,6 @@ sensor FRONT  Nomadic
 sensor BACK   Nomadic
 sensor LEFT   Nomadic
 sensor RIGHT  Nomadic
+encoder:
+sensor LEFT   Encoder
+sensor RIGHT  Encoder

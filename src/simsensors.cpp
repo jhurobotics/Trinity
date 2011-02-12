@@ -127,6 +127,20 @@ float sim::Ultrasonic::getValue() {
   return dist;
 }
 
+vec2 sim::Encoder::getAbsolutePosition() {
+  vec2 absPos = world->bot.position.transformVecToAbsolute(relPos);
+  return absPos;
+}
+
+unsigned long sim::Encoder::getCount() {
+  vec2 curPos = getAbsolutePosition();
+  // first approximation, just go along the line
+  float dist = (curPos-lastPos).mag();
+  lastPos = curPos;
+  count += dist / tickDist;
+  return count;
+}
+
 robot::RangeSensor * sim::SensorFactory::rangeSensor(const std::string& name) throw(WrongSensorKind) {
   if( !rangeSensors.count(name) ) {
     robot::RangeSpecs specs;
@@ -164,4 +178,43 @@ robot::RangeSensor * sim::SensorFactory::rangeSensor(const std::string& name) th
                         (name, specs));
   }
   return new Ultrasonic(world, rangeSensors[name]);
+}
+
+robot::Encoder * sim::SensorFactory::encoder(const std::string& name) throw(WrongSensorKind) {
+  if( !encoders.count(name) ) {
+    unsigned long tickCount = -1;
+    float wheelSize = -1;
+    float tickDist = -1;
+    std::ifstream input((libPath + "/" + name).c_str());
+    std::string astring;
+    while( input ) {
+      input >> astring;
+      if( astring[0] == '#' ) {
+        input.ignore(LONG_MAX, '\n');
+      }
+      else if( astring == "kind" ) {
+        input >> astring;
+        if( astring != "ENCODER" ) {
+          std::cerr << "Sensor named " << name << " is not an encoder\n";
+          throw WrongSensorKind();
+        }
+      }
+      else if( astring == "tickDist" ) {
+        input >> tickDist;
+      }
+      else if( astring == "wheelSize" ) {
+        input >> wheelSize;
+      }
+      else if( astring == "tickCount" ) {
+        input >> tickCount;
+      }
+    }
+    if( tickDist > 0 ) {
+      encoders.insert(std::pair<std::string, float>(name, tickDist));
+    }
+    else {
+      encoders.insert(std::pair<std::string, float>(name, wheelSize / tickCount));
+    }
+  }
+  return new Encoder(world, encoders[name]);
 }

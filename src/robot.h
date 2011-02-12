@@ -43,15 +43,25 @@ namespace robot {
     }
   }; // class RangeSensor
   
+  class Encoder {
+    public:
+    math::vec2 relPos;
+    float tickDist;
+    explicit Encoder(float td) : tickDist(td) { }
+    virtual unsigned long getCount() = 0;
+  };
+  
   class SensorFactory {
     protected:
     std::map<std::string, robot::RangeSpecs> rangeSensors;
+    std::map<std::string, float> encoders;
     public:
     virtual ~SensorFactory() {}
     
     class WrongSensorKind {};
     
     virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind) = 0;
+    virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind) = 0;
   };  // class SensorFactory
   
   class MotorControl {
@@ -94,6 +104,7 @@ namespace robot {
     
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
+    virtual void addEncoder(Encoder * encoder) = 0;
     virtual void addMotors(MotorControl * motors) = 0;
     // Takes ownership of the graph, will delete it if replaced
     virtual void addGraph(Graph * g) {
@@ -114,6 +125,7 @@ namespace robot {
   
   class SonarRobot : public AbstractRobot {
     std::set<RangeSensor*> rangeFinders;
+    std::set<Encoder*> encoders;
     MotorControl * motors;
     public:
     float size;
@@ -134,8 +146,14 @@ namespace robot {
     }
     
     virtual void act() throw(); // do one iteration of its thang.
+    // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {
       rangeFinders.insert(sensor);
+      slammer->addRangeSensor(sensor);
+    }
+    virtual void addEncoder(Encoder * encoder) {
+      encoders.insert(encoder);
+      slammer->addEncoder(encoder);
     }
 
     virtual void addMotors(MotorControl * m) {
