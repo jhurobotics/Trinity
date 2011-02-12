@@ -3,13 +3,13 @@
  *  sim
  */
 
-#ifndef __SLAM_H__
-#define __SLAM_H__
-
 #include <vector>
 #include <set>
 #include "math.h"
 #include "../geometry.h"
+
+#ifndef __SLAM_H__
+#define __SLAM_H__
 
 namespace robot {
   typedef math::Ray Pose;
@@ -20,8 +20,8 @@ namespace robot {
 #endif
   
   struct Odometry {
-    math::Ray prev;
-    math::Ray next;
+    Pose prev;
+    Pose next;
   };
   
   struct Measurements {
