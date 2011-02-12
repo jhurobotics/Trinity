@@ -64,6 +64,14 @@ class node{
     node* getnode(int dir) {
       return paths[(dir)%4]; 
     }
+    // returns the absolute direction of an adjacent node
+    // returns false if the node is not connected to this
+    bool getdir(node* node, int &dir) {
+        for(int i=0; i<4; ++i) {
+            if(paths[i]==node) {dir=i; return true;}
+        }
+        return false;
+    }
     void Connect(node* n, int dir) {
        paths[(dir)%4]=n;
        n->setnode((dir+2)%4,this);
@@ -177,6 +185,18 @@ class graph {
     // traverse() needs to be called to fill the queue
     bool nextDirection() {}
     
+    // the robot physically does a depth first search of the maze
+    // returns the next direction to travel in
+    int quickTraverse(int default_dir=Right) {
+        int direction=0;
+        cur->getdir(cur->parent,direction);
+        for(int i=1; i<4; ++i ) {
+            node* next = cur->getnode(direction+i*default_dir);
+            if(next && !next->checked) {return (direction+i*default_dir-dir)%4;}
+        }
+        return (direction-dir)%4;  // go back the way you came (assuming that is the parent node)
+    }
+    
 };
 
 
@@ -220,6 +240,7 @@ char relativeDirString(int dir) {
      return '!';
 }
 
+#define NODE_TEST
 #ifdef NODE_TEST
 
 int main()
@@ -244,7 +265,8 @@ int main()
   // traverse
   //for(int i=0; i<3; ++i) {
   while(1) {
-    int dir = g->traverse();
+    int dir = g->quickTraverse();  // will fail if theres a loop
+    // int dir = g->traverse();
     cout << "@" << g->cur->number << endl;
     cout << "go " << relativeDirString(g->traverse()) << "("<<directionString(dir+g->dir)<<")" << "\n";
     g->turn(dir);
