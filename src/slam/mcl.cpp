@@ -14,7 +14,7 @@ using namespace math;
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
-void MCL::initialize(Pose cur, float range) {
+void MCL::initialize(float range) {
   bels[0].clear();
   bels[0].reserve(PARTICLE_COUNT);
   bels[1].clear();
@@ -25,6 +25,8 @@ void MCL::initialize(Pose cur, float range) {
     float angle = randFloat(M_PI/8.0, 0);
     bels[0].push_back(Pose(vec2(x,y), angle));
   }
+  lastPose = Pose(vec2(0,0), vec2(1,0));
+  lastCount[0] = lastCount[1] = 0;
 }
 
 void MCL::low_variance_sampler(const weighted_belief_t & input, float total,
@@ -34,10 +36,10 @@ void MCL::low_variance_sampler(const weighted_belief_t & input, float total,
   
   float M_inverse = 1.0 / ((float) input.size());
   float r = math::randFloat(M_inverse/2.0, M_inverse/2.0);
-  float c = input[0].second;
+  float c = input[0].second / total;
   unsigned int i = 0;
   for( unsigned int m = 0; m < input.size(); m++ ) {
-    float u = r + m * M_inverse;
+    float u = r + ((float)m) * M_inverse;
     while( u > c && u < 1.0 ) {
       i++;
       c += input[i].second / total;
@@ -76,6 +78,36 @@ Pose MCL::getAverage(const belief_t& bel) {
   return Pose( pos/((float)count), dir/((float)count));
 }
 
+Pose MCL::determineNext(Pose curPose)
+{
+  unsigned long newCount = encoders[0]->getCount();
+  float s1 = ((float)newCount - lastCount[0]) * encoders[0]->tickDist; // left
+  lastCount[0] = newCount;
+  newCount = encoders[1]->getCount();
+  float s2 = ((float)newCount - lastCount[1]) * encoders[1]->tickDist; // right
+  lastCount[1] = newCount;
+  float d = (encoders[0]->relPos - encoders[1]->relPos).mag();
+  // assume that we're turning left
+  float theta = (s2-s1)/d;
+  
+  vec2 origin;
+  float angle;
+  if( fabsf(theta) < 0.05 ) {
+    origin = curPose.getPoint((s1+s2)/2);
+    angle = curPose.angle()+theta;
+    return Ray(origin, angle);
+  }
+  
+  float r = s1 * d / (s2 - 21);
+  origin = (encoders[1]->relPos - encoders[0]->relPos)*r + curPose.origin();
+  float R = r + d / 2;
+  vec2 disp;
+  disp.x = ( 1 - cos(theta) ) * R;
+  disp.y = sin(theta) * r;
+  angle = curPose.angle() + theta;
+  return Ray( curPose.origin() + disp, angle);
+}
+
 Pose MCL::getPose() {
   belief_t * belief;
   belief_t * next_belief;
@@ -89,7 +121,13 @@ Pose MCL::getPose() {
   }
   next_belief->clear();
   // get the sensor / odometry data somehow
+  
   Odometry u;
+  Pose nextPose = determineNext(lastPose);
+  u.prev = lastPose;
+  u.next = nextPose;
+  lastPose = nextPose;
+
   Measurements z;
   mcl(*belief, u, z, next_belief);
   cur_bel ++;
@@ -108,7 +146,6 @@ Pose MCL::getPose() {
 void MCL::draw() {
   const belief_t& bel = ( cur_bel ? bels[1] : bels[0] );
   glColor4f(RED, 1.0);
-  
   
   belief_t::const_iterator end = bel.end();
   for(belief_t::const_iterator iter = bel.begin(); iter != end; iter++ ) {

@@ -155,6 +155,8 @@ void robot::SonarRobot::act() throw() {
   position += disp;
   //position.rotateAboutStart(math::vec2(cos(theta), sin(theta)).getRotationMatrix());
   
+  // update the slammer
+  slammer->getPose();
 }
 
 #define RED 1.0, 0.0, 0.0

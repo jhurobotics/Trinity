@@ -50,7 +50,10 @@ namespace robot {
     belief_t bels[2];
     unsigned char cur_bel;
     MeasurementMap map;
+    Pose lastPose;
+    unsigned long lastCount[2];
    
+    Pose determineNext(Pose curPose);
     Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
     float sample_measurement_model(const Measurements& z, const Pose& x);
     
@@ -64,7 +67,7 @@ namespace robot {
     explicit MCL() {
       cur_bel = 0;
     }
-    void initialize(Pose cur, float range);
+    void initialize(float range);
     virtual Pose getPose();
     virtual void draw();
     virtual void addRangeSensor(RangeSensor * sensor) {
