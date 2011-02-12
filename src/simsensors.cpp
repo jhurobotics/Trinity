@@ -127,12 +127,18 @@ float sim::Ultrasonic::getValue() {
   return dist;
 }
 
+vec2 sim::Encoder::getLastAbsolutePosition() {
+  vec2 absPos = world->bot.lastPosition.transformVecToAbsolute(relPos);
+  return absPos;
+}
+
 vec2 sim::Encoder::getAbsolutePosition() {
   vec2 absPos = world->bot.position.transformVecToAbsolute(relPos);
   return absPos;
 }
 
 unsigned long sim::Encoder::getCount() {
+  vec2 lastPos = getLastAbsolutePosition();
   vec2 curPos = getAbsolutePosition();
   // first approximation, just go along the line
   float dist = (curPos-lastPos).mag();

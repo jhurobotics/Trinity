@@ -1,5 +1,5 @@
 kind ENCODER
-tickDist 1
+tickDist 0.1
 # alternately (both are valid)
 # wheelSize radius
 # tickCount count

@@ -23,6 +23,7 @@ namespace sim {
     
     // the following are the true values, not where the bot thinks it is
     // position in cm from the lower left of the house
+    math::Ray lastPosition;
     math::Ray position;
     // velocity in cm / s
     math::vec2 velocity;

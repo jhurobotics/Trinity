@@ -35,12 +35,12 @@ namespace sim {
   class Encoder : public robot::Encoder {
     protected:
     unsigned long count;
-    math::vec2 lastPos;
     Simulation * world;
+    math::vec2 getLastAbsolutePosition();
     math::vec2 getAbsolutePosition();
     public:
     Encoder(sim::Simulation * w, float td)
-      : robot::Encoder(td), count(0), lastPos(), world(w)
+      : robot::Encoder(td), count(0), world(w)
     {}
     
     virtual unsigned long getCount();
