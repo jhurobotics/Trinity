@@ -84,10 +84,6 @@ class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
   public:
   Python_AbstractRobot(PyObject* self) : m_self(self) {}
   
-  virtual void setStart(math::Ray start) {
-    call_method<void>(m_self, "setStart", start);
-  }
-  
   virtual void act() {
     call_method<void>(m_self, "act");
   }
@@ -164,7 +160,6 @@ BOOST_PYTHON_MODULE(robot) {
   class_<AbstractRobot, Python_AbstractRobot, boost::noncopyable>("AbstractRobot")
     .def("graph", &AbstractRobot::getGraph, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
     .def("slammer", &AbstractRobot::getSlam, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
-    .def("setStart", pure_virtual(&AbstractRobot::setStart))
     .def("act", pure_virtual(&AbstractRobot::act))
     .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
     .def("addEncoder", pure_virtual(&AbstractRobot::addEncoder))
