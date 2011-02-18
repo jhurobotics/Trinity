@@ -163,6 +163,7 @@ void robot::SonarRobot::act() throw() {
 #define GREEN 0.0, 1.0, 0.0
 #define BLUE 0.0, 0.0, 1.0
 #define WHITE 1.0, 1.0, 1.0
+#define THOUGHT 1.0, 0.5, 0.5
 
 void SonarRobot::draw() {
   glPointSize(4.0);
@@ -178,4 +179,25 @@ void SonarRobot::draw() {
   glEnd();
   
   slammer->draw();
+  
+  glPushMatrix();
+  glTranslatef(position.origin().x, position.origin().y, 0.0);
+  glRotatef((atan2(position.dir().y, position.dir().x))*180.0/M_PI, 0.0, 0.0, 1.0);
+  glColor4f(THOUGHT, 1.0);
+  glBegin(GL_LINE_LOOP);
+  int angleCount = 32;
+  for(int i = 0; i < angleCount; i++) {
+    glVertex2f(4*cos(((float)i)/((float)angleCount)*2*M_PI), 4*sin(((float)i)/((float)angleCount)*2*M_PI));
+  }
+  glEnd();
+  glBegin(GL_LINES);
+  glVertex2f(0.0, 0.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(6.0, -2.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(6.0, 2.0);
+  glEnd();
+
+  glPopMatrix();
 }
