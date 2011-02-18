@@ -8,6 +8,8 @@
 using namespace robot;
 using namespace math;
 
+#define START_P_COUNT   1000
+#define START_CYCLES    20
 #define PARTICLE_COUNT  100
 
 #ifndef M_PI
@@ -16,10 +18,10 @@ using namespace math;
 
 void MCL::initialize(Pose start, float range, const sim::Map& m) {
   bels[0].clear();
-  bels[0].reserve(PARTICLE_COUNT);
+  bels[0].reserve(START_P_COUNT);
   bels[1].clear();
   cur_bel = 0;
-  for( unsigned int i = 0; i < PARTICLE_COUNT; i++ ) {
+  for( unsigned int i = 0; i < START_P_COUNT; i++ ) {
     float x = randFloat(range, start.origin().x);
     float y = randFloat(range, start.origin().y);
     float angle = randFloat(M_PI, start.angle());
@@ -28,18 +30,19 @@ void MCL::initialize(Pose start, float range, const sim::Map& m) {
   lastPose = start;
   lastCount[0] = lastCount[1] = 0;
   map = m;
+  cycleCount = 0;
 }
 
-void MCL::low_variance_sampler(const weighted_belief_t & input, float total,
+void MCL::low_variance_sampler(const weighted_belief_t & input, float total, unsigned long count,
                                  belief_t * output) {
   assert(output);
-  output->reserve(input.size());
+  output->reserve(count);
   
-  float M_inverse = 1.0 / ((float) input.size());
+  float M_inverse = 1.0 / ((float) count);
   float r = math::randFloat(M_inverse/2.0, M_inverse/2.0);
   float c = input[0].second;
   unsigned int i = 0;
-  for( unsigned int m = 0; m < input.size(); m++ ) {
+  for( unsigned int m = 0; m < count; m++ ) {
     float u = (r + ((float)m) * M_inverse) * total;
     while( u > c && u < total ) {
       i++;
@@ -63,7 +66,15 @@ void MCL::mcl( const belief_t& last_bel, const Odometry& u, const Measurements& 
     bel_bar.push_back(std::pair<Pose, float>(x, w));
     totalWeight += w;
   }
-  low_variance_sampler(bel_bar, totalWeight, new_bel);
+  unsigned long count;
+  if( cycleCount < START_CYCLES ) {
+    count = START_P_COUNT;
+    cycleCount++;
+  }
+  else {
+    count = PARTICLE_COUNT;
+  }
+  low_variance_sampler(bel_bar, totalWeight, count, new_bel);
 }
 
 Pose MCL::getAverage(const belief_t& bel) {
