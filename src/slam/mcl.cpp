@@ -52,8 +52,7 @@ void MCL::low_variance_sampler(const weighted_belief_t & input, float total, uns
   }
 }
 
-void MCL::mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
-         belief_t * new_bel)
+void MCL::mcl( const belief_t& last_bel, const Odometry& u, belief_t * new_bel)
 {
   assert(new_bel);
   unsigned int M = last_bel.size();
@@ -62,7 +61,7 @@ void MCL::mcl( const belief_t& last_bel, const Odometry& u, const Measurements& 
   float totalWeight = 0.0;
   for( unsigned int m = 0; m < M; m++ ) {
     Pose x = sample_motion_model_odometry(u, last_bel[m]);
-    float w = sample_measurement_model(z, x);
+    float w = sample_measurement_model(x);
     bel_bar.push_back(std::pair<Pose, float>(x, w));
     totalWeight += w;
   }
@@ -99,7 +98,6 @@ Pose MCL::determineNext(Pose curPose)
   float s2 = ((float)newCount - lastCount[1]) * encoders[1]->tickDist; // right
   lastCount[1] = newCount;
   float d = (encoders[0]->relPos - encoders[1]->relPos).mag();
-  // assume that we're turning left
   float theta = (s2-s1)/d;
   
   vec2 origin;
@@ -140,8 +138,7 @@ Pose MCL::getPose() {
   u.next = nextPose;
   lastPose = nextPose;
 
-  Measurements z;
-  mcl(*belief, u, z, next_belief);
+  mcl(*belief, u, next_belief);
   cur_bel ++;
   cur_bel %= 2;
   return getAverage(*next_belief);

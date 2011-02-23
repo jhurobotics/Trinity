@@ -27,7 +27,7 @@ float MCL::minDist(const Ray& ray, const Pose& x) {
   return dist;
 }
 
-float MCL::sample_measurement_model(const Measurements& z, const Pose& x) {
+float MCL::sample_measurement_model(const Pose& x) {
   float weight = 1.0;
   
   typedef std::set<RangeSensor*>::iterator RangeIter_t;

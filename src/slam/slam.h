@@ -25,12 +25,6 @@ namespace robot {
     Pose next;
   };
   
-  struct Measurements {
-  };
-  
-  struct MeasurementMap {
-  };
-  
   class SLAM { 
   public:
     virtual Pose getPose() = 0;
@@ -57,13 +51,13 @@ namespace robot {
     
     float minDist(const math::Ray& ray, const Pose& x);
     Pose determineNext(Pose curPose);
+    // This only moves IF the robot has moved > 1cm or turned > 1 degree
     Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
-    float sample_measurement_model(const Measurements& z, const Pose& x);
+    float sample_measurement_model(const Pose& x);
     
     void low_variance_sampler(const weighted_belief_t & input, float total, unsigned long count,
                          belief_t * output);
-    void mcl( const belief_t& last_bel, const Odometry& u, const Measurements& z,
-              belief_t * new_bel);
+    void mcl( const belief_t& last_bel, const Odometry& u, belief_t * new_bel);
     Pose getAverage(const belief_t & bel);
     
     public:
