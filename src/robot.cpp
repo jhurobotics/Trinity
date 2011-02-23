@@ -134,14 +134,23 @@ void robot::SonarRobot::act() throw() {
   
   // Only move once the SLAM module has settled
   if( slammer->settled() ) {
-    hallway();
+    switch( curMode ) {
+    case HALLWAY:
+      hallway();
+      break;
+    case SCAN:
+      break;
+    }
   }
-    
 }
 
 #define MOVE_SPEED 20
 #define TURN_SPEED M_PI / 8.0
-const static float ANGLE_RES = M_PI/20.0;
+const static float ANGLE_RES = M_PI/40.0;
+
+#include <iostream>
+using namespace std;
+#define PRINT(exp) cout << (#exp) << " = " << (exp) << endl
 
 void SonarRobot::hallway() throw() {
   static bool moving = false;
@@ -168,6 +177,8 @@ void SonarRobot::hallway() throw() {
       
     float dispDir = atan2(disp.y, disp.x);
     float curDir = position.angle();
+    float delta = abs(std::fmod((double)dispDir - curDir, 2*M_PI));
+    PRINT(delta);
     if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
         || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
       motors->setVelocity(MOVE_SPEED);
