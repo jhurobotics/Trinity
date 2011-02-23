@@ -92,7 +92,7 @@ Pose MCL::getAverage(const belief_t& bel) {
 
 Pose MCL::determineNext(Pose curPose)
 {
-  unsigned long newCount = encoders[0]->getCount();
+  long newCount = encoders[0]->getCount();
   float s1 = ((float)newCount - lastCount[0]) * encoders[0]->tickDist; // left
   lastCount[0] = newCount;
   newCount = encoders[1]->getCount();
@@ -110,7 +110,7 @@ Pose MCL::determineNext(Pose curPose)
     return Ray(origin, angle);
   }
   
-  float r = s1 * d / (s2 - 21);
+  float r = s1 * d / (s2 - s1);
   origin = (encoders[1]->relPos - encoders[0]->relPos)*r + curPose.origin();
   float R = r + d / 2;
   vec2 disp;

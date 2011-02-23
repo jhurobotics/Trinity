@@ -1,4 +1,4 @@
-/*
+/* -*-C++-*-
  *  slam.h
  *  sim
  */
@@ -52,7 +52,7 @@ namespace robot {
     unsigned char cur_bel;
     sim::Map map;
     Pose lastPose;
-    unsigned long lastCount[2];
+    long lastCount[2];
     unsigned long cycleCount;
     
     float minDist(const math::Ray& ray, const Pose& x);

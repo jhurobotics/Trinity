@@ -48,7 +48,7 @@ namespace robot {
     math::vec2 relPos;
     float tickDist;
     explicit Encoder(float td) : tickDist(td) { }
-    virtual unsigned long getCount() = 0;
+    virtual long getCount() = 0;
   };
   
   class SensorFactory {
