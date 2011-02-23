@@ -145,61 +145,48 @@ const static float ANGLE_RES = M_PI/20.0;
 
 void SonarRobot::hallway() throw() {
   static bool moving = false;
-  //try {
-    if( !currentObjective ) {
-      // get an objective!
-      currentObjective = graph->getObjective(position.origin());
-    }
+  if( !currentObjective ) {
+    // get an objective!
+    currentObjective = graph->getObjective(position.origin());
+  }
+  
+  // am I at the objective?
+  if( currentObjective->loc.contains(position.origin()) ) {
+    motors->setVelocity(0);
+    motors->setAngularVelocity(0);
+    moving = false;
+    //if( !currentObjective->checked ) {
+    //  curMode = SCAN;
+    //}
+    //else {
+    currentObjective = graph->getObjective(position.origin());
+    //}
     
-    // am I at the objective?
-    if( currentObjective->loc.contains(position.origin()) ) {
-      motors->setVelocity(0);
-      motors->setAngularVelocity(0);
-      moving = false;
-      //if( !currentObjective->checked ) {
-      //  curMode = SCAN;
-      //}
-      //else {
-      currentObjective = graph->getObjective(position.origin());
-      //}
-        
-    }
-    else { // get there
-      vec2 disp = currentObjective->loc.center - position.origin();
+  }
+  else { // get there
+    vec2 disp = currentObjective->loc.center - position.origin();
       
-      float dispDir = atan2(disp.y, disp.x);
-      float curDir = position.angle();
-      if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
-         || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
-        motors->setVelocity(MOVE_SPEED);
-        motors->setAngularVelocity(0);
-        moving = true;
-      }
-      else {
-        if( moving )
-          motors->setVelocity(0);
-        float delta = dispDir - curDir;
-        if( delta > M_PI ) {
-          delta -= 2*M_PI;
-        }
-        else if( delta < -M_PI) {
-          delta += 2*M_PI;
-        }
-        motors->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
-      }
+    float dispDir = atan2(disp.y, disp.x);
+    float curDir = position.angle();
+    if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
+        || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
+      motors->setVelocity(MOVE_SPEED);
+      motors->setAngularVelocity(0);
+      moving = true;
     }
-    /*}
-  catch( Graph::AllCheckedException& e) {
-    set<Node*>::iterator end = graph->vertices.end();
-    for( set<Node*>::iterator iter = graph->vertices.begin(); iter != end; iter++ ) {
-      Node * n = *iter;
-      if( n->room ) {
-        n->checked = false;
+    else {
+      if( moving )
+        motors->setVelocity(0);
+      float delta = dispDir - curDir;
+      if( delta > M_PI ) {
+        delta -= 2*M_PI;
       }
+      else if( delta < -M_PI) {
+        delta += 2*M_PI;
+      }
+      motors->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
     }
-    curMode = SCAN;
-    scan(position);
-    }*/
+  }
 }
 
 
