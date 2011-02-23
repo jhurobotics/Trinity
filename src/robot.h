@@ -1,4 +1,4 @@
-/*
+/* -*-C++-*-
  *  robot.h
  *  sim
  */
@@ -124,16 +124,25 @@ namespace robot {
   }; // class AbstractRobot
   
   class SonarRobot : public AbstractRobot {
+  protected:
+    enum BotModes {
+      HALLWAY,
+      SCAN
+    } curMode;
+    Node * currentObjective;
+    
     std::set<RangeSensor*> rangeFinders;
     std::set<Encoder*> encoders;
     MotorControl * motors;
-    public:
+    
     float size;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
+  public:
     std::vector<math::vec2> realPoints;
-    
+  protected:
     math::Ray position;
+    public:
     SonarRobot() throw();
     virtual ~SonarRobot() {
       if( motors ) {
@@ -146,6 +155,9 @@ namespace robot {
     }
     
     virtual void act() throw(); // do one iteration of its thang.
+  protected:
+    void hallway() throw();
+  public:
     // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {
       rangeFinders.insert(sensor);
