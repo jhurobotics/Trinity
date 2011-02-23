@@ -7,11 +7,15 @@
 #include "../math.h"
 using namespace robot;
 
+#define ANGLE_RES M_PI / 180.0
+
 Pose MCL::sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose) {
   const math::vec2& x_bar = u_t.prev.origin();
   const math::vec2& x_bar_prime = u_t.next.origin();
-  // if we haven't moved more than one centimeter, don't move
-  if( (x_bar_prime - x_bar).mag_sq() < 1 ) {
+  
+  // if we haven't moved more than one centimeter or turned at all, don't move
+  float angleDiff = fabsf(fmodf(u_t.next.angle() - u_t.prev.angle(), 2*M_PI));
+  if( (x_bar_prime - x_bar).mag_sq() < 1 && ( angleDiff < ANGLE_RES || angleDiff > 2 * M_PI - ANGLE_RES ) ) {
     return lastPose;
   }
   float dx = x_bar_prime.x - x_bar.x;

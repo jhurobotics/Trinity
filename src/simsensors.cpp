@@ -137,13 +137,20 @@ vec2 sim::Encoder::getAbsolutePosition() {
   return absPos;
 }
 
-unsigned long sim::Encoder::getCount() {
+long sim::Encoder::getCount() {
   vec2 lastPos = getLastAbsolutePosition();
   vec2 curPos = getAbsolutePosition();
   // first approximation, just go along the line
+  vec2 disp = curPos - lastPos;
   float dist = (curPos-lastPos).mag();
   lastPos = curPos;
-  count += dist / tickDist;
+  // the vex encoders can tell which direction they are turning
+  if( disp.dot(world->bot.position.dir()) >= 0 ) {
+    count += dist / tickDist;
+  }
+  else {
+    count -= dist / tickDist;
+  }
   return count;
 }
 

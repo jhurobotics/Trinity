@@ -1,6 +1,5 @@
-/*
+/* -*-C++-*-
  *  simsensors.h
- *  sim
  */
 
 #include "robot.h"
@@ -34,7 +33,7 @@ namespace sim {
   
   class Encoder : public robot::Encoder {
     protected:
-    unsigned long count;
+    long count;
     Simulation * world;
     math::vec2 getLastAbsolutePosition();
     math::vec2 getAbsolutePosition();
@@ -43,7 +42,7 @@ namespace sim {
       : robot::Encoder(td), count(0), world(w)
     {}
     
-    virtual unsigned long getCount();
+    virtual long getCount();
   };
 
   class SensorFactory : public robot::SensorFactory {

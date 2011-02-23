@@ -1,4 +1,4 @@
-/*
+/* -*-C++-*-
  *  robot.h
  *  sim
  */
@@ -48,7 +48,7 @@ namespace robot {
     math::vec2 relPos;
     float tickDist;
     explicit Encoder(float td) : tickDist(td) { }
-    virtual unsigned long getCount() = 0;
+    virtual long getCount() = 0;
   };
   
   class SensorFactory {
@@ -102,7 +102,6 @@ namespace robot {
       return slammer;
     }
     
-    virtual void setStart(math::Ray start) = 0;
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addEncoder(Encoder * encoder) = 0;
@@ -125,16 +124,25 @@ namespace robot {
   }; // class AbstractRobot
   
   class SonarRobot : public AbstractRobot {
+  protected:
+    enum BotModes {
+      HALLWAY,
+      SCAN
+    } curMode;
+    Node * currentObjective;
+    
     std::set<RangeSensor*> rangeFinders;
     std::set<Encoder*> encoders;
     MotorControl * motors;
-    public:
+    
     float size;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
+  public:
     std::vector<math::vec2> realPoints;
-    
+  protected:
     math::Ray position;
+    public:
     SonarRobot() throw();
     virtual ~SonarRobot() {
       if( motors ) {
@@ -146,10 +154,10 @@ namespace robot {
       }
     }
     
-    virtual void setStart(math::Ray start) {
-      position = start;
-    }
     virtual void act() throw(); // do one iteration of its thang.
+  protected:
+    void hallway() throw();
+  public:
     // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {
       rangeFinders.insert(sensor);

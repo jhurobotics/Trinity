@@ -76,6 +76,9 @@ class Python_SLAM : public SLAM, wrapper<SLAM> {
   virtual void addEncoder(Encoder * encoder) {
     call_method<void>(m_self, "addEncoder", encoder);
   }
+  virtual bool settled() {
+    return call_method<bool>(m_self, "settled");
+  }
 };
 
 class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
@@ -83,10 +86,6 @@ class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
   PyObject* const m_self;
   public:
   Python_AbstractRobot(PyObject* self) : m_self(self) {}
-  
-  virtual void setStart(math::Ray start) {
-    call_method<void>(m_self, "setStart", start);
-  }
   
   virtual void act() {
     call_method<void>(m_self, "act");
@@ -133,6 +132,7 @@ BOOST_PYTHON_MODULE(robot) {
     .def("getPose", pure_virtual(&SLAM::getPose))
     .def("addRangeSensor", pure_virtual(&SLAM::addRangeSensor))
     .def("addEncoder", pure_virtual(&SLAM::addEncoder))
+    .def("settled", pure_virtual(&SLAM::settled))
   ;
   
   class_<RangeSpecs>("RangeSpecs")
@@ -164,7 +164,6 @@ BOOST_PYTHON_MODULE(robot) {
   class_<AbstractRobot, Python_AbstractRobot, boost::noncopyable>("AbstractRobot")
     .def("graph", &AbstractRobot::getGraph, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
     .def("slammer", &AbstractRobot::getSlam, return_value_policy< with_custodian_and_ward_postcall<1, 0, reference_existing_object> > ())
-    .def("setStart", pure_virtual(&AbstractRobot::setStart))
     .def("act", pure_virtual(&AbstractRobot::act))
     .def("addRangeSensor", pure_virtual(&AbstractRobot::addRangeSensor))
     .def("addEncoder", pure_virtual(&AbstractRobot::addEncoder))

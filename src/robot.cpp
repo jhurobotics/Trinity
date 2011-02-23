@@ -114,55 +114,87 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   
   bot->addMotors(motors->newMotors());
   bot->addGraph(new Graph());
-  //bot->addSlam(new SLAM());
-  
-  //return bot;
 }
 
-SonarRobot::SonarRobot() throw() : rangeFinders(), motors(), edges(), path(),
-                         position()
+SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), rangeFinders(),
+                                   motors(), edges(), path(), position()
 {
 }
 
 void robot::SonarRobot::act() throw() {
+  // update the slammer
+  position = slammer->getPose();
+  
+  path.push_back(position.origin());
   typedef std::set<RangeSensor*>::iterator RangeIterator;
   RangeIterator end = rangeFinders.end();
   for( RangeIterator iter = rangeFinders.begin(); iter != end; iter ++ ) {
     edges.push_back(position.transformVecToAbsolute((*iter)->getCoordinate()));
   }
   
-  float velocity = 10;
-  float angularVelocity = 0;//M_PI/4.0;
-  float deltaT = 0.1;
-  motors->setVelocity(velocity);
-  motors->setAngularVelocity(angularVelocity);
-  path.push_back(position.origin());
-  //math::vec2 velocityVec(velocity, 0);
-  
-  float theta = angularVelocity * deltaT;
-  math::Ray disp;
-  if( fabsf(angularVelocity) > 0.01) {
-    float radius = velocity / angularVelocity;
-    disp = math::Ray(math::vec2(0, -radius), math::vec2(1, 0));
-    disp.transform(math::getRotationMatrix(theta));
-    disp += math::vec2(0, radius);
+  // Only move once the SLAM module has settled
+  if( slammer->settled() ) {
+    hallway();
   }
-  else {
-    disp = math::Ray(math::vec2(velocity * deltaT, 0), math::vec2(1, 0));
-  }
-  
-  // transform into the world coordinate system
-  position += disp;
-  //position.rotateAboutStart(math::vec2(cos(theta), sin(theta)).getRotationMatrix());
-  
-  // update the slammer
-  position = slammer->getPose();
+    
 }
+
+#define MOVE_SPEED 20
+#define TURN_SPEED M_PI / 8.0
+const static float ANGLE_RES = M_PI/20.0;
+
+void SonarRobot::hallway() throw() {
+  static bool moving = false;
+  if( !currentObjective ) {
+    // get an objective!
+    currentObjective = graph->getObjective(position.origin());
+  }
+  
+  // am I at the objective?
+  if( currentObjective->loc.contains(position.origin()) ) {
+    motors->setVelocity(0);
+    motors->setAngularVelocity(0);
+    moving = false;
+    //if( !currentObjective->checked ) {
+    //  curMode = SCAN;
+    //}
+    //else {
+    currentObjective = graph->getObjective(position.origin());
+    //}
+    
+  }
+  else { // get there
+    vec2 disp = currentObjective->loc.center - position.origin();
+      
+    float dispDir = atan2(disp.y, disp.x);
+    float curDir = position.angle();
+    if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
+        || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
+      motors->setVelocity(MOVE_SPEED);
+      motors->setAngularVelocity(0);
+      moving = true;
+    }
+    else {
+      if( moving )
+        motors->setVelocity(0);
+      float delta = dispDir - curDir;
+      if( delta > M_PI ) {
+        delta -= 2*M_PI;
+      }
+      else if( delta < -M_PI) {
+        delta += 2*M_PI;
+      }
+      motors->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
+    }
+  }
+}
+
 
 #define RED 1.0, 0.0, 0.0
 #define GREEN 0.0, 1.0, 0.0
 #define BLUE 0.0, 0.0, 1.0
 #define WHITE 1.0, 1.0, 1.0
+#define THOUGHT 1.0, 0.5, 0.5
 
 void SonarRobot::draw() {
   glPointSize(4.0);
@@ -178,4 +210,38 @@ void SonarRobot::draw() {
   glEnd();
   
   slammer->draw();
+  
+  glPushMatrix();
+  glTranslatef(position.origin().x, position.origin().y, 0.0);
+  glRotatef((atan2(position.dir().y, position.dir().x))*180.0/M_PI, 0.0, 0.0, 1.0);
+  glColor4f(THOUGHT, 1.0);
+  glBegin(GL_LINE_LOOP);
+  int angleCount = 32;
+  for(int i = 0; i < angleCount; i++) {
+    glVertex2f(4*cos(((float)i)/((float)angleCount)*2*M_PI), 4*sin(((float)i)/((float)angleCount)*2*M_PI));
+  }
+  glEnd();
+  glBegin(GL_LINES);
+  glVertex2f(0.0, 0.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(6.0, -2.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(8.0, 0.0);
+  glVertex2f(6.0, 2.0);
+  glEnd();
+
+  glPopMatrix();
+  
+  if( currentObjective ) {
+    glPushMatrix();
+    glTranslatef(currentObjective->loc.center.x, currentObjective->loc.center.y, 0);
+    glBegin(GL_LINES);
+    glColor4f(RED, 1.0);
+    glVertex2f(-5, -5);
+    glVertex2f(5, 5);
+    glVertex2f(-5, 5);
+    glVertex2f(5, -5);
+    glEnd();
+    glPopMatrix();
+  }
 }
