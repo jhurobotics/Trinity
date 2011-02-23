@@ -76,6 +76,9 @@ class Python_SLAM : public SLAM, wrapper<SLAM> {
   virtual void addEncoder(Encoder * encoder) {
     call_method<void>(m_self, "addEncoder", encoder);
   }
+  virtual bool settled() {
+    return call_method<bool>(m_self, "settled");
+  }
 };
 
 class Python_AbstractRobot : public AbstractRobot, wrapper<AbstractRobot> {
@@ -129,6 +132,7 @@ BOOST_PYTHON_MODULE(robot) {
     .def("getPose", pure_virtual(&SLAM::getPose))
     .def("addRangeSensor", pure_virtual(&SLAM::addRangeSensor))
     .def("addEncoder", pure_virtual(&SLAM::addEncoder))
+    .def("settled", pure_virtual(&SLAM::settled))
   ;
   
   class_<RangeSpecs>("RangeSpecs")

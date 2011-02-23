@@ -31,6 +31,10 @@ namespace robot {
     virtual void draw() { }
     virtual void addRangeSensor(RangeSensor * r) = 0;
     virtual void addEncoder(Encoder * r) = 0;
+    //! Can you trust the results of this module yet?
+    //! The MCL needs to get rid of all the initial noise,
+    //! but then gives very accurate results
+    virtual bool settled() = 0;
   }; // class SLAM
   
   class MCL : public SLAM {
@@ -75,6 +79,9 @@ namespace robot {
     }
     virtual void addEncoder(Encoder * encoder) {
       encoders.push_back(encoder);
+    }
+    virtual bool settled() {
+      return cycleCount > 5;
     }
   };
   
