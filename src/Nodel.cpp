@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 /*
 // Minimal class to replace std::vector in Arduino
@@ -25,7 +26,6 @@ class Vector {
 */
 
 
-#define boolean bool
 #define LFIR 2  // left front
 #define RFIR 3  // right front
 #define LBIR 4  // left back
@@ -48,11 +48,18 @@ static int nodecount=1;
 class node{
   public:
     node* paths[4];
+    float position[2];   // (x,y) of the node relative to home
     int checked;   // true when robot has passed through this node
     node* parent;
     int number; // node id for trouble shooting
     int searched;  // for traversing the graph
-    node() {paths[0]=0; paths[1]=0; paths[2]=0; paths[3]=0;checked=0;
+    node() {
+       for(int i=0; i<4; ++i) {
+         paths[i]=NULL;
+       }
+       position[0]=0;
+       position[1]=0;
+       checked=0;
        parent=0;
        number=nodecount++;
        searched=false;
@@ -72,6 +79,12 @@ class node{
         }
         return false;
     }
+    float getDistance(int dir) {
+        node* next = getnode(dir);
+        float x = position[0]-next->position[0];
+        float y = position[1]-next->position[1];
+        return sqrt(x*x+y*y);
+    }
     void Connect(node* n, int dir) {
        paths[(dir)%4]=n;
        n->setnode((dir+2)%4,this);
@@ -79,6 +92,14 @@ class node{
     void add(int dir){
       Connect(new node(), dir);
       paths[(dir)%4]->parent=this;
+    }
+    void getPosition(float &x, float &y) {
+        x=position[0];
+        y=position[1];
+    }
+    void setPosition(float x, float y) {
+        position[0]=x;
+        position[1]=y;
     }
 };
 
@@ -89,7 +110,7 @@ class graph {
     node* cur;  // current node
     int dir;  // current direction (N,S,E,W)
     vector<node*> route;   // route will be filled when traverse is called
-    graph(boolean left, boolean right, boolean front, boolean back=false) {
+    graph(bool left, bool right, bool front, bool back=false) {
         H=new node(); 
         cur=H; 
         dir=0;
@@ -103,7 +124,7 @@ class graph {
     
     // adds nodes to the current node
     // TODO:  What happens if nodes already exist?  this means the robot got confused, but what should we do about it?
-    void update(boolean left, boolean right, boolean front) {
+    void expand(bool left, bool right, bool front) {
      if(front){
        cur->add(dir);
      } 
@@ -115,13 +136,14 @@ class graph {
      }       
     }
     
+    
     void turn(int Direction) {
       dir+=Direction; 
       dir%=4;
     }
     
     // returns false if the robot is facing a wall
-    boolean move() {
+    bool move() {
         node *next = cur->getnode(dir);
         if(next) {
             cur=next;
@@ -201,7 +223,7 @@ class graph {
 
 
 // for trouble shooting
-void outputGraph(node* n, boolean unsearched) {
+void outputGraph(node* n, bool unsearched) {
      cout << n->number;
      if(n->checked) cout << " CHECKED";
      cout << "\n";
@@ -247,12 +269,12 @@ int main()
 {
   graph* g = new graph(0,0,1,0);
   g->move();
-  g->update(1,0,1);
+  g->expand(1,0,1);
   g->turn(W);
   g->move();
-  g->update(0,0,1);
+  g->expand(0,0,1);
   g->move();
-  g->update(0,0,0);
+  g->expand(0,0,0);
   
   
   outputGraph(g->H);
