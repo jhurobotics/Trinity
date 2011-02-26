@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
+#include "geometry.h"
 
 /*
 // Minimal class to replace std::vector in Arduino
@@ -41,24 +41,23 @@ class Vector {
 #define E 3
 
 
-using namespace std; 
+using namespace std;
+using namespace math;
 
 static int nodecount=1;
 
 class node{
   public:
     node* paths[4];
-    float position[2];   // (x,y) of the node relative to home
+    Circle position;
     int checked;   // true when robot has passed through this node
     node* parent;
     int number; // node id for trouble shooting
     int searched;  // for traversing the graph
-    node() {
+    node() : position(vec2(0,0), 5){
        for(int i=0; i<4; ++i) {
          paths[i]=NULL;
        }
-       position[0]=0;
-       position[1]=0;
        checked=0;
        parent=0;
        number=nodecount++;
@@ -81,9 +80,7 @@ class node{
     }
     float getDistance(int dir) {
         node* next = getnode(dir);
-        float x = position[0]-next->position[0];
-        float y = position[1]-next->position[1];
-        return sqrt(x*x+y*y);
+        return (position.center - next->position.center).mag();
     }
     void Connect(node* n, int dir) {
        paths[(dir)%4]=n;
@@ -93,13 +90,11 @@ class node{
       Connect(new node(), dir);
       paths[(dir)%4]->parent=this;
     }
-    void getPosition(float &x, float &y) {
-        x=position[0];
-        y=position[1];
+    Circle getPosition() {
+      return position;
     }
-    void setPosition(float x, float y) {
-        position[0]=x;
-        position[1]=y;
+    void setPosition(const Circle& newPos) {
+      position = newPos;
     }
 };
 
@@ -235,7 +230,7 @@ void outputGraph(node* n, bool unsearched) {
      n->searched=!unsearched;
      for(int i=0; i<4; ++i) {
          node* p=n->getnode(i);
-         if(!p||p->searched^unsearched) continue;
+         if( !p || p->searched ^ unsearched ) continue;
          outputGraph(n->getnode(i),unsearched);
      }
 }
@@ -262,7 +257,6 @@ char relativeDirString(int dir) {
      return '!';
 }
 
-#define NODE_TEST
 #ifdef NODE_TEST
 
 int main()
