@@ -16,6 +16,8 @@ SOURCES += \
     src/geometry.cpp \
     src/timers.cpp \
     src/Nodel.cpp \
+    src/serial.cpp \
+    src/arduino.cpp \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
@@ -36,6 +38,8 @@ HEADERS  += \
     src/geometry.h \
     src/graph.h \
     src/timers.h \
+    src/serial.h \
+    src/arduino.h \
     src/slam/slam.h \
     src/slam/simslam.h \
     qt/mapwidget.h \
