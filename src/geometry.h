@@ -367,7 +367,7 @@ namespace math {
     public:
     explicit Circle(const vec2& c, float r) throw() : center(c), _radius(fabsf(r)) {}
         
-    const float radius() const throw() {
+    float radius() const throw() {
       return _radius;
     }
     void setRadius(float rad) throw() {
