@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <string.h>
 #include "arduino.h"
 using namespace robot;
@@ -49,3 +50,14 @@ void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) 
 
 void Arduino::switchLight(bool on) {
 }
+
+void ArduinoMotors::sendCommand() {
+  if( !arduino ) {
+    return;
+  }
+  float leftVel = velocity - distance * angularVelocity;
+  float rightVel = velocity + distance * angularVelocity;
+  arduino->setMotor(left, static_cast<int32_t>(leftVel * INT_MAX));
+  arduino->setMotor(right, static_cast<int32_t>(rightVel * INT_MAX));
+}
+

@@ -36,6 +36,54 @@ namespace robot {
     void setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError);
     void switchLight(bool on);
   };
+  
+  class ArduinoMotors : public MotorControl {
+  protected:
+    // This class does NOT own the arduino class.
+    // It expects it to be alive for the life of the Motors class
+    // It also expects someone else to delete it when finished,
+    // as other object are also likely sharing the same arduino object
+    Arduino * arduino;
+    float velocity;
+    float angularVelocity;
+    
+    motorid_t left;
+    motorid_t right;
+    float distance;
+    
+    void sendCommand();
+  public:
+    ArduinoMotors(Arduino * _a = NULL) :
+      arduino(_a), velocity(0), angularVelocity(0) {}
+    virtual ~ArduinoMotors() {};
+    
+    void setVelocity(float v)  {
+      velocity = v;
+      sendCommand();
+    }
+    
+    void setAngularVelocity(float aV) {
+      angularVelocity = aV;
+      sendCommand();
+    }
+
+    void setArduino(Arduino * a) {
+      arduino = a;
+    }
+    
+    void setLeftMotor(motorid_t l) {
+      left = l | Arduino::MOTOR_FLAG;
+    }
+
+    void setRightMotor(motorid_t r) {
+      right = r | Arduino::MOTOR_FLAG;
+    }
+    
+    void setMotorDistance(float d) {
+      distance = d;
+      sendCommand();
+    }
+  };
 }
 
 #endif
