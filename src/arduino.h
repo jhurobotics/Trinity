@@ -9,6 +9,11 @@
 #define __ARDUINO_H__
 
 namespace robot {
+  
+  typedef uint8_t id_t;
+  typedef id_t motorid_t;
+  typedef id_t sensorid_t;
+  
   class Arduino {
   protected:
     Serial serial;
@@ -22,13 +27,13 @@ namespace robot {
       LIGHT_SWITCH = 0x04,
     };
     
-    static const int MOTOR_FLAG = 0x80;
+    static const motorid_t MOTOR_FLAG = 0x80;
     static const uint8_t END = 0xFF;
     
     void setup();
-    void getSensor(uint8_t id, char * value) throw(Serial::ReadError);
-    void setMotor(uint8_t id, int32_t value) throw(Serial::WriteError);
-    void setSensor(uint8_t id, int32_t value) throw(Serial::WriteError);
+    void getSensor(sensorid_t id, char * value) throw(Serial::ReadError);
+    void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
+    void setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError);
     void switchLight(bool on);
   };
 }
