@@ -245,3 +245,33 @@ void SonarRobot::draw() {
     glPopMatrix();
   }
 }
+
+#include "arduino.h"
+
+void initialize_robot(AbstractRobot * bot, const char * mapPath, const char *botPath,
+                                        const char * sensLibPath, bool arduinoMotor = true ) {
+  SensorFactory * sensors = NULL;
+  MotorFactory * motors = NULL;
+  Arduino * arduino = new Arduino();
+  
+  if( arduinoMotor ) {
+    motors = new ArduinoMotorFactory(arduino);
+  }
+  //else {
+  //  motors = new MaestroMotorFactory(maestro);
+  //}
+  
+  //sensors = new ArduinoSensorFactory(sensLibPath);
+  
+  sim::Map * map = sim::read_map(mapPath);
+  MCL * mcl = new MCL();
+  mcl->initialize(map->start, 10, *map);
+  delete map;
+  map = NULL;
+  bot->addSlam(mcl);
+  
+  read_robot(bot, botPath, sensors, motors);
+  
+  delete motors;
+  //delete sensors;
+}

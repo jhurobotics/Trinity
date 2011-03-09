@@ -3,6 +3,10 @@
 #include "arduino.h"
 using namespace robot;
 
+void Arduino::setup(const char * path) {
+  serial.Open(path);
+}
+
 void Arduino::getSensor(sensorid_t id, char * value) throw(Serial::ReadError) {
   uint8_t buff[7];
   buff[0] = GET;
