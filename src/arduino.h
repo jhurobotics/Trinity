@@ -5,7 +5,7 @@
 #include "serial.h"
 #include "robot.h"
 
-#ifndef __ARDUNIO_H__
+#ifndef __ARDUINO_H__
 #define __ARDUINO_H__
 
 namespace robot {
