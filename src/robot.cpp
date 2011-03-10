@@ -16,6 +16,7 @@
 #else
 #include <OpenGL/gl.h>
 #endif
+#include "arduino.h"
 using namespace robot;
 using namespace math;
 
@@ -34,6 +35,21 @@ AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) t
   default:
     throw BadRobotImplementation();
   }
+}
+
+AbstractRobot::~AbstractRobot() {
+  if( graph ) {
+    delete graph;
+  }
+  if( slammer ) {
+    delete slammer;
+  }
+  if( arduino ) {
+    delete arduino;
+  }
+  //if( maestro ) {
+  //  delete maestro;
+  //}
 }
 
 typedef std::map<std::string, math::Ray> StrToRay_t;
@@ -245,8 +261,6 @@ void SonarRobot::draw() {
     glPopMatrix();
   }
 }
-
-#include "arduino.h"
 
 void initialize_robot(AbstractRobot * bot, const char * mapPath, const char *botPath,
                                         const char * sensLibPath, bool arduinoMotor = true ) {

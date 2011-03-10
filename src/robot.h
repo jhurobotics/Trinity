@@ -11,6 +11,15 @@
 #include "graph.h"
 #include "slam/slam.h"
 
+namespace robot {
+#ifndef __ARDUINO_H__
+  class Arduino;
+#endif
+#ifndef __MAESTRO_H__
+  class Maestro;
+#endif
+} // namespace robot
+
 #ifndef __ROBOT_H__
 #define __ROBOT_H__
 
@@ -83,17 +92,12 @@ namespace robot {
     protected:
     Graph * graph;
     SLAM * slammer;
+    Arduino * arduino;
+    Maestro * maestro;
     
     public:
-    AbstractRobot() : graph(NULL), slammer(NULL) {}
-    virtual ~AbstractRobot() {
-      if( graph ) {
-        delete graph;
-      }
-      if( slammer ) {
-        delete slammer;
-      }
-    }
+    AbstractRobot() : graph(NULL), slammer(NULL), arduino(NULL), maestro(NULL) {}
+    virtual ~AbstractRobot();
     
     Graph * getGraph() const {
       return graph;
