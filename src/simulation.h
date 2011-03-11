@@ -46,7 +46,15 @@ namespace sim {
       : bot(), map(NULL), candle(), time(0.0), deltaT(0.1)
     {}
     
-    void step();  // do one iteration through the simulation
+    virtual void step();  // do one iteration through the simulation
+  };
+  
+  class RealTimeSimulation : public Simulation {
+  protected:
+    float lastTime;
+  public:
+    RealTimeSimulation() : Simulation(), lastTime(0.0) {}
+    virtual void step();
   };
   
   Simulation * create_simulation(robot::AbstractRobot * bot, const char * mapPath,

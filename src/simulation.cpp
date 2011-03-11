@@ -37,10 +37,7 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
 }
 
 void sim::Simulation::step() {
-#ifdef REAL_ROBOT
   curSim = this;
-#endif
-  bot.bot->act();
   
   // find the displacement in the robot's coordinate system
   float theta = bot.angularVelocity * deltaT;
@@ -58,5 +55,32 @@ void sim::Simulation::step() {
   // transform into the world coordinate system
   bot.lastPosition = bot.position;
   bot.position += disp;
-  //bot.position.rotateAboutStart(math::vec2(cos(theta), sin(theta)).getRotationMatrix());
+  
+  bot.bot->act();
+}
+
+void sim::RealTimeSimulation::step() {
+  curSim = this;
+  float nextTime = robot::time();
+  deltaT = nextTime - lastTime;
+  lastTime = nextTime;
+  
+  // find the displacement in the robot's coordinate system
+  float theta = bot.angularVelocity * deltaT;
+  math::Ray disp;
+  if( fabsf(bot.angularVelocity) > 0.01) {
+    float radius = bot.velocity.mag() / bot.angularVelocity;
+    disp = math::Ray(math::vec2(0, -radius), math::vec2(1, 0));
+    disp.transform(math::getRotationMatrix(theta));
+    disp += math::vec2(0, radius);
+  }
+  else {
+    disp = math::Ray(math::vec2(bot.velocity.mag() * deltaT, 0), math::vec2(1,0));
+  }
+  
+  // transform into the world coordinate system
+  bot.lastPosition = bot.position;
+  bot.position += disp;
+  
+  bot.bot->act();
 }

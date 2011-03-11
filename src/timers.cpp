@@ -3,39 +3,35 @@
  *  sim
  */
 #include <ctime>
-#include "timers.h"
-using namespace robot;
-
-#ifdef REAL_ROBOT
-
-unsigned long robot::micro_time(void) {
-  return clock() * 1000000 / CLOCKS_PER_SEC;
-}
-
-unsigned long robot::milli_time(void) {
-  return clock() * 1000 / CLOCKS_PER_SEC;
-}
-
-double robot::time(void) {
-  return ((double)clock()) / ((double)CLOCKS_PER_SEC);
-}
-
-#else
-
 #include "simulation.h"
+#include "timers.h"
+using namespace sim;
 
-sim::Simulation * sim::curSim = NULL;
+Simulation * sim::curSim = NULL;
 
 unsigned long robot::micro_time(void) {
-  return sim::curSim->time * 1000000;
+  if( curSim && dynamic_cast<RealTimeSimulation*>(curSim) == NULL ) {
+    return sim::curSim->time * 1000000;
+  }
+  else {
+    return clock() * 1000000 / CLOCKS_PER_SEC;
+  }
 }
 
 unsigned long robot::milli_time(void) {
-  return sim::curSim->time * 1000;
+  if( curSim && dynamic_cast<RealTimeSimulation*>(curSim) == NULL ) {
+    return sim::curSim->time * 1000;
+  }
+  else {
+    return clock() * 1000 / CLOCKS_PER_SEC;
+  }
 }
 
 double robot::time(void) {
-  return sim::curSim->time;
+  if( curSim && dynamic_cast<RealTimeSimulation*>(curSim) == NULL ) {
+    return sim::curSim->time;
+  }
+  else {
+    return ((double)clock()) / ((double)CLOCKS_PER_SEC);
+  }
 }
-
-#endif
