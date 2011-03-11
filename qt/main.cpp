@@ -17,4 +17,4 @@ int main(int argc, char *argv[])
   return a.exec();
 }
 
-#endif NODE_TEST
+#endif // NODE_TEST

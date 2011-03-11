@@ -16,7 +16,8 @@ namespace sim {
   typedef math::Segment Wall;
   typedef math::Segment Door;
   
-  struct Map {
+  class Map {
+  public:
     int width;
     int height;
     math::Ray start;

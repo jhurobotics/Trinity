@@ -14,6 +14,9 @@
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DA72DC981329C4D600493D34 /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC921329C4D600493D34 /* arduino.cpp */; };
+		DA72DC991329C4D600493D34 /* serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC951329C4D600493D34 /* serial.cpp */; };
+		DA72DC9A1329C4D600493D34 /* setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC971329C4D600493D34 /* setup.cpp */; };
 		DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */; };
 		DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE2012FCD57A00B11B07 /* mcl.cpp */; };
 		DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */; };
@@ -22,7 +25,6 @@
 		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
 		DAC2F9F812E7C5130084052D /* py_math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC2F9F612E7C5130084052D /* py_math.cpp */; };
 		DAC2F9F912E7C5130084052D /* py_robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC2F9F712E7C5130084052D /* py_robot.cpp */; };
-		DAC760AF12C86B0500E7E711 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F4512C8598F00E7E711 /* main.cpp */; };
 		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
 		DAFD40AE12DECE4800E5D62C /* simwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD405412DECBDE00E5D62C /* simwidget.cpp */; };
 		DAFD40B612DECF5400E5D62C /* mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */; };
@@ -72,6 +74,12 @@
 		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DA72DC921329C4D600493D34 /* arduino.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = arduino.cpp; sourceTree = "<group>"; };
+		DA72DC931329C4D600493D34 /* arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arduino.h; sourceTree = "<group>"; };
+		DA72DC941329C4D600493D34 /* Nodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nodel.h; sourceTree = "<group>"; };
+		DA72DC951329C4D600493D34 /* serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serial.cpp; sourceTree = "<group>"; };
+		DA72DC961329C4D600493D34 /* serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serial.h; sourceTree = "<group>"; };
+		DA72DC971329C4D600493D34 /* setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setup.cpp; sourceTree = "<group>"; };
 		DAA22FD612F0DEBE00B808AA /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OdometryModel.cpp; sourceTree = "<group>"; };
 		DAADDDBF12FCC09800B11B07 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
@@ -82,7 +90,6 @@
 		DAC2F9F612E7C5130084052D /* py_math.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_math.cpp; sourceTree = "<group>"; };
 		DAC2F9F712E7C5130084052D /* py_robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = py_robot.cpp; sourceTree = "<group>"; };
 		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
-		DAC75F4512C8598F00E7E711 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAC75F4612C859F900E7E711 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
 		DAC75F7012C85E1600E7E711 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
 		DAC760A712C86ACB00E7E711 /* sim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sim; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +99,7 @@
 		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
 		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
+		DAED38CE132A76E300C2E225 /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setup.h; sourceTree = "<group>"; };
 		DAFD403612DECB4500E5D62C /* QtSim-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QtSim-Info.plist"; path = "../QtSim-Info.plist"; sourceTree = "<group>"; };
 		DAFD404D12DECBDE00E5D62C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mainwindow.cpp; sourceTree = "<group>"; };
@@ -187,21 +195,27 @@
 		DAC75F4412C8597F00E7E711 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				DA2EC8D812F3747A0029F044 /* timers.h */,
-				DA2EC8D912F3747A0029F044 /* timers.cpp */,
+				DAC2F9F512E7C5130084052D /* bindings */,
+				DAADDDBD12FCC08400B11B07 /* slam */,
+				DAC9AC6612CA891E00691585 /* Sim mocks */,
+				DAC9AC6412CA890800691585 /* math */,
+				DA72DC921329C4D600493D34 /* arduino.cpp */,
+				DA72DC931329C4D600493D34 /* arduino.h */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
+				DAC75F4612C859F900E7E711 /* map.h */,
+				DAC75F7012C85E1600E7E711 /* map.cpp */,
+				DA72DC941329C4D600493D34 /* Nodel.h */,
 				DA35B15E13020DCD00DAD788 /* Nodel.cpp */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
-				DAC9AC6612CA891E00691585 /* Sim mocks */,
-				DAC75F4512C8598F00E7E711 /* main.cpp */,
-				DAC75F4612C859F900E7E711 /* map.h */,
-				DAC75F7012C85E1600E7E711 /* map.cpp */,
-				DAC9AC6412CA890800691585 /* math */,
+				DA72DC961329C4D600493D34 /* serial.h */,
+				DA72DC951329C4D600493D34 /* serial.cpp */,
+				DAED38CE132A76E300C2E225 /* setup.h */,
+				DA72DC971329C4D600493D34 /* setup.cpp */,
 				DAC9ADE612CAB49500691585 /* simulation.h */,
 				DAC9ADE712CAB49500691585 /* simulation.cpp */,
-				DAC2F9F512E7C5130084052D /* bindings */,
-				DAADDDBD12FCC08400B11B07 /* slam */,
+				DA2EC8D812F3747A0029F044 /* timers.h */,
+				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -401,7 +415,6 @@
 				DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */,
 				DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */,
 				DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */,
-				DAC760AF12C86B0500E7E711 /* main.cpp in Sources */,
 				DAC760B012C86B0500E7E711 /* map.cpp in Sources */,
 				DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */,
 				DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */,
@@ -432,6 +445,9 @@
 				DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */,
 				DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */,
 				DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */,
+				DA72DC981329C4D600493D34 /* arduino.cpp in Sources */,
+				DA72DC991329C4D600493D34 /* serial.cpp in Sources */,
+				DA72DC9A1329C4D600493D34 /* setup.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

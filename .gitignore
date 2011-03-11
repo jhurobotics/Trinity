@@ -7,4 +7,5 @@ sim
 .DS_Store
 *.pro.user
 generated_sources/*
-
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace/xcuserdata
