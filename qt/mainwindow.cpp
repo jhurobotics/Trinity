@@ -6,6 +6,7 @@
 #include "simwidget.h"
 #include "../src/simulation.h"
 #include "../src/robot.h"
+#include "../src/setup.h"
 using namespace sim;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -33,9 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //change later for myself.
 
-  setRobotPath(QString("/Users/paul/Documents/Robotics/Trinity/robots/first"));
-  setSensorPath(QString("/Users/paul/Documents/Robotics/Trinity/sensors"));
-  setMapPath(QString("/Users/paul/Documents/Robotics/Trinity/maps/basic_map"));
+  setRobotPath(QString("/Users/paul/Desktop/Trinity/robots/first"));
+  setSensorPath(QString("/Users/paul/Desktop/Trinity/sensors"));
+  setMapPath(QString("/Users/paul/Desktop/Trinity/maps/basic_map"));
 
   openDialog->setWindowModality(Qt::ApplicationModal);
   openDialog->setAcceptMode(QFileDialog::AcceptOpen);
@@ -173,8 +174,39 @@ void MainWindow::startSimulation()
   else if( ui->cppButton_3->isChecked() ) {
     bot = new_robot(robot::CPP_2);
   }
-  simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
-                            robotPath.toAscii().data(), sensorPath.toAscii().data()));
+  
+  setupflags_t setupflags = 0;
+  
+  if( ui->motors_sim->isChecked() ) {
+    setupflags |= MOTORS_SIM;
+  }
+  else if( ui->motors_arduino->isChecked() ) {
+    setupflags |= MOTORS_ARDUINO;
+  }
+  else if( ui->motors_maestro->isChecked() ) {
+    setupflags |= MOTORS_MAESTRO;
+  }
+  
+  if( ui->sonar_sim->isChecked() ) {
+    setupflags |= SONAR_SIM;
+  }
+  else if( ui->sonar_arduino->isChecked() ) {
+    setupflags |= SONAR_ARDUINO;
+  }
+  
+  if( ui->encoder_sim->isChecked() ) {
+    setupflags |= ENCODER_SIM;
+  }
+  else if( ui->encoder_arduino->isChecked() ) {
+    setupflags |= ENCODER_ARDUINO;
+  }
+  
+  simDisplay->setWorld(create_world(bot, mapPath.toAscii().data(),
+                        robotPath.toAscii().data(), sensorPath.toAscii().data(),
+                                    setupflags));
+  
+  //simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
+  //                          robotPath.toAscii().data(), sensorPath.toAscii().data()));
   simWindow->show();
 }
 

@@ -4,29 +4,8 @@
 #include "arduino.h"
 #include "simsensors.h"
 #include "simmotors.h"
+#include "setup.h"
 using namespace robot;
-
-#define SIM_REQUIRED     0x1000
-#define ARDUINO_REQUIRED 0x0100
-#define MAESTRO_REQUIRED 0x0200
-
-#define REAL_WORLD       0x0F00
-#define COMM_MASK        0xFF00
-
-#define MOTOR_MASK       0x00F0
-#define SENSOR_MASK      0x000F
-
-#define MOTORS_SIM       (SIM_REQUIRED     | 0x0080)
-#define MOTORS_ARDUINO   (ARDUINO_REQUIRED | 0x0010)
-#define MOTORS_MAESTRO   (MAESTRO_REQUIRED | 0x0020)
-#define REAL_MOTORS      (MOTORS_ARDUINO | MOTORS_MAESTRO)
-
-#define SONAR_SIM        (SIM_REQUIRED     | 0x0001)
-#define SONAR_ARDUINO    (ARDUINO_REQUIRED | 0x0002)
-#define ENCODER_SIM      (SIM_REQUIRED     | 0x0004)
-#define ENCODER_ARDUINO  (ARDUINO_REQUIRED | 0x0008)
-
-typedef uint16_t setupflags_t;
 
 template<class mType1>
 class HybridMotorControl : public MotorControl {
@@ -99,6 +78,9 @@ sim::Simulation * create_world(AbstractRobot * bot,
         // motors = new HybridMotorControl<MaestroMotors, sim::MotorControl>();
       }
     }
+    else if( devices & MOTORS_SIM ) {
+      motors = new sim::MotorFactory(result);
+    }
     
     if( devices & SONAR_SIM ) {
       sensors.rangeFactory = new sim::SensorFactory(sensLibPath, result);
@@ -124,7 +106,7 @@ sim::Simulation * create_world(AbstractRobot * bot,
       }
       
       if( devices & ENCODER_ARDUINO ) {
-        //sensros.encoderFactory = new ArduinoSensorFactory();
+        //sensors.encoderFactory = new ArduinoSensorFactory();
       }
     }
     
