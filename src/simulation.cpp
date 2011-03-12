@@ -53,8 +53,8 @@ void sim::Simulation::step() {
   }
   
   // transform into the world coordinate system
-  bot.lastPosition = bot.position;
-  bot.position += disp;
+  simBot.lastPosition = simBot.position;
+  simBot.position += disp;
   
   bot.bot->act();
 }

@@ -51,7 +51,7 @@ namespace sim {
   
   class RealTimeSimulation : public Simulation {
   protected:
-    float lastTime;
+    unsigned long lastTime;
   public:
     RealTimeSimulation() : Simulation(), lastTime(0.0) {}
     virtual void step();

@@ -12,7 +12,9 @@ namespace robot {
   // returns the time in milliseconds
   unsigned long milli_time(void);
   // returns the time in seconds
-  double time(void);
+  // The absolute numbers are generally too big and
+  // doubles are not precise enough to store actual seconds
+  // double time(void);
 } // namespace robot
 
 #ifndef REAL_ROBOT
