@@ -89,14 +89,14 @@ Pose MCL::getAverage(const belief_t& bel) {
   return Pose( pos/((float)count), dir/((float)count));
 }
 
-Pose MCL::determineNext(Pose curPose)
+Pose MCL::determineNext(Pose curPose, long encCount[2])
 {
   long newCount = encoders[0]->getCount();
-  float s1 = ((float)newCount - lastCount[0]) * encoders[0]->tickDist; // left
-  lastCount[0] = newCount;
+  float s1 = ((float)newCount - encCount[0]) * encoders[0]->tickDist; // left
+  encCount[0] = newCount;
   newCount = encoders[1]->getCount();
-  float s2 = ((float)newCount - lastCount[1]) * encoders[1]->tickDist; // right
-  lastCount[1] = newCount;
+  float s2 = ((float)newCount - encCount[1]) * encoders[1]->tickDist; // right
+  encCount[1] = newCount;
   float d = (encoders[0]->relPos - encoders[1]->relPos).mag();
   float theta = (s2-s1)/d;
   
