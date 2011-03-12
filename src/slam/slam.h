@@ -28,6 +28,7 @@ namespace robot {
   class SLAM { 
   public:
     virtual Pose getPose() = 0;
+    virtual Pose increment(Pose curPose) = 0;
     virtual void draw() { }
     virtual void addRangeSensor(RangeSensor * r) = 0;
     virtual void addEncoder(Encoder * r) = 0;
@@ -51,10 +52,11 @@ namespace robot {
     sim::Map map;
     Pose lastPose;
     long lastCount[2];
+    long tmpCount[2];
     unsigned long cycleCount;
     
     float minDist(const math::Ray& ray, const Pose& x);
-    Pose determineNext(Pose curPose);
+    Pose determineNext(Pose curPose, long encCount[2]);
     // This only moves IF the robot has moved > 1cm or turned > 1 degree
     Pose sample_motion_model_odometry(const Odometry& u_t, const Pose& lastPose);
     float sample_measurement_model(const Pose& x);
@@ -73,6 +75,9 @@ namespace robot {
     }
     void initialize(Pose start, float range, const sim::Map& m);
     virtual Pose getPose();
+    virtual Pose increment(Pose curPose) {
+      return determineNext(curPose, tmpCount);
+    }
     virtual void draw();
     virtual void addRangeSensor(RangeSensor * sensor) {
       rangeFinders.insert(sensor);

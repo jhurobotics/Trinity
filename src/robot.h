@@ -96,7 +96,8 @@ namespace robot {
     Maestro * maestro;
     
     public:
-    AbstractRobot() : graph(NULL), slammer(NULL), arduino(NULL), maestro(NULL) {}
+    AbstractRobot()
+      : graph(NULL), slammer(NULL), arduino(NULL), maestro(NULL) {}
     virtual ~AbstractRobot();
     
     Graph * getGraph() const {
@@ -125,6 +126,8 @@ namespace robot {
       slammer = s;
     }
     virtual void draw() { }
+    virtual const math::Ray& getPosition() = 0;
+    virtual void halt() = 0;
   }; // class AbstractRobot
   
   class SonarRobot : public AbstractRobot {
@@ -146,7 +149,9 @@ namespace robot {
     std::vector<math::vec2> realPoints;
   protected:
     math::Ray position;
-    public:
+    unsigned long lastSLAMTime;
+    std::vector<long> encoderCounts;
+  public:
     SonarRobot() throw();
     virtual ~SonarRobot() {
       if( motors ) {
@@ -177,6 +182,15 @@ namespace robot {
     }
 
     virtual void draw();
+    virtual const math::Ray& getPosition() throw() {
+      return position;
+    }
+    virtual void halt() {
+      if( motors ) {
+        motors->setVelocity(0);
+        motors->setAngularVelocity(0);
+      }
+    }
   }; // class SonarRobot
   
   enum Implementation {
@@ -185,7 +199,7 @@ namespace robot {
     CPP_2
   };
   class BadRobotImplementation : public std::exception {};
-  AbstractRobot * new_robot(Implementation imp, const char * path = NULL) throw(BadRobotImplementation);
+  AbstractRobot * new_robot(Implementation imp) throw(BadRobotImplementation);
   void read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors);
 } // namespace robot
 

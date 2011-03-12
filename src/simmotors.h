@@ -15,7 +15,7 @@ namespace sim {
   class MotorControl : public robot::MotorControl {
     sim::Robot * bot;
     public:
-    MotorControl(sim::Simulation * w) : bot(&(w->bot)) {}
+    MotorControl(sim::Simulation * w) : bot(&(w->simBot)) {}
     virtual ~MotorControl() {}
     
     virtual void setVelocity(float velocity);

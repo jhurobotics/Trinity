@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "mapwidget.h"
 #include "../src/map.h"
-#include "simwidget.h"
+#include "robotwidget.h"
 #include "../src/simulation.h"
 #include "../src/robot.h"
 #include "../src/setup.h"
@@ -13,7 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     openDialog(new QFileDialog(this)),
     mapPreviewWindow(new QMainWindow()), mapDisplay(NULL),
-    simWindow(new QMainWindow()), simDisplay(NULL)
+    simWindow(new QMainWindow()), simDisplay(NULL),
+    realWindow(new QMainWindow()), realDisplay(NULL)
 {
   ui->setupUi(this);
 
@@ -43,6 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
   setupMapWindow();
   setupSimWindow();
+  setupRealWindow();
 
   setWindowTitle(QString("Simulation Setup"));
   simWindow->setWindowTitle(QString("Simulation"));
@@ -65,7 +67,7 @@ void MainWindow::setupMapWindow() {
 void MainWindow::setupSimWindow() {
   simWindow->resize(650, 700);
   QWidget * centralwidget = new QWidget(simWindow);
-  simDisplay = new sim::SimWidget(centralwidget);
+  simDisplay = new sim::RobotWidget(centralwidget);
   simDisplay->setGeometry(QRect(0, 0, 650, 650));
   QPushButton *pushButton = new QPushButton(centralwidget);
   pushButton->setText("Step Once");
@@ -77,6 +79,23 @@ void MainWindow::setupSimWindow() {
 
   QObject::connect(pushButton, SIGNAL(clicked()), simDisplay, SLOT(stepOnce()));
   QObject::connect(pushButton_2, SIGNAL(clicked()), simDisplay, SLOT(stepSecond()));
+}
+
+void MainWindow::setupRealWindow() {
+  realWindow->resize(650, 700);
+  QWidget * centralwidget = new QWidget(realWindow);
+  realDisplay = new sim::RobotWidget(centralwidget);
+  realDisplay->setGeometry(QRect(0, 0, 650, 650));
+  QPushButton *pushButton = new QPushButton(centralwidget);
+  pushButton->setText("Stop");
+  pushButton->setGeometry(QRect(120, 660, 114, 32));
+  QPushButton *pushButton_2 = new QPushButton(centralwidget);
+  pushButton_2->setText("Start");
+  pushButton_2->setGeometry(QRect(370, 660, 121, 32));
+  realWindow->setCentralWidget(centralwidget);
+  
+  QObject::connect(pushButton, SIGNAL(clicked()), realDisplay, SLOT(stop()));
+  QObject::connect(pushButton_2, SIGNAL(clicked()), realDisplay, SLOT(start()));
 }
 
 QString MainWindow::getRobotPath() const {
@@ -196,11 +215,15 @@ void MainWindow::startSimulation()
     setupflags |= ENCODER_ARDUINO;
   }
   
-  simDisplay->setWorld(create_world(bot, mapPath.toAscii().data(),
-                        robotPath.toAscii().data(), sensorPath.toAscii().data(),
-                                    setupflags));
-  
-  //simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
-  //                          robotPath.toAscii().data(), sensorPath.toAscii().data()));
-  simWindow->show();
+  sim::World * world = create_world(bot, mapPath.toAscii().data(),
+                                    robotPath.toAscii().data(), sensorPath.toAscii().data(),
+                                    setupflags);
+  if( world->realTime() ) {
+    realDisplay->setWorld(world);
+    realWindow->show();
+  }
+  else {
+    simDisplay->setWorld(world);
+    simWindow->show();
+  }
 }

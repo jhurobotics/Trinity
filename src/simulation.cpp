@@ -13,9 +13,15 @@
 #include "slam/simslam.h"
 using namespace sim;
 
-sim::Robot::~Robot() {
+World::~World() {
   if( bot ) {
     delete bot;
+  }
+}
+
+void World::pause() {
+  if( bot ) {
+    bot->halt();
   }
 }
 
@@ -24,12 +30,12 @@ Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapP
   result->map = read_map(mapPath);
   robot::SensorFactory * sensors = new sim::SensorFactory(sensLibPath, result);
   robot::MotorFactory * motors = new sim::MotorFactory(result);
-  result->bot.bot = bot;
+  result->bot = bot;
   robot::MCL * mcl = new robot::MCL();
   bot->addSlam(mcl);
   read_robot(bot, botPath, sensors, motors);
-  result->bot.position = result->map->start;
-  result->bot.lastPosition = result->bot.position;
+  result->simBot.position = result->map->start;
+  result->simBot.lastPosition = result->simBot.position;
   mcl->initialize(result->map->start, 10, *result->map);
   delete motors;
   delete sensors;
@@ -40,47 +46,59 @@ void sim::Simulation::step() {
   curSim = this;
   
   // find the displacement in the robot's coordinate system
-  float theta = bot.angularVelocity * deltaT;
+  float theta = simBot.angularVelocity * deltaT;
   math::Ray disp;
-  if( fabsf(bot.angularVelocity) > 0.01) {
-    float radius = bot.velocity.mag() / bot.angularVelocity;
+  if( fabsf(simBot.angularVelocity) > 0.01) {
+    float radius = simBot.velocity.mag() / simBot.angularVelocity;
     disp = math::Ray(math::vec2(0, -radius), math::vec2(1, 0));
     disp.transform(math::getRotationMatrix(theta));
     disp += math::vec2(0, radius);
   }
   else {
-    disp = math::Ray(math::vec2(bot.velocity.mag() * deltaT, 0), math::vec2(1,0));
+    disp = math::Ray(math::vec2(simBot.velocity.mag() * deltaT, 0), math::vec2(1,0));
   }
   
   // transform into the world coordinate system
   simBot.lastPosition = simBot.position;
   simBot.position += disp;
   
-  bot.bot->act();
+  bot->act();
 }
 
 void sim::RealTimeSimulation::step() {
   curSim = this;
-  float nextTime = robot::time();
-  deltaT = nextTime - lastTime;
+  unsigned long nextTime = robot::milli_time();
+  deltaT = (nextTime - lastTime)/1000.0;
   lastTime = nextTime;
   
   // find the displacement in the robot's coordinate system
-  float theta = bot.angularVelocity * deltaT;
+  float theta = simBot.angularVelocity * deltaT;
   math::Ray disp;
-  if( fabsf(bot.angularVelocity) > 0.01) {
-    float radius = bot.velocity.mag() / bot.angularVelocity;
+  if( fabsf(simBot.angularVelocity) > 0.01) {
+    float radius = simBot.velocity.mag() / simBot.angularVelocity;
     disp = math::Ray(math::vec2(0, -radius), math::vec2(1, 0));
     disp.transform(math::getRotationMatrix(theta));
     disp += math::vec2(0, radius);
   }
   else {
-    disp = math::Ray(math::vec2(bot.velocity.mag() * deltaT, 0), math::vec2(1,0));
+    disp = math::Ray(math::vec2(simBot.velocity.mag() * deltaT, 0), math::vec2(1,0));
   }
   
   // transform into the world coordinate system
-  bot.lastPosition = bot.position;
-  bot.position += disp;
+  simBot.lastPosition = simBot.position;
+  simBot.position += disp;
   
-  bot.bot->act();
+  bot->act();
+}
+
+void RealTimeSimulation::start() {
+  lastTime = robot::milli_time();
+}
+
+RealWorld::RealWorld(robot::AbstractRobot * b)
+: World(b->getPosition(), b) {
+}
+
+void RealWorld::step() {
+  bot->act();
 }

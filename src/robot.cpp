@@ -16,10 +16,11 @@
 #include <OpenGL/gl.h>
 #endif
 #include "arduino.h"
+#include "timers.h"
 using namespace robot;
 using namespace math;
 
-AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) throw(BadRobotImplementation) {
+AbstractRobot * robot::new_robot(robot::Implementation imp) throw(BadRobotImplementation) {
   switch( imp ) {
   case SONAR:
     return new SonarRobot;
@@ -132,8 +133,14 @@ SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), ran
 
 void robot::SonarRobot::act() throw() {
   // update the slammer
-  position = slammer->getPose();
-  
+  unsigned long curTime = milli_time();
+  if( curTime - lastSLAMTime > 100 ) {
+    position = slammer->getPose();
+    lastSLAMTime = curTime;
+  }
+  else {
+    position = slammer->increment(position);
+  }
   path.push_back(position.origin());
   typedef std::set<RangeSensor*>::iterator RangeIterator;
   RangeIterator end = rangeFinders.end();
@@ -145,7 +152,6 @@ void robot::SonarRobot::act() throw() {
   if( slammer->settled() ) {
     hallway();
   }
-    
 }
 
 #define MOVE_SPEED 20
@@ -168,9 +174,8 @@ void SonarRobot::hallway() throw() {
     //  curMode = SCAN;
     //}
     //else {
-    currentObjective = graph->getObjective(position.origin());
+    //  currentObjective = graph->getObjective(position.origin());
     //}
-    
   }
   else { // get there
     vec2 disp = currentObjective->loc.center - position.origin();

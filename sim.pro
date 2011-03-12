@@ -21,7 +21,7 @@ SOURCES += \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
     qt/mapwidget.cpp \
-    qt/simwidget.cpp \
+    qt/robotwidget.cpp \
 
 HEADERS  += \
     qt/mainwindow.h \
@@ -40,7 +40,7 @@ HEADERS  += \
     src/slam/slam.h \
     src/slam/simslam.h \
     qt/mapwidget.h \
-    qt/simwidget.h
+    qt/robotwidget.h \
 
 FORMS    += \
     qt/mainwindow.ui

@@ -6,47 +6,51 @@
 #include <QFileDialog>
 
 namespace Ui {
-    class MainWindow;
+  class MainWindow;
 }
 
 namespace sim {
-
+  
 #ifndef MAPWIDGET_H
-class MapWidget;
+  class MapWidget;
 #endif // MAPWIDGET_H
-#ifndef SIMWIDGET_H
-class SimWidget;
+#ifndef ROBOTWIDGET_H
+  class RobotWidget;
 #endif
-
-class MainWindow : public QMainWindow
-{
+  
+  class MainWindow : public QMainWindow
+  {
     Q_OBJECT
-
-public:
+    
+  public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-
-private:
+    
+  private:
     Ui::MainWindow *ui;
     QFileDialog * openDialog;
-
+    
     QString robotPath;
     QString sensorPath;
     QString mapPath;
-
+    
     QMainWindow * mapPreviewWindow;
     MapWidget * mapDisplay;
     void setupMapWindow();
-
+    
     QMainWindow * simWindow;
-    SimWidget * simDisplay;
+    RobotWidget * simDisplay;
     void setupSimWindow();
-public:
+    QMainWindow * realWindow;
+    RobotWidget * realDisplay;
+    void setupRealWindow();
+    
+  public:
     QString getRobotPath() const;
     QString getSensorPath() const;
     QString getMapPath() const;
-
-public slots:
+    
+    public slots:
     void setRobotPath(const QString& path);
     void updateRobotPath();
     void setSensorPath(const QString& path);
@@ -58,13 +62,13 @@ public slots:
     void sensorBrowse();
     void robotBrowse();
     void startSimulation();
-
-signals:
+    
+  signals:
     void robotPathChanged(const QString& path);
     void sensorPathChanged(const QString& path);
     void mapPathChanged(const QString& path);
-};
-
+  };
+  
 } // namespace sim
 
 #endif // MAINWINDOW_H

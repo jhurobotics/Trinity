@@ -19,8 +19,6 @@ namespace sim {
   
   class Robot {
   public:
-    robot::AbstractRobot * bot;
-    
     // the following are the true values, not where the bot thinks it is
     // position in cm from the lower left of the house
     math::Ray lastPosition;
@@ -30,23 +28,42 @@ namespace sim {
     // angular velocity in radians / sec
     float angularVelocity;
     
-    Robot() : bot(NULL), position(), velocity(), angularVelocity(0) {}
-    virtual ~Robot();
+    Robot() : position(), velocity(), angularVelocity(0) {}
   };
   
-  class Simulation {
-    public:
-    sim::Robot bot;
+  class World {
+  public:
     sim::Map * map;
+    const math::Ray& position;
+    robot::AbstractRobot * bot;
+    
+    World(const math::Ray& pos, robot::AbstractRobot * b = NULL)
+      : map(NULL), position(pos), bot(b) { }
+    virtual ~World();
+    
+    virtual void step() = 0;
+    
+    virtual bool realTime() = 0;
+    virtual void start() = 0;
+    virtual void pause();
+  };
+  
+  class Simulation : public World {
+    public:
+    sim::Robot simBot;
     math::vec2 candle;
     float time;
     float deltaT;
     
     Simulation()
-      : bot(), map(NULL), candle(), time(0.0), deltaT(0.1)
+      : World(simBot.position), simBot(), candle(), time(0.0), deltaT(0.1)
     {}
     
     virtual void step();  // do one iteration through the simulation
+    virtual bool realTime() {
+      return false;
+    }
+    virtual void start() {}
   };
   
   class RealTimeSimulation : public Simulation {
@@ -55,6 +72,22 @@ namespace sim {
   public:
     RealTimeSimulation() : Simulation(), lastTime(0.0) {}
     virtual void step();
+    virtual bool realTime() {
+      return true;
+    }
+    virtual void start();
+  };
+  
+  class RealWorld : public World {
+  public:
+    explicit RealWorld(robot::AbstractRobot * b);
+    
+    virtual void step();
+    
+    virtual bool realTime() {
+      return true;
+    }
+    virtual void start() { };
   };
   
   Simulation * create_simulation(robot::AbstractRobot * bot, const char * mapPath,

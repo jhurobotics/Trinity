@@ -130,10 +130,11 @@ Pose MCL::getPose() {
     next_belief = &(bels[0]);
   }
   next_belief->clear();
-  // get the sensor / odometry data somehow
   
   Odometry u;
-  Pose nextPose = determineNext(lastPose);
+  Pose nextPose = determineNext(lastPose, lastCount);
+  tmpCount[0] = lastCount[0];
+  tmpCount[1] = lastCount[1];
   u.prev = lastPose;
   u.next = nextPose;
   lastPose = nextPose;

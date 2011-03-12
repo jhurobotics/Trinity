@@ -33,13 +33,14 @@ namespace sim {
   
   class Encoder : public robot::Encoder {
     protected:
+    double totalDist;
     long count;
     Simulation * world;
     math::vec2 getLastAbsolutePosition();
     math::vec2 getAbsolutePosition();
     public:
     Encoder(sim::Simulation * w, float td)
-      : robot::Encoder(td), count(0), world(w)
+      : robot::Encoder(td), totalDist(0), count(0), world(w)
     {}
     
     virtual long getCount();

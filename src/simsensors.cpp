@@ -19,7 +19,7 @@ using namespace math;
 static const float maxDotProd = cos(M_PI/2.0 - REFLECT_ANGLE);
 
 Ray sim::Ultrasonic::getAbsolutePosition() {
-  Ray absPos = world->bot.position.transformRayToAbsolute(relPos);
+  Ray absPos = world->simBot.position.transformRayToAbsolute(relPos);
   return absPos;
 }
 
@@ -121,19 +121,19 @@ float sim::Ultrasonic::getValue() {
   
   // log this data point for visualization
   // log( absPos.origin() + (dist * absPos.dir()) );
-  if( robot::SonarRobot * bot = dynamic_cast<robot::SonarRobot*> (world->bot.bot) ) {
+  if( robot::SonarRobot * bot = dynamic_cast<robot::SonarRobot*> (world->bot) ) {
     bot->realPoints.push_back(absPos.transformVecToAbsolute(realPoint));
   }
   return dist;
 }
 
 vec2 sim::Encoder::getLastAbsolutePosition() {
-  vec2 absPos = world->bot.lastPosition.transformVecToAbsolute(relPos);
+  vec2 absPos = world->simBot.lastPosition.transformVecToAbsolute(relPos);
   return absPos;
 }
 
 vec2 sim::Encoder::getAbsolutePosition() {
-  vec2 absPos = world->bot.position.transformVecToAbsolute(relPos);
+  vec2 absPos = world->simBot.position.transformVecToAbsolute(relPos);
   return absPos;
 }
 
@@ -142,15 +142,16 @@ long sim::Encoder::getCount() {
   vec2 curPos = getAbsolutePosition();
   // first approximation, just go along the line
   vec2 disp = curPos - lastPos;
-  float dist = (curPos-lastPos).mag();
+  double dist = (curPos-lastPos).mag();
   lastPos = curPos;
   // the vex encoders can tell which direction they are turning
-  if( disp.dot(world->bot.position.dir()) >= 0 ) {
-    count += dist / tickDist;
+  if( disp.dot(world->simBot.position.dir()) >= 0 ) {
+    totalDist += dist;
   }
   else {
-    count -= dist / tickDist;
+    totalDist -= dist;
   }
+  count = totalDist/tickDist;
   return count;
 }
 

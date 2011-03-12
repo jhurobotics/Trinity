@@ -3,7 +3,6 @@
  *  sim
  */
 #include "geometry.h"
-#include <iostream>
 using namespace math;
 
 mat2 math::getRotationMatrix(float angle) throw() {
