@@ -8,7 +8,6 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <boost/python.hpp>
 #include "robot.h"
 #include "geometryio.h"
 #ifndef __APPLE__
@@ -20,14 +19,8 @@
 using namespace robot;
 using namespace math;
 
-static AbstractRobot * python_robot(const std::string& pyName) {
-  return boost::python::extract<AbstractRobot*>(boost::python::eval((pyName+"()").c_str()));
-}
-
 AbstractRobot * robot::new_robot(robot::Implementation imp, const char * path) throw(BadRobotImplementation) {
   switch( imp ) {
-  case PYTHON:
-    return python_robot(path);
   case SONAR:
     return new SonarRobot;
   case CPP_1:

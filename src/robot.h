@@ -180,7 +180,6 @@ namespace robot {
   }; // class SonarRobot
   
   enum Implementation {
-    PYTHON,
     SONAR,
     CPP_1,
     CPP_2

@@ -1,4 +1,3 @@
-#include <boost/python.hpp>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mapwidget.h"
@@ -30,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
   connect(ui->mapPreview, SIGNAL(clicked()), this, SLOT(mapPreview()));
   connect(ui->startButton, SIGNAL(clicked()), this, SLOT(startSimulation()));
-  connect(ui->addPython, SIGNAL(clicked()), this, SLOT(addPython()));
 
   //change later for myself.
 
@@ -162,10 +160,7 @@ void MainWindow::robotBrowse()
 void MainWindow::startSimulation()
 {
   robot::AbstractRobot * bot;
-  if( ui->pythonButton->isChecked() ) {
-    bot = new_robot(robot::PYTHON, ui->pyClass->text().toAscii().data());
-  }
-  else if(ui->cppButton->isChecked() ) {
+  if(ui->cppButton->isChecked() ) {
     bot = new_robot(robot::SONAR);
   }
   else if( ui->cppButton_2->isChecked() ) {
@@ -208,15 +203,4 @@ void MainWindow::startSimulation()
   //simDisplay->setWorld(sim::create_simulation(bot, mapPath.toAscii().data(),
   //                          robotPath.toAscii().data(), sensorPath.toAscii().data()));
   simWindow->show();
-}
-
-void MainWindow::addPython() {
-  openDialog->setFileMode(QFileDialog::ExistingFiles);
-  if( openDialog->exec() == QDialog::Accepted ) {
-    QStringList files = openDialog->selectedFiles();
-    QStringList::iterator end = files.end();
-    for( QStringList::iterator iter = files.begin(); iter != end; iter++) {
-      boost::python::exec_file(iter->toAscii().data());
-    }
-  }
 }

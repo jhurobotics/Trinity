@@ -3,8 +3,6 @@ CONFIG += debug
 TARGET = sim
 TEMPLATE = app
 
-INCLUDEPATH += /usr/include/python2.6
-
 SOURCES += \
     qt/mainwindow.cpp \
     qt/main.cpp \
@@ -24,8 +22,6 @@ SOURCES += \
     src/slam/MeasurementModel.cpp \
     qt/mapwidget.cpp \
     qt/simwidget.cpp \
-    src/bindings/py_robot.cpp \
-    src/bindings/py_math.cpp
 
 HEADERS  += \
     qt/mainwindow.h \
@@ -48,5 +44,3 @@ HEADERS  += \
 
 FORMS    += \
     qt/mainwindow.ui
-
-LIBS  += -lpython2.6 -lboost_python
