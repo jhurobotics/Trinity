@@ -4,10 +4,10 @@ position BACK  -4  0 -1  0
 position LEFT   0  4  0  1
 position RIGHT  0 -4  0 -1
 range:
-sensor FRONT  Nomadic
-sensor BACK   Nomadic
-sensor LEFT   Nomadic
-sensor RIGHT  Nomadic
+sensor FRONT  Nomadic 5
+sensor BACK   Nomadic 6
+sensor LEFT   Nomadic 3
+sensor RIGHT  Nomadic 4
 encoder:
-sensor LEFT   Encoder
-sensor RIGHT  Encoder
+sensor LEFT   Encoder 1
+sensor RIGHT  Encoder 2

@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <stdint.h>
 #include "geometry.h"
 #include "graph.h"
 #include "slam/slam.h"
@@ -26,6 +27,11 @@ namespace robot {
 
 namespace robot {
   
+  class Sensor {
+  public:
+    uint8_t id;
+  };
+  
   struct RangeSpecs {
     // The maximum detectable range
     float maxRange;
@@ -38,7 +44,7 @@ namespace robot {
     float tanOfWidth;
   }; // struct RangeSpecs
   
-  class RangeSensor {
+  class RangeSensor : public Sensor {
     public:
     RangeSpecs specs;
     // Position relative to the robot
@@ -53,7 +59,7 @@ namespace robot {
     }
   }; // class RangeSensor
   
-  class Encoder {
+  class Encoder : public Sensor {
     public:
     math::vec2 relPos;
     float tickDist;

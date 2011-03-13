@@ -105,6 +105,7 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
           input >> astring;
           RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
           ranger->relPos = posRay;
+          input >> ranger->id;
           bot->addRangeSensor(ranger);
           break;
         }
@@ -113,6 +114,7 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
           input >> astring;
           Encoder * encoder = sensors->encoder(astring.c_str());
           encoder->relPos = pos;
+          input >> encoder->id;
           bot->addEncoder(encoder);
           break;
         }
