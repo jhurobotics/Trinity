@@ -5,6 +5,7 @@
 
 #include "geometry.h"
 #include "map.h"
+#include "timers.h"
 
 #ifndef __ROBOT_H__
 namespace robot {
@@ -68,9 +69,9 @@ namespace sim {
   
   class RealTimeSimulation : public Simulation {
   protected:
-    unsigned long lastTime;
+    struct timeval lastTime;
   public:
-    RealTimeSimulation() : Simulation(), lastTime(0.0) {}
+    RealTimeSimulation() : Simulation(), lastTime() {}
     virtual void step();
     virtual bool realTime() {
       return true;

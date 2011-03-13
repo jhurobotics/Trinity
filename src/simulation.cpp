@@ -25,23 +25,6 @@ void World::pause() {
   }
 }
 
-Simulation * sim::create_simulation(robot::AbstractRobot * bot, const char *mapPath, const char *botPath, const char *sensLibPath) {
-  Simulation * result = new Simulation();
-  result->map = read_map(mapPath);
-  robot::SensorFactory * sensors = new sim::SensorFactory(sensLibPath, result);
-  robot::MotorFactory * motors = new sim::MotorFactory(result);
-  result->bot = bot;
-  robot::MCL * mcl = new robot::MCL();
-  bot->addSlam(mcl);
-  read_robot(bot, botPath, sensors, motors);
-  result->simBot.position = result->map->start;
-  result->simBot.lastPosition = result->simBot.position;
-  mcl->initialize(result->map->start, 10, *result->map);
-  delete motors;
-  delete sensors;
-  return result;
-}
-
 void sim::Simulation::step() {
   curSim = this;
   
@@ -67,8 +50,8 @@ void sim::Simulation::step() {
 
 void sim::RealTimeSimulation::step() {
   curSim = this;
-  unsigned long nextTime = robot::milli_time();
-  deltaT = (nextTime - lastTime)/1000.0;
+  struct timeval nextTime = robot::time();
+  deltaT = ((float)robot::time_diff(lastTime, nextTime))/1000000.0;
   lastTime = nextTime;
   
   // find the displacement in the robot's coordinate system
@@ -92,7 +75,7 @@ void sim::RealTimeSimulation::step() {
 }
 
 void RealTimeSimulation::start() {
-  lastTime = robot::milli_time();
+  lastTime = robot::time();
 }
 
 RealWorld::RealWorld(robot::AbstractRobot * b)

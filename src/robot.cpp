@@ -133,8 +133,8 @@ SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), ran
 
 void robot::SonarRobot::act() throw() {
   // update the slammer
-  unsigned long curTime = milli_time();
-  if( curTime - lastSLAMTime > 100 ) {
+  struct timeval curTime = robot::time();
+  if( robot::time_diff(lastSLAMTime, curTime) > 100000 ) {
     position = slammer->getPose();
     lastSLAMTime = curTime;
   }
@@ -258,32 +258,4 @@ void SonarRobot::draw() {
     glEnd();
     glPopMatrix();
   }
-}
-
-void initialize_robot(AbstractRobot * bot, const char * mapPath, const char *botPath,
-                                        const char * sensLibPath, bool arduinoMotor = true ) {
-  SensorFactory * sensors = NULL;
-  MotorFactory * motors = NULL;
-  Arduino * arduino = new Arduino();
-  
-  if( arduinoMotor ) {
-    motors = new ArduinoMotorFactory(arduino);
-  }
-  //else {
-  //  motors = new MaestroMotorFactory(maestro);
-  //}
-  
-  //sensors = new ArduinoSensorFactory(sensLibPath);
-  
-  sim::Map * map = sim::read_map(mapPath);
-  MCL * mcl = new MCL();
-  mcl->initialize(map->start, 10, *map);
-  delete map;
-  map = NULL;
-  bot->addSlam(mcl);
-  
-  read_robot(bot, botPath, sensors, motors);
-  
-  delete motors;
-  //delete sensors;
 }

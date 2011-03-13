@@ -2,31 +2,34 @@
  *  timers.c
  *  sim
  */
-#include <sys/time.h>
 #include "simulation.h"
 #include "timers.h"
-using namespace sim;
 
-Simulation * sim::curSim = NULL;
+#define MILLION 1000000
 
-unsigned long robot::micro_time(void) {
-  if( curSim && !curSim->realTime() ) {
-    return sim::curSim->time * 1000000;
+sim::Simulation * sim::curSim = NULL;
+
+struct timeval robot::time(void) {
+  struct timeval tv;
+  if( sim::curSim && !sim::curSim->realTime() ) {
+    tv.tv_sec = (unsigned long)sim::curSim->time;
+    tv.tv_usec = (unsigned long)(sim::curSim->time * MILLION);
   }
   else {
-    struct timeval tv;
     gettimeofday(&tv, NULL);
-    return tv.tv_sec*1000000 + tv.tv_usec;
   }
+  return tv;
 }
 
-unsigned long robot::milli_time(void) {
-  if( curSim && !curSim->realTime() ) {
-    return sim::curSim->time * 1000;
+
+// returns the difference between two times in microseconds
+unsigned long robot::time_diff(struct timeval first, struct timeval second) {
+  if( timevalcmp(&first, &second, >) ) {
+    return robot::time_diff(second, first);
   }
-  else {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return tv.tv_sec*1000 + tv.tv_usec/1000.0;
-  }
+  unsigned long diff = 0;
+  diff = second.tv_sec - first.tv_sec;
+  diff *= MILLION;
+  diff += second.tv_usec - first.tv_usec;
+  return diff;
 }

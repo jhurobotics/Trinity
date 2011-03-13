@@ -3,18 +3,16 @@
  *  sim
  */
 
+#include <sys/time.h>
+
 #ifndef __TIMERS_H__
 #define __TIMERS_H__
 
 namespace robot {
-  // returns the time in microseconds
-  unsigned long micro_time(void);
-  // returns the time in milliseconds
-  unsigned long milli_time(void);
-  // returns the time in seconds
-  // The absolute numbers are generally too big and
-  // doubles are not precise enough to store actual seconds
-  // double time(void);
+  struct timeval time(void);
+  // Returns the difference between two times in microseconds
+  unsigned long time_diff(struct timeval first, struct timeval second);
+
 } // namespace robot
 
 #ifndef REAL_ROBOT

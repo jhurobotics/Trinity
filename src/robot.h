@@ -10,6 +10,7 @@
 #include "geometry.h"
 #include "graph.h"
 #include "slam/slam.h"
+#include "timers.h"
 
 namespace robot {
 #ifndef __ARDUINO_H__
@@ -149,7 +150,7 @@ namespace robot {
     std::vector<math::vec2> realPoints;
   protected:
     math::Ray position;
-    unsigned long lastSLAMTime;
+    struct timeval lastSLAMTime;
     std::vector<long> encoderCounts;
   public:
     SonarRobot() throw();
