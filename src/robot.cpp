@@ -66,13 +66,7 @@ static Ray read_position(std::istream& input, StrToRay_t& sensorPositions) {
   }
 }
 
-void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors) {
-  enum SensorType {
-    UNKNOWN = 0,
-    RANGE,
-    ENCODER
-  };
-  SensorType curSensType = UNKNOWN;
+void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors) {
   StrToRay_t sensorPositions;
   std::ifstream input(path);
   std::string astring;
@@ -90,46 +84,37 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       input >> pos;
       sensorPositions[astring] = pos;
     }
-    else if( astring == "range:" ) {
-      curSensType = RANGE;
+    else if( astring == "range" ) {
+      input >> astring;
+      RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
+      ranger->relPos = read_position(input, sensorPositions);
+      input >> ranger->id;
+      bot->addRangeSensor(ranger);
     }
-    else if( astring == "encoder:" ) {
-      curSensType = ENCODER;
+    else if( astring == "encoder" ) {
+      input >> astring;
+      Encoder * encoder = sensors->encoder(astring.c_str());
+      encoder->relPos = read_position(input, sensorPositions).origin();
+      input >> encoder->id;
+      bot->addEncoder(encoder);
     }
-    else if( astring == "sensor" ) {
-      switch( curSensType ) {
-        case UNKNOWN:
-          break;
-        case RANGE: {
-          Ray posRay = read_position(input, sensorPositions);
-          input >> astring;
-          RangeSensor * ranger = sensors->rangeSensor(astring.c_str());
-          ranger->relPos = posRay;
-          input >> ranger->id;
-          bot->addRangeSensor(ranger);
-          break;
-        }
-        case ENCODER: {
-          vec2 pos = read_position(input, sensorPositions).origin();
-          input >> astring;
-          Encoder * encoder = sensors->encoder(astring.c_str());
-          encoder->relPos = pos;
-          input >> encoder->id;
-          bot->addEncoder(encoder);
-          break;
-        }
-      }
+    else if( astring == "motor" ) {
+      Motor m;
+      input >> astring;
+      m.relPos = read_position(input, sensorPositions);
+      input >> m.id;
+      input >> m.minSpeed >> m.maxSpeed;
+      bot->addMotor(m);
     }
   }
     
   input.close();
   
-  bot->addMotors(motors->newMotors());
   bot->addGraph(new Graph());
 }
 
 SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), rangeFinders(),
-                                   motors(), edges(), path(), position()
+                                   control(), edges(), path(), position()
 {
 }
 
@@ -169,8 +154,8 @@ void SonarRobot::hallway() throw() {
   
   // am I at the objective?
   if( currentObjective->loc.contains(position.origin()) ) {
-    motors->setVelocity(0);
-    motors->setAngularVelocity(0);
+    control->setVelocity(0);
+    control->setAngularVelocity(0);
     moving = false;
     //if( !currentObjective->checked ) {
     //  curMode = SCAN;
@@ -186,13 +171,13 @@ void SonarRobot::hallway() throw() {
     float curDir = position.angle();
     if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
         || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
-      motors->setVelocity(MOVE_SPEED);
-      motors->setAngularVelocity(0);
+      control->setVelocity(MOVE_SPEED);
+      control->setAngularVelocity(0);
       moving = true;
     }
     else {
       if( moving )
-        motors->setVelocity(0);
+        control->setVelocity(0);
       float delta = dispDir - curDir;
       if( delta > M_PI ) {
         delta -= 2*M_PI;
@@ -200,7 +185,7 @@ void SonarRobot::hallway() throw() {
       else if( delta < -M_PI) {
         delta += 2*M_PI;
       }
-      motors->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
+      control->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
     }
   }
 }

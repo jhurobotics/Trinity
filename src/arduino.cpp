@@ -55,13 +55,17 @@ void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) 
 void Arduino::switchLight(bool on) {
 }
 
+static inline int32_t convertVelocity(float vel, Motor m) {
+  return static_cast<int32_t>((vel - m.minSpeed)/(m.maxSpeed - m.minSpeed)) * INT_MAX;
+}
+
 void ArduinoMotors::sendCommand() {
   if( !arduino ) {
     return;
   }
   float leftVel = velocity - distance * angularVelocity;
   float rightVel = velocity + distance * angularVelocity;
-  arduino->setMotor(left, static_cast<int32_t>(leftVel * INT_MAX));
-  arduino->setMotor(right, static_cast<int32_t>(rightVel * INT_MAX));
+  arduino->setMotor(left.id, convertVelocity(leftVel, left));
+  arduino->setMotor(right.id, convertVelocity(rightVel, right));
 }
 

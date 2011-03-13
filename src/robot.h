@@ -80,6 +80,13 @@ namespace robot {
     virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind) = 0;
   };  // class SensorFactory
   
+  struct Motor {
+    uint8_t id;
+    math::Ray relPos;
+    float minSpeed;
+    float maxSpeed;
+  };
+  
   class MotorControl {
     public:
     virtual ~MotorControl() {}
@@ -87,12 +94,13 @@ namespace robot {
     virtual void setVelocity(float velocity) = 0;
     // radians / s
     virtual void setAngularVelocity(float angVel) = 0;
+    virtual void addMotor(Motor m) = 0;
   };  // class MotorControl
   
   class MotorFactory {
     public:
     virtual ~MotorFactory() {}
-    virtual MotorControl * newMotors() = 0;
+    virtual MotorControl * newMotors(const char * name) = 0;
   };  // class MotorFactory
   
   class AbstractRobot {
@@ -117,7 +125,8 @@ namespace robot {
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addEncoder(Encoder * encoder) = 0;
-    virtual void addMotors(MotorControl * motors) = 0;
+    virtual void setMotorController(MotorControl * control) = 0;
+    virtual void addMotor(Motor motors) = 0;
     // Takes ownership of the graph, will delete it if replaced
     virtual void addGraph(Graph * g) {
       if( graph ) {
@@ -147,7 +156,7 @@ namespace robot {
     
     std::set<RangeSensor*> rangeFinders;
     std::set<Encoder*> encoders;
-    MotorControl * motors;
+    MotorControl * control;
     
     float size;
     std::vector<math::vec2> edges;
@@ -161,8 +170,8 @@ namespace robot {
   public:
     SonarRobot() throw();
     virtual ~SonarRobot() {
-      if( motors ) {
-        delete motors;
+      if( control ) {
+        delete control;
       }
       std::set<RangeSensor*>::iterator end = rangeFinders.end();
       for( std::set<RangeSensor*>::iterator iter = rangeFinders.begin(); iter != end; iter++ ) {
@@ -183,9 +192,13 @@ namespace robot {
       encoders.insert(encoder);
       slammer->addEncoder(encoder);
     }
-
-    virtual void addMotors(MotorControl * m) {
-      motors = m;
+    
+    virtual void setMotorController(MotorControl * c) {
+      control = c;
+    }
+    
+    virtual void addMotor(Motor m) {
+      control->addMotor(m);
     }
 
     virtual void draw();
@@ -193,9 +206,9 @@ namespace robot {
       return position;
     }
     virtual void halt() {
-      if( motors ) {
-        motors->setVelocity(0);
-        motors->setAngularVelocity(0);
+      if( control ) {
+        control->setVelocity(0);
+        control->setAngularVelocity(0);
       }
     }
   }; // class SonarRobot
@@ -207,7 +220,7 @@ namespace robot {
   };
   class BadRobotImplementation : public std::exception {};
   AbstractRobot * new_robot(Implementation imp) throw(BadRobotImplementation);
-  void read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors, MotorFactory * motors);
+  void read_robot(AbstractRobot * bot, const char * path, SensorFactory * sensors);
 } // namespace robot
 
 #endif // __ROBOT_H__

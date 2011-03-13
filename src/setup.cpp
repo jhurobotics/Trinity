@@ -24,17 +24,10 @@ public:
     motors_0.setAngularVelocity(angVel);
     motors_1.setAngularVelocity(angVel);
   }
-};
-
-template<class mType1>
-class HybridMotorFactory : public robot::MotorFactory {
-protected:
-  sim::Simulation * world;
-public:
-  HybridMotorFactory(sim::Simulation * w) : world(w) {}
   
-  virtual MotorControl * newMotors() {
-    return new HybridMotorControl<mType1>(world);
+  virtual void addMotor(Motor m) {
+    motors_0.addMotor(m);
+    motors_1.addMotor(m);
   }
 };
 
@@ -69,7 +62,7 @@ sim::World * create_world(AbstractRobot * bot,
                   setupflags_t devices)
 {
   HybridSensorFactory sensors;
-  MotorFactory * motors;
+  MotorControl * motors;
   sim::World * result = NULL;
 
   sim::Map * map = sim::read_map(mapPath);
@@ -88,7 +81,7 @@ sim::World * create_world(AbstractRobot * bot,
     if( devices & REAL_MOTORS ) {
       theSim = new sim::RealTimeSimulation();
       if( devices & MOTORS_ARDUINO ) {
-        motors = new HybridMotorFactory<ArduinoMotors>(theSim);
+        motors = new HybridMotorControl<ArduinoMotors>(theSim);
       }
       else if( devices & MOTORS_MAESTRO ) {
         // motors = new HybridMotorControl<MaestroMotors, sim::MotorControl>();
@@ -96,7 +89,7 @@ sim::World * create_world(AbstractRobot * bot,
     }
     else if( devices & MOTORS_SIM ) {
       theSim = new sim::Simulation();
-      motors = new sim::MotorFactory(theSim);
+      motors = new sim::MotorControl(theSim);
     }
     
     result = theSim;
@@ -123,7 +116,7 @@ sim::World * create_world(AbstractRobot * bot,
       
       if( devices & MOTORS_ARDUINO ) {
         if( ! (devices & SIM_REQUIRED) ) {
-          motors = new ArduinoMotorFactory(arduino);
+          motors = new ArduinoMotors(arduino);
         }
       }
       
@@ -148,9 +141,8 @@ sim::World * create_world(AbstractRobot * bot,
   
   }
   
+  bot->setMotorController(motors);
+  read_robot(bot, botPath, &sensors);
   
-  read_robot(bot, botPath, &sensors, motors);
-  
-  delete motors;
   return result;
 }

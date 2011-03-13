@@ -3,11 +3,13 @@ position FRONT  4  0  1  0
 position BACK  -4  0 -1  0
 position LEFT   0  4  0  1
 position RIGHT  0 -4  0 -1
-range:
-sensor FRONT  Nomadic 5
-sensor BACK   Nomadic 6
-sensor LEFT   Nomadic 3
-sensor RIGHT  Nomadic 4
-encoder:
-sensor LEFT   Encoder 1
-sensor RIGHT  Encoder 2
+
+range   Nomadic FRONT 5
+range   Nomadic BACK  6
+range   Nomadic LEFT  3
+range   Nomadic RIGHT 4
+encoder Encoder LEFT  1
+encoder Encoder RIGHT 2
+
+motor Vex LEFT  1 -10 10
+motor Vex RIGHT 2 -10 10

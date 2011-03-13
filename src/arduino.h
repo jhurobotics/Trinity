@@ -47,8 +47,8 @@ namespace robot {
     float velocity;
     float angularVelocity;
     
-    motorid_t left;
-    motorid_t right;
+    Motor left;
+    Motor right;
     float distance;
     
     void sendCommand();
@@ -61,24 +61,26 @@ namespace robot {
       velocity = v;
       sendCommand();
     }
-    
+        
     void setAngularVelocity(float aV) {
       angularVelocity = aV;
       sendCommand();
     }
-
+    
+    virtual void addMotor(Motor m) {
+      m.id |= Arduino::MOTOR_FLAG;
+      if( m.relPos.origin().x < 0 ) {
+        left = m;
+      }
+      else {
+        right = m;
+      }
+    }
+    
     void setArduino(Arduino * a) {
       arduino = a;
     }
-    
-    void setLeftMotor(motorid_t l) {
-      left = l | Arduino::MOTOR_FLAG;
-    }
-
-    void setRightMotor(motorid_t r) {
-      right = r | Arduino::MOTOR_FLAG;
-    }
-    
+        
     void setMotorDistance(float d) {
       distance = d;
       sendCommand();

@@ -18,6 +18,7 @@ namespace sim {
     MotorControl(sim::Simulation * w) : bot(&(w->simBot)) {}
     virtual ~MotorControl() {}
     
+    virtual void addMotor(robot::Motor m) { }
     virtual void setVelocity(float velocity);
     virtual void setAngularVelocity(float angVel);
     
