@@ -27,6 +27,10 @@ namespace robot {
 
 namespace robot {
   
+  typedef uint8_t id_t;
+  typedef id_t motorid_t;
+  typedef id_t sensorid_t;
+  
   class Sensor {
   public:
     uint8_t id;
@@ -144,6 +148,8 @@ namespace robot {
     virtual void draw() { }
     virtual const math::Ray& getPosition() = 0;
     virtual void halt() = 0;
+    void setArduino(Arduino * a);
+    void setMaestro(Maestro * m);
   }; // class AbstractRobot
   
   class SonarRobot : public AbstractRobot {

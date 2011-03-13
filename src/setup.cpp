@@ -2,6 +2,7 @@
 #include "robot.h"
 #include "simulation.h"
 #include "arduino.h"
+#include "maestro.h"
 #include "simsensors.h"
 #include "simmotors.h"
 #include "setup.h"
@@ -113,6 +114,7 @@ sim::World * create_world(AbstractRobot * bot,
     }
     if( devices & ARDUINO_REQUIRED ) {
       Arduino * arduino = new Arduino();
+      bot->setArduino(arduino);
       
       if( devices & MOTORS_ARDUINO ) {
         if( ! (devices & SIM_REQUIRED) ) {
@@ -130,13 +132,14 @@ sim::World * create_world(AbstractRobot * bot,
     }
     
     if( devices & MAESTRO_REQUIRED ) {
-      // Maestro * maestro = new Maestro();
+      Maestro * maestro = new Maestro();
+      bot->setMaestro(maestro);
       
-      // if( devices & MOTORS_MAESTRO ) {
-      //   if( !( devices & SIM_REQUIRED) ) {
-      //     motors = new MaestroMotorFactory();
-      //   }
-      // }
+      if( devices & MOTORS_MAESTRO ) {
+        if( !( devices & SIM_REQUIRED) ) {
+          motors = new MaestroMotors();
+        }
+      }
     }
   
   }

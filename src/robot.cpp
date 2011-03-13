@@ -16,6 +16,7 @@
 #include <OpenGL/gl.h>
 #endif
 #include "arduino.h"
+#include "maestro.h"
 #include "timers.h"
 using namespace robot;
 using namespace math;
@@ -41,9 +42,23 @@ AbstractRobot::~AbstractRobot() {
   if( arduino ) {
     delete arduino;
   }
-  //if( maestro ) {
-  //  delete maestro;
-  //}
+  if( maestro ) {
+    delete maestro;
+  }
+}
+
+void AbstractRobot::setArduino(Arduino * a) {
+  if( arduino ) {
+    delete arduino;
+  }
+  arduino = a;
+}
+
+void AbstractRobot::setMaestro(Maestro * m) {
+  if( maestro ) {
+    delete maestro;
+  }
+  maestro = m;
 }
 
 typedef std::map<std::string, math::Ray> StrToRay_t;

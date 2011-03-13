@@ -10,10 +10,6 @@
 
 namespace robot {
   
-  typedef uint8_t id_t;
-  typedef id_t motorid_t;
-  typedef id_t sensorid_t;
-  
   class Arduino {
   protected:
     Serial serial;
@@ -84,22 +80,6 @@ namespace robot {
     void setMotorDistance(float d) {
       distance = d;
       sendCommand();
-    }
-  };
-  
-  class ArduinoMotorFactory : public MotorFactory {
-  protected:
-    // Creates MotorControls that talk with this Arduino
-    Arduino * arduino;
-  public:
-    ArduinoMotorFactory(Arduino * a = NULL) : arduino(a) {}
-    
-    void setArduino(Arduino * a) {
-      arduino = a;
-    }
-    
-    virtual MotorControl * newMotors() {
-      return new ArduinoMotors(arduino);
     }
   };
 }

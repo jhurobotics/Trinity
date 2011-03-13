@@ -20,6 +20,7 @@
 		DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */; };
 		DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE2012FCD57A00B11B07 /* mcl.cpp */; };
 		DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */; };
+		DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABEF4F9132C8FE9002D4E22 /* maestro.cpp */; };
 		DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
 		DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
 		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
@@ -82,6 +83,8 @@
 		DAADDDBF12FCC09800B11B07 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
 		DAADDE2012FCD57A00B11B07 /* mcl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mcl.cpp; sourceTree = "<group>"; };
 		DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeasurementModel.cpp; sourceTree = "<group>"; };
+		DABEF4F9132C8FE9002D4E22 /* maestro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maestro.cpp; sourceTree = "<group>"; };
+		DABEF4FA132C8FE9002D4E22 /* maestro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maestro.h; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = qt_preprocess.mak; path = ../qt_preprocess.mak; sourceTree = "<group>"; };
 		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
@@ -177,8 +180,10 @@
 				DAADDDBD12FCC08400B11B07 /* slam */,
 				DAC9AC6612CA891E00691585 /* Sim mocks */,
 				DAC9AC6412CA890800691585 /* math */,
-				DA72DC921329C4D600493D34 /* arduino.cpp */,
 				DA72DC931329C4D600493D34 /* arduino.h */,
+				DA72DC921329C4D600493D34 /* arduino.cpp */,
+				DABEF4FA132C8FE9002D4E22 /* maestro.h */,
+				DABEF4F9132C8FE9002D4E22 /* maestro.cpp */,
 				DAA22FD612F0DEBE00B808AA /* graph.h */,
 				DAC75F4612C859F900E7E711 /* map.h */,
 				DAC75F7012C85E1600E7E711 /* map.cpp */,
@@ -424,6 +429,7 @@
 				DA72DC9A1329C4D600493D34 /* setup.cpp in Sources */,
 				DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */,
 				DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */,
+				DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
