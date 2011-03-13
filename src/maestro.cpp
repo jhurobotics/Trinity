@@ -5,13 +5,14 @@
 
 #include <limits.h>
 #include "maestro.h"
+#include "controllers.h"
 using namespace robot;
 
 void Maestro::setup(const char *path) {
   serial.Open(path);
 }
 
-void Maestro::setMotor(id_t channel, uint16_t value) {
+void Maestro::setChannel(id_t channel, uint16_t value) {
   unsigned char command[] = {
     0x84, channel, value & 0x7F, (value >> 7) & 0x7F
   };
@@ -28,6 +29,6 @@ void MaestroMotors::sendCommand() {
   }
   float leftVel = velocity - distance * angularVelocity;
   float rightVel = velocity + distance * angularVelocity;
-  maestro->setMotor(left.id, convertVelocity(leftVel, left));
-  maestro->setMotor(right.id, convertVelocity(rightVel, right));
+  maestro->setChannel(left.id, convertVelocity(leftVel, left));
+  maestro->setChannel(right.id, convertVelocity(rightVel, right));
 }

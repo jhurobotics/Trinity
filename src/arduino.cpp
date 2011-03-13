@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <string.h>
 #include "arduino.h"
+#include "controllers.h"
 using namespace robot;
 
 void Arduino::setup(const char * path) {

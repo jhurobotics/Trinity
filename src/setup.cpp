@@ -3,6 +3,7 @@
 #include "simulation.h"
 #include "arduino.h"
 #include "maestro.h"
+#include "controllers.h"
 #include "simsensors.h"
 #include "simmotors.h"
 #include "setup.h"
