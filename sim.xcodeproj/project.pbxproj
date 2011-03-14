@@ -64,6 +64,7 @@
 		DA35B15D13020DBE00DAD788 /* simslam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simslam.h; sourceTree = "<group>"; };
 		DA35B15E13020DCD00DAD788 /* Nodel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Nodel.cpp; sourceTree = "<group>"; };
 		DA35B2EF130227B200DAD788 /* Encoder */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Encoder; sourceTree = "<group>"; };
+		DA3ECD42132E9872005001BF /* graph */ = {isa = PBXFileReference; lastKnownFileType = text; path = graph; sourceTree = "<group>"; };
 		DA47B85F12C922EE00A7A0AF /* geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometry.h; sourceTree = "<group>"; };
 		DA47B86012C922EE00A7A0AF /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		DA5F5BCD12C96A6800BEA4B0 /* robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot.h; sourceTree = "<group>"; };
@@ -229,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				DAC9AB9312CA5A9900691585 /* first */,
+				DA3ECD42132E9872005001BF /* graph */,
 			);
 			path = robots;
 			sourceTree = "<group>";

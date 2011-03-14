@@ -1,0 +1,66 @@
+# for the basic arena described in basic_map
+# and modified to make the edges line up
+
+NODE ROOM1
+room true
+checked false
+pos 148 68
+
+NODE ROOM2
+room true
+checked false
+pos 52 23
+
+NODE ROOM3
+room true
+checked false
+pos 23 177
+
+NODE ROOM4
+room true
+checked false
+pos 151 157
+
+NODE ROOM1_ENTER
+room false
+checked true
+pos 95 68
+
+NODE ROOM2_ENTER
+room false
+checked true
+pos 95 23
+
+NODE MIDDLE
+room false
+checked true
+pos 95 114
+
+NODE ROOM3_ENTER
+room false
+checked true
+pos 23 114
+
+NODE ROOM4_ENTER
+room false
+checked true
+pos 151 114
+
+NODE START
+room false
+checked true
+pos 95 225
+
+EDGE START MIDDLE
+
+EDGE MIDDLE ROOM4_ENTER
+EDGE ROOM4_ENTER ROOM4
+
+EDGE MIDDLE ROOM3_ENTER
+EDGE ROOM3_ENTER ROOM3
+
+EDGE MIDDLE ROOM1_ENTER
+EDGE ROOM1_ENTER ROOM1
+
+EDGE ROOM1_ENTER ROOM2_ENTER
+EDGE ROOM2_ENTER ROOM2
