@@ -46,6 +46,8 @@ void sim::Simulation::step() {
   simBot.position += disp;
   
   bot->act();
+  
+  time += deltaT;
 }
 
 void sim::RealTimeSimulation::step() {

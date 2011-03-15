@@ -9,7 +9,7 @@ using namespace robot;
 using namespace math;
 
 #define START_P_COUNT   1000
-#define START_CYCLES    20
+#define START_CYCLES    10
 #define PARTICLE_COUNT  100
 
 #ifndef M_PI
