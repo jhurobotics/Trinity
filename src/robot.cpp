@@ -170,7 +170,7 @@ void SonarRobot::hallway() throw() {
   static bool moving = false;
   if( !currentObjective ) {
     // get an objective!
-    currentObjective = graph->getObjective(position.origin());
+    currentObjective = graph->getObjective();
   }
   
   // am I at the objective?

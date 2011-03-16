@@ -143,7 +143,6 @@ namespace math {
             return cur->getnode((dir+Direction)%4);
         }
         
-        
         int traverse(Node *n, int level, int searched, int maxdepth=0);
         
         // looks for closest unchecked nodes
@@ -168,7 +167,8 @@ namespace math {
         }
       void draw();
       
-      Node * getObjective(const math::vec2& pos) {
+      // This should call traverse, or actually do something...
+      Node * getObjective() {
         return &middle;
       }
         

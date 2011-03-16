@@ -80,7 +80,6 @@
 		DA72DC951329C4D600493D34 /* serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serial.cpp; sourceTree = "<group>"; };
 		DA72DC961329C4D600493D34 /* serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serial.h; sourceTree = "<group>"; };
 		DA72DC971329C4D600493D34 /* setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setup.cpp; sourceTree = "<group>"; };
-		DAA22FD612F0DEBE00B808AA /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OdometryModel.cpp; sourceTree = "<group>"; };
 		DAADDDBF12FCC09800B11B07 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
 		DAADDE2012FCD57A00B11B07 /* mcl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mcl.cpp; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 				DA72DC931329C4D600493D34 /* arduino.h */,
 				DA72DC921329C4D600493D34 /* arduino.cpp */,
 				DAB40508132D3311005500E1 /* controllers.h */,
-				DAA22FD612F0DEBE00B808AA /* graph.h */,
 				DABEF4FA132C8FE9002D4E22 /* maestro.h */,
 				DABEF4F9132C8FE9002D4E22 /* maestro.cpp */,
 				DAC75F4612C859F900E7E711 /* map.h */,
