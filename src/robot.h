@@ -9,7 +9,7 @@
 #include <string>
 #include <stdint.h>
 #include "geometry.h"
-#include "graph.h"
+#include "Nodel.h"
 #include "slam/slam.h"
 #include "timers.h"
 
@@ -115,7 +115,7 @@ namespace robot {
   
   class AbstractRobot {
     protected:
-    Graph * graph;
+    math::Graph * graph;
     SLAM * slammer;
     Arduino * arduino;
     Maestro * maestro;
@@ -125,7 +125,7 @@ namespace robot {
       : graph(NULL), slammer(NULL), arduino(NULL), maestro(NULL) {}
     virtual ~AbstractRobot();
     
-    Graph * getGraph() const {
+    math::Graph * getGraph() const {
       return graph;
     }
     SLAM * getSlam() const {
@@ -138,7 +138,7 @@ namespace robot {
     virtual void setMotorController(MotorControl * control) = 0;
     virtual void addMotor(Motor motors) = 0;
     // Takes ownership of the graph, will delete it if replaced
-    virtual void addGraph(Graph * g) {
+    virtual void addGraph(math::Graph * g) {
       if( graph ) {
         delete graph;
       }
@@ -164,7 +164,7 @@ namespace robot {
       HALLWAY,
       SCAN
     } curMode;
-    Node * currentObjective;
+    math::Node * currentObjective;
     
     std::set<RangeSensor*> rangeFinders;
     std::set<Encoder*> encoders;

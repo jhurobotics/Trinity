@@ -121,11 +121,17 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       input >> m.minSpeed >> m.maxSpeed;
       bot->addMotor(m);
     }
+    else if( astring == "graph" ) {
+      input >> astring;
+      Graph * g = new Graph(0,0,0,0);
+      std::string pathStr = path;
+      std::string graphPath = pathStr.substr(0, pathStr.find_last_of('/')+1) + astring;
+      math::read_graph(g, graphPath.c_str());
+      bot->addGraph(g);
+    }
   }
     
   input.close();
-  
-  bot->addGraph(new Graph());
 }
 
 SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), rangeFinders(),
@@ -136,7 +142,7 @@ SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), ran
 void robot::SonarRobot::act() throw() {
   // update the slammer
   struct timeval curTime = robot::time();
-  if( robot::time_diff(lastSLAMTime, curTime) > 100000 ) {
+  if( robot::time_diff(lastSLAMTime, curTime) >= 100000 ) {
     position = slammer->getPose();
     lastSLAMTime = curTime;
   }
@@ -168,7 +174,7 @@ void SonarRobot::hallway() throw() {
   }
   
   // am I at the objective?
-  if( currentObjective->loc.contains(position.origin()) ) {
+  if( currentObjective->position.contains(position.origin()) ) {
     control->setVelocity(0);
     control->setAngularVelocity(0);
     moving = false;
@@ -180,7 +186,7 @@ void SonarRobot::hallway() throw() {
     //}
   }
   else { // get there
-    vec2 disp = currentObjective->loc.center - position.origin();
+    vec2 disp = currentObjective->position.center - position.origin();
       
     float dispDir = atan2(disp.y, disp.x);
     float curDir = position.angle();
@@ -303,6 +309,7 @@ void SonarRobot::draw() {
   glEnd();
   
   slammer->draw();
+  graph->draw();
   
   glPushMatrix();
   glTranslatef(position.origin().x, position.origin().y, 0.0);
@@ -327,7 +334,7 @@ void SonarRobot::draw() {
   
   if( currentObjective ) {
     glPushMatrix();
-    glTranslatef(currentObjective->loc.center.x, currentObjective->loc.center.y, 0);
+    glTranslatef(currentObjective->position.center.x, currentObjective->position.center.y, 0);
     glBegin(GL_LINES);
     glColor4f(RED, 1.0);
     glVertex2f(-5, -5);

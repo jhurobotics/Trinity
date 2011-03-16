@@ -7,7 +7,7 @@ using namespace std;
 
 static int nodecount=1;
 using namespace math;
-int graph::traverse(node *n, int level, int searched, int maxdepth) {
+int Graph::traverse(Node *n, int level, int searched, int maxdepth) {
     if(!n) {return 0;}
     if(n->searched==searched)  {  // this node was already traversed
         if(!n->checked) {return level;}
@@ -32,7 +32,7 @@ int graph::traverse(node *n, int level, int searched, int maxdepth) {
     // looks for closest unchecked nodes
     // returns a direction (-1,0,1,2)
     // returns a direction to turn in relative to the current direction
-int graph::traverse() {
+int Graph::traverse() {
   int maxdist = 0;
   int Direction = 0;
   // vector<node*> searched = vector<node*>;
@@ -51,9 +51,62 @@ int graph::traverse() {
   return Direction;
 }
 
+#ifndef __APPLE__
+#include <GL/gl.h>
+#else
+#include <OpenGL/gl.h>
+#endif
+
+#define RED 1.0, 0.0, 0.0
+#define GREEN 0.0, 1.0, 0.0
+#define BLUE 0.0, 0.0, 1.0
+#define WHITE 1.0, 1.0, 1.0
+
+void Graph::draw() {
+  set<Node*>::iterator vEnd = vertices.end();
+  for( set<Node*>::iterator iter = vertices.begin(); iter != vEnd; iter++ ) {
+    Node * n = *iter;
+    glPushMatrix();
+    glTranslatef( n->position.center.x, n->position.center.y, 0);
+    
+    if( n->room ) {
+      glColor4f(RED, 1.0);
+    }
+    else {
+      glColor4f(GREEN, 1.0);
+    }
+    
+    if( (*iter)->checked ) {
+      glBegin(GL_TRIANGLE_FAN);
+      glVertex2f( 0, 0);
+    }
+    else {
+      glBegin(GL_LINE_STRIP);
+    }
+    
+    int angleCount = 32;
+    for(int i = 0; i < angleCount+1; i++) {
+      glVertex2f(4*cos(((float)i)/((float)angleCount)*2*M_PI), 4*sin(((float)i)/((float)angleCount)*2*M_PI));
+    }
+    
+    glEnd();
+    glPopMatrix();
+    
+    glColor4f(GREEN, 1.0);
+    glBegin(GL_LINES);
+    for( int i = 0; i < 4; i++ ) {
+      Node * end = n->paths[i];
+      if( end ) {
+        glVertex2f(n->position.center.x, n->position.center.y);
+        glVertex2f(end->position.center.x, end->position.center.y);
+      }
+    }
+    glEnd();
+  }
+}
 
 // for trouble shooting
-void outputGraph(node* n, bool unsearched) {
+void outputGraph(Node* n, bool unsearched) {
      cout << n->number;
      if(n->checked) cout << " CHECKED";
      cout << "\n";
@@ -64,12 +117,12 @@ void outputGraph(node* n, bool unsearched) {
      cout << "\n";
      n->searched=!unsearched;
      for(int i=0; i<4; ++i) {
-         node* p=n->getnode(i);
+         Node* p=n->getnode(i);
          if( !p || p->searched ^ unsearched ) continue;
          outputGraph(n->getnode(i),unsearched);
      }
 }
-void outputGraph(node* n) {
+void outputGraph(Node* n) {
     outputGraph(n,n->searched);
 }
 
@@ -92,11 +145,105 @@ char relativeDirString(int dir) {
      return '!';
 }
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include "geometryio.h"
+using namespace std;
+
+static void read_bool(istream& input, bool * dest) {
+  string astring;
+  input >> astring;
+  if( astring == "true" ) {
+    (*dest) = true;
+  }
+  else {
+    (*dest) = false;
+  }
+}
+
+void math::read_graph(Graph * g, const char * path) {
+  static const vec2 NORTH( 0, 1);
+  static const vec2 EAST ( 1, 0);
+  ifstream input(path);
+  
+  string astring;
+  std::map<string, Node*> nodes;
+  Node * curNode = NULL;
+  while( input ) {
+    input >> astring;
+    if( astring[0] == '#' ) { // comment, skip line
+      input.ignore(LONG_MAX, '\n');
+    }
+    else if( astring == "NODE" ) {
+      input >> astring;
+      curNode = new Node();
+      g->vertices.insert(curNode);
+      nodes[astring] = curNode;
+    }
+    else if( astring == "room" ) {
+      if( !curNode ) {
+        cout << "no current node for room property\n";
+        break;
+      }
+      read_bool(input, &(curNode->room));
+    }
+    else if( astring == "checked" ) {
+      if( !curNode ) {
+        cout << "no current node for checked property\n";
+        break;
+      }
+      read_bool(input, &(curNode->checked));
+    }
+    else if( astring == "pos" ) {
+      if( !curNode ) {
+        cout << "no current node for pos property\n";
+        break;
+      }
+      input >> curNode->position.center;
+    }
+    else if( astring == "start" ) {
+      g->H = curNode;
+    }
+    else if( astring == "EDGE" ) {
+      string bstring;
+      input >> astring >> bstring;
+      Node * aNode = nodes[astring];
+      Node * bNode = nodes[bstring];
+      vec2 disp = aNode->position.center - bNode->position.center;
+      float d;
+      if( abs(d = disp.dot(NORTH)/disp.mag()) > 0.9 ) {
+        if( d > 0 ) {
+          bNode->paths[N] = aNode;
+          aNode->paths[S] = bNode;
+        }
+        else {
+          bNode->paths[S] = aNode;
+          aNode->paths[W] = bNode;
+        }
+      }
+      else {
+        if( disp.dot(EAST) > 0 ) {
+          bNode->paths[E] = aNode;
+          aNode->paths[W] = bNode;
+        }
+        else {
+          bNode->paths[W] = aNode;
+          aNode->paths[E] = bNode;
+        }
+      }
+      //g->edges.insert(new Edge(nodes[astring], nodes[bstring]));
+    }
+  }
+}
+
+
 #ifdef NODE_TEST
 
 int main()
 {
-  graph* g = new graph(0,0,1,0);
+  Graph* g = new Graph(0,0,1,0);
   g->move();
   g->expand(1,0,1);
   g->turn(W);

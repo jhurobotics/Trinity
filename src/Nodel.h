@@ -3,12 +3,11 @@
  */
 
 #include <vector>
+#include <set>
 #include "geometry.h"
 
 #ifndef __NODEL_H__
 #define __NODEL_H__
-
-
 
 #define LFIR 2  // left front
 #define RFIR 3  // right front
@@ -26,15 +25,16 @@
 
 namespace math {
 
-    class node{
+    class Node{
       public:
-        node* paths[4];
+        Node* paths[4];
         Circle position;
-        int checked;   // true when robot has passed through this node
-        node* parent;
+        bool checked;   // true when robot has passed through this node
+        Node* parent;
         int number; // node id for trouble shooting
         int searched;  // for traversing the graph
-        node(int id=0) : position(vec2(0,0), 5){
+        bool room;
+        Node(int id=0) : position(vec2(0,0), 5){
            for(int i=0; i<4; ++i) {
              paths[i]=NULL;
            }
@@ -44,30 +44,30 @@ namespace math {
            searched=false;
         }
         // 0=north; 1=west; 2=south; 3=east;
-        void setnode(int dir, node* obj=0) {
+        void setnode(int dir, Node* obj=0) {
           paths[dir]=obj;
         }
-        node* getnode(int dir) {
+        Node* getnode(int dir) {
           return paths[(dir)%4]; 
         }
         // returns the absolute direction of an adjacent node
         // returns false if the node is not connected to this
-        bool getdir(node* node, int &dir) {
+        bool getdir(Node* node, int &dir) {
             for(int i=0; i<4; ++i) {
                 if(paths[i]==node) {dir=i; return true;}
             }
             return false;
         }
         float getDistance(int dir) {
-            node* next = getnode(dir);
+            Node* next = getnode(dir);
             return (position.center - next->position.center).mag();
         }
-        void Connect(node* n, int dir) {
+        void Connect(Node* n, int dir) {
            paths[(dir)%4]=n;
            n->setnode((dir+2)%4,this);
         } 
         void add(int dir){
-          Connect(new node(), dir);
+          Connect(new Node(), dir);
           paths[(dir)%4]->parent=this;
         }
         Circle getPosition() {
@@ -79,24 +79,33 @@ namespace math {
     };
 
     // represents the entire known maze and the bot inside it
-    class graph {
+    class Graph {
       public:
-        node* H;  // home node
-        node* cur;  // current node
+        Node* H;  // home node
+        Node* cur;  // current node
         int dir;  // current direction (N,S,E,W)
-        std::vector<node*> route;   // route will be filled when traverse is called
+        std::vector<Node*> route;   // route will be filled when traverse is called
         int nodecount;    // give each node a unique ID for trouble shooting
-        graph(bool left, bool right, bool front, bool back=false) {
-            H=new node(); 
+        std::set<Node*> vertices;
+        Node middle;
+        Graph(bool left, bool right, bool front, bool back=false) {
+            H=new Node(); 
             cur=H; 
             dir=0;
-            route = std::vector<node*>();
+            route = std::vector<Node*>();
             if(left) H->add(W);
             if(right) H->add(E);
             if(front) H->add(N);
             if(back) H->add(S);
             H->checked=true;
+          middle.position = Circle(math::vec2(124, 124), 3);
         }
+      ~Graph() {
+        std::set<Node*>::iterator end = vertices.end();
+        for(std::set<Node*>::iterator iter = vertices.begin(); iter != end; iter++ ) {
+          delete *iter;
+        }
+      }
         
         // adds nodes to the current node
         // TODO:  What happens if nodes already exist?  this means the robot got confused, but what should we do about it?
@@ -114,13 +123,13 @@ namespace math {
         
         
         void turn(int Direction) {
-          dir+=Direction; 
+          dir+=Direction;
           dir%=4;
         }
         
         // returns false if the robot is facing a wall
         bool move() {
-            node *next = cur->getnode(dir);
+            Node *next = cur->getnode(dir);
             if(next) {
                 cur=next;
                 cur->checked=true;
@@ -130,12 +139,12 @@ namespace math {
             
         }
         
-        node * getNode(int Direction) {
+        Node * getNode(int Direction) {
             return cur->getnode((dir+Direction)%4);
         }
         
         
-        int traverse(node *n, int level, int searched, int maxdepth=0);
+        int traverse(Node *n, int level, int searched, int maxdepth=0);
         
         // looks for closest unchecked nodes
         // returns a direction (-1,0,1,2)
@@ -152,15 +161,21 @@ namespace math {
             int direction=0;
             cur->getdir(cur->parent,direction);
             for(int i=1; i<4; ++i ) {
-                node* next = cur->getnode(direction+i*default_dir);
+                Node* next = cur->getnode(direction+i*default_dir);
                 if(next && !next->checked) {return (direction+i*default_dir-dir)%4;}
             }
             return (direction-dir)%4;  // go back the way you came (assuming that is the parent node)
         }
+      void draw();
+      
+      Node * getObjective(const math::vec2& pos) {
+        return &middle;
+      }
         
 };
-}
+  void read_graph(Graph * g, const char * path);
 
+}
 
 
 #endif // __NODEL_H__
