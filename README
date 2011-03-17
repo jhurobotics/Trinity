@@ -1,7 +1,5 @@
 Dependencies:
 Qt 4 (including qmake)
-Python
-Boost Python
 
 Build Instructions:
 
@@ -31,6 +29,8 @@ Run sim.
 The first window is the setup window.
 Choose the robot configuration (from the robots directory), the sensor library
 (probably the sensors directory), and the current map (from the maps directory).
+
+Other stuff you might need to know:
 The current step size of the simulation is 0.1s.
 The units used are centimeters, seconds, and radians.
 Forwards is along the positive x axis.

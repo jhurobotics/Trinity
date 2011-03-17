@@ -21,14 +21,19 @@ room true
 checked false
 pos 151 157
 
+NODE ROOM4_ALT
+room true
+checked false
+pos 180 180
+
 NODE ROOM1_ENTER
 room false
-checked true
+checked false
 pos 95 68
 
 NODE ROOM2_ENTER
 room false
-checked true
+checked false
 pos 95 23
 
 NODE MIDDLE
@@ -43,14 +48,34 @@ pos 23 114
 
 NODE ROOM4_ENTER
 room false
-checked true
+checked false
 pos 151 114
+
+NODE ROOM4_ALT_ENTER
+room false
+checked false
+pos 180 225
 
 NODE START
 start
 room false
 checked true
 pos 95 225
+
+NODE NE_CORNER
+room false
+checked true
+pos 225 225
+
+NODE E_SIDE
+room false
+checked true
+pos 225 114
+
+NODE ROOM1_ALT
+room true
+checked false
+pos 148 23
 
 EDGE START MIDDLE
 
@@ -65,3 +90,12 @@ EDGE ROOM1_ENTER ROOM1
 
 EDGE ROOM1_ENTER ROOM2_ENTER
 EDGE ROOM2_ENTER ROOM2
+
+EDGE START ROOM4_ALT_ENTER
+EDGE ROOM4_ALT_ENTER ROOM4_ALT
+
+EDGE ROOM4_ALT_ENTER NE_CORNER
+EDGE NE_CORNER E_SIDE
+EDGE E_SIDE ROOM4_ENTER
+
+EDGE ROOM1_ALT ROOM2_ENTER

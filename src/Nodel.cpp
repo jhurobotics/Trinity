@@ -1,12 +1,12 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <map>
+#include "geometryio.h"
 #include "Nodel.h"
-
-
 using namespace std;
-
-
-static int nodecount=1;
 using namespace math;
+
 int Graph::traverse(Node *n, int level, int searched, int maxdepth) {
     if(!n) {return 0;}
     if(n->searched==searched)  {  // this node was already traversed
@@ -29,9 +29,9 @@ int Graph::traverse(Node *n, int level, int searched, int maxdepth) {
     return maxdist;
 }
     
-    // looks for closest unchecked nodes
-    // returns a direction (-1,0,1,2)
-    // returns a direction to turn in relative to the current direction
+// looks for closest unchecked nodes
+// returns a direction (-1,0,1,2)
+// returns a direction to turn in relative to the current direction
 int Graph::traverse() {
   int maxdist = 0;
   int Direction = 0;
@@ -145,13 +145,6 @@ char relativeDirString(int dir) {
      return '!';
 }
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <map>
-#include "geometryio.h"
-using namespace std;
-
 static void read_bool(istream& input, bool * dest) {
   string astring;
   input >> astring;
@@ -233,7 +226,6 @@ void math::read_graph(Graph * g, const char * path) {
           aNode->paths[E] = bNode;
         }
       }
-      //g->edges.insert(new Edge(nodes[astring], nodes[bstring]));
     }
   }
 }

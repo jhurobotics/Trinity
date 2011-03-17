@@ -99,6 +99,7 @@
 		DAC9AD6712CAA7E100691585 /* geometryio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = geometryio.h; sourceTree = "<group>"; };
 		DAC9ADE612CAB49500691585 /* simulation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simulation.h; sourceTree = "<group>"; };
 		DAC9ADE712CAB49500691585 /* simulation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simulation.cpp; sourceTree = "<group>"; };
+		DAD8C7841331860F00967E4B /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		DAED38CE132A76E300C2E225 /* setup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setup.h; sourceTree = "<group>"; };
 		DAFD403612DECB4500E5D62C /* QtSim-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "QtSim-Info.plist"; path = "../QtSim-Info.plist"; sourceTree = "<group>"; };
 		DAFD404D12DECBDE00E5D62C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -145,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				DA0FE2DA133A96E4009EDEB5 /* serial_communication.pde */,
+				DAD8C7841331860F00967E4B /* README */,
 				DAFD410E12DED1BB00E5D62C /* generated_sources */,
 				DAFD404C12DECBDE00E5D62C /* qt */,
 				DAC75F4412C8597F00E7E711 /* src */,
