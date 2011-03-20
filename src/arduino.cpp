@@ -70,3 +70,14 @@ void ArduinoMotors::sendCommand() {
   arduino->setMotor(right.id, convertVelocity(rightVel, right));
 }
 
+float ArduinoSonar::getValue() {
+  float distance;
+  arduino->getSensor(id, reinterpret_cast<char*>(&distance));
+  return distance;
+}
+
+long ArduinoEncoder::getCount() {
+  long count;
+  arduino->getSensor(id, reinterpret_cast<char*>(&count));
+  return count;
+}

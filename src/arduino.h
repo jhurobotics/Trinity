@@ -32,6 +32,44 @@ namespace robot {
     void setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError);
     void switchLight(bool on);
   };
+  
+  class ArduinoDevice {
+  protected:
+    Arduino * arduino;
+  public:
+    ArduinoDevice(Arduino * a = NULL) : arduino(a) { }
+    void setArduino(Arduino * a) {
+      arduino = a;
+    }
+  };
+  
+  class ArduinoSonar : public RangeSensor, public ArduinoDevice {
+  public:
+    explicit ArduinoSonar(const RangeSpecs& s, Arduino * a) 
+      : RangeSensor(s), ArduinoDevice(a) { }
+    virtual float getValue();    
+  };
+  
+  class ArduinoEncoder : public Encoder, public ArduinoDevice {
+  public:
+    explicit ArduinoEncoder(float dist, Arduino * a = NULL)
+      : Encoder(dist), ArduinoDevice(a) { }
+    virtual long getCount();
+  };
+  
+  class ArduinoSensorFactory : public SensorFactory, public ArduinoDevice {
+  public:
+    ArduinoSensorFactory(std::string libPath, Arduino * a = NULL)
+      : SensorFactory(libPath), ArduinoDevice(a) { }
+    
+    virtual robot::RangeSensor * allocRange(const robot::RangeSpecs &specs) {
+      return new ArduinoSonar(specs, arduino);
+    }
+    
+    virtual robot::Encoder * allocEncoder(float td) {
+      return new ArduinoEncoder(td, arduino);
+    }
+  };
 }
 
 #endif

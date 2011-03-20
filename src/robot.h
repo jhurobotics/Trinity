@@ -72,16 +72,22 @@ namespace robot {
   };
   
   class SensorFactory {
-    protected:
+  protected:
+    std::string libPath;
     std::map<std::string, robot::RangeSpecs> rangeSensors;
     std::map<std::string, float> encoders;
-    public:
+    
+  public:
+    virtual RangeSensor * allocRange(const robot::RangeSpecs& specs) = 0;
+    virtual Encoder * allocEncoder(float tickDist) = 0;
+    
+    SensorFactory(std::string path) : libPath(path) { }
     virtual ~SensorFactory() {}
     
     class WrongSensorKind {};
     
-    virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind) = 0;
-    virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind) = 0;
+    virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind);
+    virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind);
   };  // class SensorFactory
   
   struct Motor {

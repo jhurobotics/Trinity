@@ -32,13 +32,13 @@ namespace sim {
   }; // class Ultrasonic
   
   class Encoder : public robot::Encoder {
-    protected:
+  protected:
     double totalDist;
     long count;
     Simulation * world;
     math::vec2 getLastAbsolutePosition();
     math::vec2 getAbsolutePosition();
-    public:
+  public:
     Encoder(sim::Simulation * w, float td)
       : robot::Encoder(td), totalDist(0), count(0), world(w)
     {}
@@ -47,15 +47,16 @@ namespace sim {
   };
 
   class SensorFactory : public robot::SensorFactory {
-    std::string libPath;
+  protected:
     sim::Simulation * world;
-    public:
-    SensorFactory(const std::string& lib, sim::Simulation * w)
-      : libPath(lib), world(w) {}
-    virtual ~SensorFactory() {}
     
-    virtual robot::RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind);
-    virtual robot::Encoder * encoder(const std::string& name) throw(WrongSensorKind);
+  public:
+    virtual robot::RangeSensor * allocRange(const robot::RangeSpecs& specs);
+    virtual robot::Encoder * allocEncoder(float tickDist);
+    
+    SensorFactory(const std::string& lib, sim::Simulation * w)
+    : robot::SensorFactory(lib), world(w) { }
+    virtual ~SensorFactory() {}
   };
 } // namespace sim
 

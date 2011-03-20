@@ -38,8 +38,16 @@ public:
   SensorFactory * rangeFactory;
   SensorFactory * encoderFactory;
   
-  HybridSensorFactory() throw()
-    : rangeFactory(NULL), encoderFactory(NULL) { }
+  virtual RangeSensor * allocRange(const RangeSpecs& specs) {
+    return rangeFactory->allocRange(specs);
+  }
+  
+  virtual Encoder * allocEncoder(float td) {
+    return encoderFactory->allocEncoder(td);
+  }
+  
+  HybridSensorFactory(std::string libPath) throw()
+    : SensorFactory(libPath), rangeFactory(NULL), encoderFactory(NULL) { }
   
   virtual ~HybridSensorFactory() {
     if( rangeFactory ) {
@@ -49,21 +57,13 @@ public:
       delete encoderFactory;
     }
   }
-  
-  virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind) {
-    return rangeFactory->rangeSensor(name);
-  }
-  
-  virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind) {
-    return encoderFactory->encoder(name);
-  }
 };
 
 sim::World * create_world(AbstractRobot * bot,
                   const char *mapPath, const char *botPath, const char *sensLibPath,
                   setupflags_t devices)
 {
-  HybridSensorFactory sensors;
+  HybridSensorFactory sensors(sensLibPath);
   MotorControl * motors;
   sim::World * result = NULL;
 
@@ -124,11 +124,11 @@ sim::World * create_world(AbstractRobot * bot,
       }
       
       if( devices & SONAR_ARDUINO ) {
-        //sensors.rangeFactory = new ArduinoSensorFactory();
+        sensors.rangeFactory = new ArduinoSensorFactory(sensLibPath, arduino);
       }
       
       if( devices & ENCODER_ARDUINO ) {
-        //sensors.encoderFactory = new ArduinoSensorFactory();
+        sensors.encoderFactory = new ArduinoSensorFactory(sensLibPath, arduino);
       }
     }
     
