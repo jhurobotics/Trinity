@@ -32,7 +32,7 @@ int Graph::traverse(Node *n, int level, int searched, int maxdepth) {
 // looks for closest unchecked nodes
 // returns a direction (-1,0,1,2)
 // returns a direction to turn in relative to the current direction
-int Graph::traverse() {
+int Graph::traverse(Node ** next) {
   int maxdist = 0;
   int Direction = 0;
   // vector<node*> searched = vector<node*>;
@@ -42,6 +42,9 @@ int Graph::traverse() {
     if(dist>maxdist) {
         Direction = i;
         maxdist=dist;
+      if( next ) {
+        (*next) = getNode(i);
+      }
     }
   }
   if(maxdist==0) {  // there are no more unchecked nodes
@@ -198,6 +201,7 @@ void math::read_graph(Graph * g, const char * path) {
     }
     else if( astring == "start" ) {
       g->H = curNode;
+      g->cur = curNode;
     }
     else if( astring == "EDGE" ) {
       string bstring;

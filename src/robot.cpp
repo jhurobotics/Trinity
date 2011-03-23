@@ -134,7 +134,7 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   input.close();
 }
 
-SonarRobot::SonarRobot() throw() : curMode(HALLWAY), currentObjective(NULL), rangeFinders(),
+SonarRobot::SonarRobot() throw() : curMode(INIT), currentObjective(NULL), rangeFinders(),
                                    control(), edges(), path(), position()
 {
 }
@@ -156,21 +156,54 @@ void robot::SonarRobot::act() throw() {
     edges.push_back(position.transformVecToAbsolute((*iter)->getCoordinate()));
   }
   
-  // Only move once the SLAM module has settled
-  if( slammer->settled() ) {
-    hallway();
+  switch( curMode ) {
+    case INIT:
+      // Only move once the SLAM module has settled
+      if( !slammer->settled() ) {
+        break;
+      }
+      else {
+        static const vec2 NORTH( 0, 1);
+        static const vec2 EAST ( 1, 0);
+        curMode = HALLWAY;
+        vec2 dir = position.dir();
+        float d;
+        if( abs(d = dir.dot(NORTH)) > 0.5 ) {
+          if( d > 0 ) {
+            graph->turn(N);
+          }
+          else {
+            graph->turn(S);
+          }
+        }
+        else {
+          if( dir.dot(EAST) > 0 ) {
+            graph->turn(E);
+          }
+          else {
+            graph->turn(W);
+          }
+        }
+      }
+    case HALLWAY:
+      hallway();
+      break;
+    default:
+      break;
   }
 }
 
 #define MOVE_SPEED 20
 #define TURN_SPEED M_PI / 8.0
-const static float ANGLE_RES = M_PI/20.0;
 
 void SonarRobot::hallway() throw() {
   static bool moving = false;
+  static int cur_dir = 0;
   if( !currentObjective ) {
     // get an objective!
-    currentObjective = graph->getObjective();
+    cur_dir = graph->traverse(&currentObjective);
+    graph->turn(cur_dir);
+    graph->move();
   }
   
   // am I at the objective?
@@ -178,12 +211,16 @@ void SonarRobot::hallway() throw() {
     control->setVelocity(0);
     control->setAngularVelocity(0);
     moving = false;
-    //if( !currentObjective->checked ) {
+    if( !currentObjective->checked ) {
     //  curMode = SCAN;
-    //}
-    //else {
-    //  currentObjective = graph->getObjective(position.origin());
-    //}
+    }
+    else {
+      int dir = graph->traverse();
+      currentObjective = graph->cur->getnode(dir);
+      int destDir = (dir + cur_dir) % 4;
+      graph->turn(destDir);
+      graph->move();
+    }
   }
   else { // get there
     vec2 disp = currentObjective->position.center - position.origin();
@@ -293,7 +330,7 @@ Encoder * SensorFactory::encoder(const std::string& name) throw(WrongSensorKind)
 #define GREEN 0.0, 1.0, 0.0
 #define BLUE 0.0, 0.0, 1.0
 #define WHITE 1.0, 1.0, 1.0
-#define THOUGHT 1.0, 0.5, 0.5
+#define THOUGHT 1.0, 1.0, 0.5
 
 void SonarRobot::draw() {
   glPointSize(4.0);

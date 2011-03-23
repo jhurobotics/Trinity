@@ -86,7 +86,6 @@ namespace math {
         std::vector<Node*> route;   // route will be filled when traverse is called
         int nodecount;    // give each node a unique ID for trouble shooting
         std::set<Node*> vertices;
-        Node middle;
         Graph(bool left, bool right, bool front, bool back=false) {
             H=new Node(); 
             cur=H; 
@@ -97,7 +96,6 @@ namespace math {
             if(front) H->add(N);
             if(back) H->add(S);
             H->checked=true;
-          middle.position = Circle(math::vec2(124, 124), 3);
         }
       ~Graph() {
         std::set<Node*>::iterator end = vertices.end();
@@ -148,7 +146,7 @@ namespace math {
         // looks for closest unchecked nodes
         // returns a direction (-1,0,1,2)
         // returns a direction to turn in relative to the current direction
-        int traverse();
+        int traverse(Node ** next = NULL);
         
         // returns false if there are no nodes left on the queue
         // traverse() needs to be called to fill the queue
@@ -169,7 +167,8 @@ namespace math {
       
       // This should call traverse, or actually do something...
       Node * getObjective() {
-        return &middle;
+        int dir = traverse();
+        return cur->getnode(dir);
       }
         
 };

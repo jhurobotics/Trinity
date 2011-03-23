@@ -161,6 +161,7 @@ namespace robot {
   class SonarRobot : public AbstractRobot {
   protected:
     enum BotModes {
+      INIT,
       HALLWAY,
       SCAN
     } curMode;
