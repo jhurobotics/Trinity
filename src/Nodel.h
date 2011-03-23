@@ -15,7 +15,6 @@
 #define RBIR 5  // right back
 #define FIR  6  // front
 #define BIR  7  // back
-#define LED 13
 #define Left   1   // turn left
 #define Right -1   // turn right
 #define N 0
@@ -52,9 +51,9 @@ namespace math {
         }
         // returns the absolute direction of an adjacent node
         // returns false if the node is not connected to this
-        bool getdir(Node* node, int &dir) {
+        bool getdir(Node* node, int * dir) {
             for(int i=0; i<4; ++i) {
-                if(paths[i]==node) {dir=i; return true;}
+                if(paths[i]==node) {(*dir)=i; return true;}
             }
             return false;
         }
@@ -108,7 +107,8 @@ namespace math {
       }
         
         // adds nodes to the current node
-        // TODO:  What happens if nodes already exist?  this means the robot got confused, but what should we do about it?
+        // TODO:  What happens if nodes already exist?
+        // this means the robot got confused, but what should we do about it?
         void expand(bool left, bool right, bool front) {
          if(front){
            cur->add(dir);
@@ -158,7 +158,7 @@ namespace math {
         // returns the next direction to travel in
         int quickTraverse(int default_dir=Right) {
             int direction=0;
-            cur->getdir(cur->parent,direction);
+            cur->getdir(cur->parent,&direction);
             for(int i=1; i<4; ++i ) {
                 Node* next = cur->getnode(direction+i*default_dir);
                 if(next && !next->checked) {return (direction+i*default_dir-dir)%4;}
