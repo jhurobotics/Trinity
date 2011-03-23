@@ -20,7 +20,7 @@ namespace robot {
       GET = 0x01,
       SET_MOTOR = 0x02,
       SET_SENSOR = 0x03,
-      LIGHT_SWITCH = 0x04,
+      SET_LIGHT = 0x04,
     };
     
     static const motorid_t MOTOR_FLAG = 0x80;
@@ -30,7 +30,7 @@ namespace robot {
     void getSensor(sensorid_t id, char * value) throw(Serial::ReadError);
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
     void setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError);
-    void switchLight(bool on);
+    void switchLight(bool on) throw(Serial::WriteError);
   };
   
   class ArduinoDevice {

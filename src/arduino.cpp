@@ -53,7 +53,16 @@ void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) 
   }
 }
 
-void Arduino::switchLight(bool on) {
+void Arduino::switchLight(bool on) throw(Serial::WriteError) {
+  uint8_t buff[3];
+  buff[0] = SET_LIGHT;
+  buff[1] = (on ? 1 : 0 );
+  buff[2] = END;
+  serial.Write(reinterpret_cast<char*>(buff), 3);
+  serial.Read(reinterpret_cast<char*>(buff), 3);
+  if( buff[0] != SET_LIGHT || buff[1] != (on ? 1 : 0 ) || buff[2] != END ) {
+    throw Serial::WriteError();
+  }
 }
 
 static inline int32_t convertVelocity(float vel, Motor m) {
