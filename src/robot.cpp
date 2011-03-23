@@ -225,10 +225,9 @@ void SonarRobot::hallway() throw() {
   else { // get there
     vec2 disp = currentObjective->position.center - position.origin();
       
-    float dispDir = atan2(disp.y, disp.x);
+    disp.normalize();
     float curDir = position.angle();
-    if( abs(std::fmod((double)dispDir - curDir, 2*M_PI)) < ANGLE_RES / (moving ? 1 : 2)
-        || abs(std::fmod((double)dispDir - curDir, 2*M_PI)) > 2 * M_PI - (ANGLE_RES / (moving ? 1 : 2)) ) {
+    if( disp.dot(position.dir()) > 0.99 ) {
       control->setVelocity(MOVE_SPEED);
       control->setAngularVelocity(0);
       moving = true;
@@ -236,7 +235,7 @@ void SonarRobot::hallway() throw() {
     else {
       if( moving )
         control->setVelocity(0);
-      float delta = dispDir - curDir;
+      float delta = atan2(disp.y, disp.x) - curDir;
       if( delta > M_PI ) {
         delta -= 2*M_PI;
       }
