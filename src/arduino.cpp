@@ -9,58 +9,105 @@ void Arduino::setup(const char * path) {
 }
 
 void Arduino::getSensor(sensorid_t id, char * value) throw(Serial::ReadError) {
-  uint8_t buff[7];
-  buff[0] = GET;
-  buff[1] = id;
-  buff[2] = END;
-  serial.Write(reinterpret_cast<char*>(buff), 3);
-  serial.Read(reinterpret_cast<char*>(buff), 7);
-  if( buff[0] != GET || buff[1] != id || buff[7] != END ) {
+  struct cmd {
+    uint8_t name;
+    uint8_t id;
+    uint8_t end;
+  };
+  struct resp {
+    uint8_t name;
+    uint8_t id;
+    char val[4];
+    uint8_t end;
+  };
+  union {
+    char buff[7];
+    struct cmd cmd;
+    struct resp resp;
+  };
+  cmd.name = GET;
+  cmd.id = id;
+  cmd.end = END;
+  serial.Write(buff, 3);
+  serial.Read(buff, 7);
+  if( resp.name != GET || resp.id != id || resp.end != END ) {
     throw Serial::ReadError();
   }
-  memcpy(value, buff+2, 4);
+  memcpy(value, resp.val, 4);
 }
 
 void Arduino::setMotor(motorid_t id, int32_t value) throw(Serial::WriteError) {
-  uint8_t buff[7];
-  buff[0] = SET_MOTOR;
-  buff[1] = id;
-  buff[2] = value & 0xFF;
-  buff[3] = ( value >> 8 ) & 0xFF;
-  buff[4] = ( value >> 16) & 0xFF;
-  buff[5] = ( value >> 24) & 0xFF;
-  buff[6] = END;
-  serial.Write(reinterpret_cast<char*>(buff), 7);
-  serial.Read(reinterpret_cast<char*>(buff), 3);
-  if( buff[0] != SET_MOTOR || buff[1] != id || buff[2] != END ) {
+  struct cmd {
+    uint8_t name;
+    uint8_t id;
+    int32_t val;
+    uint8_t end;
+  };
+  struct resp {
+    uint8_t name;
+    uint8_t id;
+    uint8_t end;
+  };
+  union {
+    char buff[7];
+    struct cmd cmd;
+    struct resp resp;
+  };
+  cmd.name = SET_MOTOR;
+  cmd.id = id;
+  cmd.val = value;  // Assuming little-endian
+  cmd.end = END;
+  serial.Write(buff, 7);
+  serial.Read(buff, 3);
+  if( resp.name != SET_MOTOR || resp.id != id || resp.end != END ) {
     throw Serial::WriteError();
   }
 }
 
 void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) {
-  uint8_t buff[7];
-  buff[0] = SET_SENSOR;
-  buff[1] = id;
-  buff[2] = value & 0xFF;
-  buff[3] = ( value >> 8 ) & 0xFF;
-  buff[4] = ( value >> 16) & 0xFF;
-  buff[5] = ( value >> 24) & 0xFF;
-  buff[6] = END;
-  serial.Write(reinterpret_cast<char*>(buff), 7);
-  serial.Read(reinterpret_cast<char*>(buff), 3);
-  if( buff[0] != SET_SENSOR || buff[1] != id || buff[2] != END ) {
+  struct cmd {
+    uint8_t name;
+    uint8_t id;
+    int32_t val;
+    uint8_t end;
+  };
+  struct resp {
+    uint8_t name;
+    uint8_t id;
+    uint8_t end;
+  };
+  union {
+    char buff[7];
+    struct cmd cmd;
+    struct resp resp;
+  };
+  cmd.name = SET_SENSOR;
+  cmd.id = id;
+  cmd.val = value;
+  cmd.end = END;
+  serial.Write(buff, 7);
+  serial.Read(buff, 3);
+  if( resp.name != SET_SENSOR || resp.id != id || resp.end != END ) {
     throw Serial::WriteError();
   }
 }
 
 void Arduino::switchLight(bool on) throw(Serial::WriteError) {
-  uint8_t buff[3];
-  buff[0] = SET_LIGHT;
-  buff[1] = (on ? 1 : 0 );
-  buff[2] = END;
-  serial.Write(reinterpret_cast<char*>(buff), 3);
-  serial.Read(reinterpret_cast<char*>(buff), 3);
-  if( buff[0] != SET_LIGHT || buff[1] != (on ? 1 : 0 ) || buff[2] != END ) {
+  struct cmd {
+    uint8_t name;
+    uint8_t state;
+    uint8_t end;
+  };
+  union {
+    char buff[3];
+    struct cmd cmd;
+  };
+  cmd.name = SET_LIGHT;
+  cmd.state = (on ? 1 : 0 );
+  cmd.end = END;
+  serial.Write(buff, 3);
+  serial.Read(buff, 3);
+  if( cmd.name != SET_LIGHT || cmd.state != (on ? 1 : 0 ) || cmd.end != END ) {
     throw Serial::WriteError();
   }
 }
