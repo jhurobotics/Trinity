@@ -29,7 +29,9 @@ namespace robot {
     void setup(const char * path);
     void getSensor(sensorid_t id, char * value) throw(Serial::ReadError);
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
-    void setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError);
+    // Pass in the desired value
+    // The value getting replaced is passed back out
+    void setSensor(sensorid_t id, int32_t *value) throw(Serial::WriteError);
     void switchLight(bool on) throw(Serial::WriteError);
   };
   

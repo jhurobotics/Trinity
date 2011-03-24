@@ -64,7 +64,7 @@ void Arduino::setMotor(motorid_t id, int32_t value) throw(Serial::WriteError) {
   }
 }
 
-void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) {
+void Arduino::setSensor(sensorid_t id, int32_t *value) throw(Serial::WriteError) {
   struct cmd {
     uint8_t name;
     uint8_t id;
@@ -74,6 +74,7 @@ void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) 
   struct resp {
     uint8_t name;
     uint8_t id;
+    int32_t val;
     uint8_t end;
   };
   union {
@@ -83,13 +84,14 @@ void Arduino::setSensor(sensorid_t id, int32_t value) throw(Serial::WriteError) 
   };
   cmd.name = SET_SENSOR;
   cmd.id = id;
-  cmd.val = value;
+  cmd.val = *value;
   cmd.end = END;
   serial.Write(buff, 7);
-  serial.Read(buff, 3);
+  serial.Read(buff, 7);
   if( resp.name != SET_SENSOR || resp.id != id || resp.end != END ) {
     throw Serial::WriteError();
   }
+  (*value) = resp.val;
 }
 
 void Arduino::switchLight(bool on) throw(Serial::WriteError) {
