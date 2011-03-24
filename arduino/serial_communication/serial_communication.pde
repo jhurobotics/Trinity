@@ -12,18 +12,6 @@ static float sonarVals[SONAR_COUNT];
 #define ENC_CHAN_1 0x01
 #define ENC_CHAN_2 0x02
 volatile long encoderVals[ENCODER_COUNT];
-/*
- 0 0
- 0 1
- 1 1
- 1 0
- */
-/*static byte possibleStates[] = {
-  0,
-  ENC_CHAN_1,
-  ENC_CHAN_1 | ENC_CHAN_2,
-  ENC_CHAN_2
-};*/
 // The order in which the states should occur
 static byte stateMap[4] = {
   0,
@@ -31,7 +19,6 @@ static byte stateMap[4] = {
   3,
   2
 };
-// index into the previous array
 volatile byte encoderState[ENCODER_COUNT];
 
 inline byte encoderStatus(byte pinStart) {
