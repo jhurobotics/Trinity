@@ -8,7 +8,7 @@ volatile long encoderVals[ENCODER_COUNT];
 
 #define SENSOR_COUNT 6
 // index into the array is the id of that sensor
-unsigned char* sensorVals[SENSOR_COUNT+1];
+byte* sensorVals[SENSOR_COUNT+1];
 
 #define MOTOR_PIN_START
 
@@ -21,41 +21,41 @@ enum name_t {
   SET_LIGHT = 0x04,
 };
 
-static const unsigned char MOTOR_FLAG = 0x80;
-static const unsigned char END = 0xFF;
+static const byte MOTOR_FLAG = 0x80;
+static const byte END = 0xFF;
 
 typedef struct get_command_t {
-  unsigned char name;
-  unsigned char id;
-  unsigned char end;
+  byte name;
+  byte id;
+  byte end;
 } get_command_t;
 typedef struct set_command_t {
-  unsigned char name;
-  unsigned char id;
+  byte name;
+  byte id;
   long val;
-  unsigned char end;
+  byte end;
 } set_command_t;
 typedef struct light_command_t {
-  unsigned char name;
-  unsigned char state;
-  unsigned char end;
+  byte name;
+  byte state;
+  byte end;
 } light_command_t;
 
 
-static unsigned char read() {
+static byte read() {
   int result = 0;
   do {
     result = Serial.read();
   } while( result != -1 );
-  return (unsigned char)result;
+  return (byte)result;
 }
 
-static bool read(unsigned char * b) {
+static bool read(byte * b) {
   int result = 0;
-  for( unsigned char i = 0; i < 10; i++ ) {
+  for( byte i = 0; i < 10; i++ ) {
     result = Serial.read();
     if( result != -1 ) {
-      (*b) = (unsigned char)result;
+      (*b) = (byte)result;
       return true;
     }
   }
@@ -64,21 +64,21 @@ static bool read(unsigned char * b) {
 
 static void fail() {
   // Arduino compiler won't let me &END in the last line,
-  // So use an extra unsigned char ... sigh ...
+  // So use an extra byte ... sigh ...
   while( Serial.read() != -1 ) ;
-  unsigned char buff = END;
+  byte buff = END;
   Serial.write(&buff, 1);
 }
 
-void getValue(struct get_command_t get_cmd) {
+static void getValue(struct get_command_t get_cmd) {
   struct resp {
-    unsigned char name;
-    unsigned char id;
-    unsigned char val[4];
-    unsigned char end;
+    byte name;
+    byte id;
+    byte val[4];
+    byte end;
   };
   union {
-    unsigned char buff[sizeof(struct resp)];
+    byte buff[sizeof(struct resp)];
     struct resp resp;
   };
   
@@ -94,7 +94,7 @@ void getValue(struct get_command_t get_cmd) {
   
   resp.name = GET;
   resp.id = get_cmd.id;
-  for( unsigned char i = 0; i < sizeof(long); i++ ) {
+  for( byte i = 0; i < sizeof(long); i++ ) {
     resp.val[i] = sensorVals[get_cmd.id][i];
   }
   resp.end = END;
@@ -108,13 +108,13 @@ static void setMotor(struct set_command_t set_cmd) {
 static void setSensor(struct set_command_t set_cmd) {
   // Send the response back
   struct resp {
-    unsigned char name;
-    unsigned char id;
+    byte name;
+    byte id;
     long val;
-    unsigned char end;
+    byte end;
   };
   union {
-    unsigned char buff[sizeof(struct resp)];
+    byte buff[sizeof(struct resp)];
     struct resp resp;
   };
   
@@ -142,18 +142,18 @@ static void setLight(struct light_command_t light_cmd) {
   
   digitalWrite(LED_PIN, (light_cmd.state ? HIGH : LOW ));
   
-  Serial.write((unsigned char*)&light_cmd, sizeof(light_cmd));
+  Serial.write((byte*)&light_cmd, sizeof(light_cmd));
 }
 
 void parseCommand() {
   union {
-    unsigned char data[7];
+    byte data[7];
     get_command_t get_cmd;
     set_command_t set_cmd;
     light_command_t light_cmd;
   };
   data[0] = (name_t)read();
-  // I need to read at least 2 more unsigned chars, so do it now:
+  // I need to read at least 2 more bytes, so do it now:
   if( !read(&data[1]) ) {
     fail();
     return;
@@ -168,14 +168,14 @@ void parseCommand() {
       break;
     case SET_MOTOR:
     case SET_SENSOR:
-      // read in 4 more unsigned chars
-      for( unsigned char i = 0; i < 4; i++) {
+      // read in 4 more bytes
+      for( byte i = 0; i < 4; i++) {
         if( !read(&data[i+3]) ) {
           fail();
           return;
         }
       }
-      // the last unsigned char in both cases must be END, so check here
+      // the last byte in both cases must be END, so check here
       if( data[6] != END ) {
         fail();
         return;
@@ -198,10 +198,10 @@ void setup() {
   // These values are specified in the robot configuration
   int sensCount = 0;
   for( int i = 0; i < ENCODER_COUNT; i++ ) {
-    sensorVals[++sensCount] = (unsigned char*)(encoderVals+i);
+    sensorVals[++sensCount] = (byte*)(encoderVals+i);
   }
   for( int i = 0; i < SONAR_COUNT; i++ ) {
-    sensorVals[++sensCount] = (unsigned char*)(sonarVals+i);
+    sensorVals[++sensCount] = (byte*)(sonarVals+i);
   }
   
   Serial.begin(9600);
