@@ -56,6 +56,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA0FE2DA133A96E4009EDEB5 /* serial_communication.pde */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; name = serial_communication.pde; path = arduino/serial_communication/serial_communication.pde; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		DA29583B12CD1310003D4584 /* simmotors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simmotors.h; sourceTree = "<group>"; };
 		DA29583C12CD1310003D4584 /* simmotors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simmotors.cpp; sourceTree = "<group>"; };
 		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		08FB7794FE84155DC02AAC07 /* sim */ = {
 			isa = PBXGroup;
 			children = (
+				DA0FE2DA133A96E4009EDEB5 /* serial_communication.pde */,
 				DAFD410E12DED1BB00E5D62C /* generated_sources */,
 				DAFD404C12DECBDE00E5D62C /* qt */,
 				DAC75F4412C8597F00E7E711 /* src */,
