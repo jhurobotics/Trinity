@@ -242,6 +242,24 @@ void parseCommand() {
   }
 }
 
+void ping(int id) {
+  unsigned long startTime, endTime;
+  byte pin = id + SONAR_PIN_START;
+  
+  // trigger the ping
+  pinMode(pin, OUTPUT);
+  digitalWrite(id, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(id, LOW);
+  pinMode(id, INPUT);
+  
+  while( digitalRead(id) == LOW ) ; // wait for the holdoff time
+  startTime = micros(); // record the time the signal goes high
+  while( digitalRead(id) == HIGH ) ;
+  endTime = micros();
+  
+  sonarVals[id] = (endTime - startTime)*0.0343;
+}
 
 void setup() {
   pinMode(13, OUTPUT);
@@ -261,11 +279,16 @@ void setup() {
   attachInterrupt(1, right_encoder_tick, CHANGE);
   
   Serial.begin(9600);
-  
+  while( Serial.available() > 0 ) {
+    parseCommand();
+  }
 }
 
 void loop() {
-  if(Serial.available() > 0) {
-    parseCommand();
+  for( byte i = 0; i < SONAR_COUNT; i++ ) {
+    ping(i);
+    while( Serial.available() > 0 ) {
+      parseCommand();
+    }
   }
 }
