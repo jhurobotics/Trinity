@@ -165,6 +165,13 @@ namespace robot {
       HALLWAY,
       SCAN
     } curMode;
+    enum ScanModes {
+      START = 0,
+      TURN_RIGHT,
+      SCAN_LEFT,
+      FINISHED,
+      VERIFY_READING
+    } curScanMode;
     math::Node * currentObjective;
     
     std::set<RangeSensor*> rangeFinders;
@@ -195,6 +202,7 @@ namespace robot {
     virtual void act() throw(); // do one iteration of its thang.
   protected:
     void hallway() throw();
+    void scan() throw();
   public:
     // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {

@@ -27,7 +27,6 @@ AbstractRobot * robot::new_robot(robot::Implementation imp) throw(BadRobotImplem
   case SONAR:
     return new SonarRobot;
   case CPP_1:
-    return new CandleScanner;
   case CPP_2:
   default:
     throw BadRobotImplementation();
@@ -136,7 +135,8 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   input.close();
 }
 
-SonarRobot::SonarRobot() throw() : curMode(INIT), currentObjective(NULL), rangeFinders(),
+SonarRobot::SonarRobot() throw() : curMode(INIT), curScanMode(START),
+                                   currentObjective(NULL), rangeFinders(),
                                    control(), edges(), path(), position()
 {
 }
@@ -190,6 +190,9 @@ void robot::SonarRobot::act() throw() {
     case HALLWAY:
       hallway();
       break;
+    case SCAN:
+      scan();
+      break;
     default:
       break;
   }
@@ -214,7 +217,14 @@ void SonarRobot::hallway() throw() {
     control->setAngularVelocity(0);
     moving = false;
     if( !currentObjective->checked ) {
-    //  curMode = SCAN;
+      if( currentObjective->room ) {
+        curMode = SCAN;
+      }
+      else {
+        // we're in a hallway, and we need to do something about it
+        // we need to check out something in the hallway
+        // this is probably where one of the uncertain doors is
+      }
     }
     else {
       int dir = graph->traverse();
@@ -246,6 +256,63 @@ void SonarRobot::hallway() throw() {
       }
       control->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
     }
+  }
+}
+
+// turn 180 degrees to the left in 8 seconds
+#define SCAN_SPEED M_PI / 8
+
+void SonarRobot::scan() throw() {
+  static float startAngle;
+  float diff;
+  switch( curScanMode ) {
+    case START:
+      startAngle = slammer->getPose().angle();
+      control->setVelocity(0);
+      control->setAngularVelocity( -SCAN_SPEED);
+      curScanMode = TURN_RIGHT;
+    case TURN_RIGHT:
+      diff = startAngle - slammer->getPose().angle();
+      if( diff < 0 ) {
+        diff += 2*M_PI;
+      }
+      if( diff < M_PI / 2 ) {
+        break;
+      }
+      else {
+        // start the left scan
+        curScanMode = SCAN_LEFT;
+        control->setAngularVelocity( SCAN_SPEED );
+      }
+    case SCAN_LEFT:
+      // check to see if we saw anthing
+      // if( see something ) {
+      //  say something;
+      //  curMode = VERIFY_READING;
+      //  motors->setAngularVelocity(0);
+      //  break;
+      // }
+      diff = slammer->getPose().angle() - startAngle;
+      if( diff < 0 ) {
+        diff += 2*M_PI;
+      }
+      if( diff < M_PI / 2 || diff > 3 * M_PI / 2) {
+        break;
+      }
+      else {
+        curScanMode = FINISHED;
+        control->setAngularVelocity(0);
+      }
+    case FINISHED:
+      // return to hallway mode
+      curScanMode = START;
+      curMode = HALLWAY;
+      break;
+    case VERIFY_READING:
+      // No-op for now
+      control->setAngularVelocity(SCAN_SPEED);
+      curScanMode = SCAN_LEFT;
+      break;
   }
 }
 
