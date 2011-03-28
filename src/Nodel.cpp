@@ -177,6 +177,7 @@ void math::read_graph(Graph * g, const char * path) {
       curNode = new Node();
       g->vertices.insert(curNode);
       nodes[astring] = curNode;
+      curNode->name = astring;
     }
     else if( astring == "room" ) {
       if( !curNode ) {

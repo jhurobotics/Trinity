@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <set>
+#include <string>
 #include "geometry.h"
 
 #ifndef __NODEL_H__
@@ -33,6 +34,7 @@ namespace math {
         int number; // node id for trouble shooting
         int searched;  // for traversing the graph
         bool room;
+        std::string name;
         Node(int id=0) : position(vec2(0,0), 5){
            for(int i=0; i<4; ++i) {
              paths[i]=NULL;
