@@ -135,7 +135,8 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   input.close();
 }
 
-SonarRobot::SonarRobot() throw() : curMode(INIT), curScanMode(START),
+SonarRobot::SonarRobot() throw() : curMode(INIT), curDecision(ROOM1A),
+                                  decidingEye(NULL), curScanMode(START),
                                    currentObjective(NULL), rangeFinders(),
                                    control(), edges(), path(), position()
 {
@@ -165,6 +166,7 @@ void robot::SonarRobot::act() throw() {
         break;
       }
       else {
+        // tell Nodel which way we're facing
         static const vec2 NORTH( 0, 1);
         static const vec2 EAST ( 1, 0);
         curMode = HALLWAY;
@@ -189,6 +191,9 @@ void robot::SonarRobot::act() throw() {
       }
     case HALLWAY:
       hallway();
+      break;
+    case HALLWAY_CHECK:
+      hallwayCheck();
       break;
     case SCAN:
       scan();
@@ -224,6 +229,20 @@ void SonarRobot::hallway() throw() {
         // we're in a hallway, and we need to do something about it
         // we need to check out something in the hallway
         // this is probably where one of the uncertain doors is
+        curMode = HALLWAY_CHECK;
+        if( currentObjective->name == "ROOM1A_ENTER" ) {
+          curDecision = ROOM1A;
+        }
+        else if( currentObjective->name == "ROOM2_ENTER" ) {
+          curDecision = ROOM1B;
+        }
+        else if( currentObjective->name == "ROOM4A_ENTER" ) {
+          curDecision = ROOM4A;
+        }
+        else if( currentObjective->name == "ROOM4B_ENTER" ) {
+          curDecision = ROOM4B;
+        }
+        hallwayCheck();
       }
     }
     else {
@@ -256,6 +275,107 @@ void SonarRobot::hallway() throw() {
       }
       control->setAngularVelocity(TURN_SPEED * (delta > 0 ? 1 : -1 ));
     }
+  }
+}
+
+// the robot will take this many measurements
+// before it decides that a wall is or is not there
+#define DECISION_THRESHOLD  4
+// If the measurements average less than 20 cm, then assume
+// that there is a wall in that direction
+#define WALL_CUTOFF         20.0
+
+void SonarRobot::hallwayCheck() throw() {
+  if( ! decidingEye ) {
+    vec2 dir;
+    switch( curDecision ) {
+      case ROOM1A:
+      case ROOM1B:
+        dir = vec2(-1, 0);
+        break;
+      case ROOM4A:
+        dir = vec2(0, 1);
+        break;
+      case ROOM4B:
+        dir = vec2(0, -1);
+        break;
+    }
+    // find the sensor lookiing in the given absolute direction
+    rangeIter_t end = rangeFinders.end();
+    for( rangeIter_t iter = rangeFinders.begin(); iter != end && !decidingEye; iter++ ) {
+      if( position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir) > 0.99 ) {
+        decidingEye = *iter;
+      }
+    }
+    totalMeasure = lastMeasurement = decidingEye->getValue();
+    decisionCount = 1;
+  }
+  
+  float measure = decidingEye->getValue();
+  if( measure != lastMeasurement ) {
+    lastMeasurement = measure;
+    totalMeasure += lastMeasurement;
+    decisionCount ++;
+    if( decisionCount >= DECISION_THRESHOLD ) {
+      float avgDist = totalMeasure / static_cast<float>(decisionCount);
+      Node * doors[2];
+      Node * openNode;
+      Node * closeNode;
+      switch( curDecision ) {
+        case ROOM1A:
+          doors[0] = graph->nodeByName["ROOM1_ENTER"];
+          doors[0] = graph->nodeByName["ROOM2_ENTER"];
+          if( avgDist > WALL_CUTOFF ) {
+            openNode = graph->nodeByName["ROOM1A"];
+            closeNode = graph->nodeByName["ROOM1B"];
+          }
+          else {
+            openNode = graph->nodeByName["ROOM1B"];
+            closeNode = graph->nodeByName["ROOM1A"];
+          }
+          break;
+        case ROOM1B:
+          doors[0] = graph->nodeByName["ROOM1_ENTER"];
+          doors[0] = graph->nodeByName["ROOM2_ENTER"];
+          if( avgDist > WALL_CUTOFF ) {
+            openNode = graph->nodeByName["ROOM1B"];
+            closeNode = graph->nodeByName["ROOM1A"];
+          }
+          else {
+            openNode = graph->nodeByName["ROOM1A"];
+            closeNode = graph->nodeByName["ROOM1B"];
+          }
+          break;
+        case ROOM4A:
+          doors[0] = graph->nodeByName["ROOM4A_ENTER"];
+          doors[0] = graph->nodeByName["ROOM4B_ENTER"];
+          if( avgDist > WALL_CUTOFF ) {
+            openNode = graph->nodeByName["ROOM4A"];
+            closeNode = graph->nodeByName["ROOM4B"];
+          }
+          else {
+            openNode = graph->nodeByName["ROOM4B"];
+            closeNode = graph->nodeByName["ROOM4A"];
+          }
+          break;
+        case ROOM4B:
+          doors[0] = graph->nodeByName["ROOM4A_ENTER"];
+          doors[0] = graph->nodeByName["ROOM4B_ENTER"];
+          if( avgDist > WALL_CUTOFF ) {
+            openNode = graph->nodeByName["ROOM4B"];
+            closeNode = graph->nodeByName["ROOM4A"];
+          }
+          else {
+            openNode = graph->nodeByName["ROOM4A"];
+            closeNode = graph->nodeByName["ROOM4B"];
+          }
+          break;
+      }
+      doors[0]->checked = doors[1]->checked = true;
+      closeNode->checked = true;
+    }
+    decidingEye = NULL;
+    curMode = HALLWAY;
   }
 }
 

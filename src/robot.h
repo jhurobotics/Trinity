@@ -163,8 +163,21 @@ namespace robot {
     enum BotModes {
       INIT,
       HALLWAY,
-      SCAN
+      HALLWAY_CHECK,
+      SCAN,
     } curMode;
+    
+    enum HallChoices {
+      ROOM1A,
+      ROOM1B,
+      ROOM4A,
+      ROOM4B,
+    } curDecision;
+    RangeSensor * decidingEye;
+    float lastMeasurement;
+    float totalMeasure;
+    unsigned char decisionCount;
+    
     enum ScanModes {
       START = 0,
       TURN_RIGHT,
@@ -175,6 +188,7 @@ namespace robot {
     math::Node * currentObjective;
     
     std::set<RangeSensor*> rangeFinders;
+    typedef std::set<RangeSensor*>::iterator rangeIter_t;
     std::set<Encoder*> encoders;
     MotorControl * control;
     
@@ -202,6 +216,7 @@ namespace robot {
     virtual void act() throw(); // do one iteration of its thang.
   protected:
     void hallway() throw();
+    void hallwayCheck() throw();
     void scan() throw();
   public:
     // SLAM is added before reading the config
