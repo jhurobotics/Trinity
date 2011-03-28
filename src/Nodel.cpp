@@ -210,6 +210,11 @@ void math::read_graph(Graph * g, const char * path) {
       input >> astring >> bstring;
       Node * aNode = nodes[astring];
       Node * bNode = nodes[bstring];
+      if( !aNode || !bNode ) {
+        cout << "Edge between nonexistent nodes: " << astring << " and " << bstring << "\n";
+        input.ignore(LONG_MAX, '\n');
+        continue;
+      }
       vec2 disp = aNode->position.center - bNode->position.center;
       float d;
       if( abs(d = disp.dot(NORTH)/disp.mag()) > 0.9 ) {
