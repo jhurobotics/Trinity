@@ -166,7 +166,6 @@ void math::read_graph(Graph * g, const char * path) {
   ifstream input(path);
   
   string astring;
-  std::map<string, Node*> nodes;
   Node * curNode = NULL;
   while( input ) {
     input >> astring;
@@ -177,7 +176,7 @@ void math::read_graph(Graph * g, const char * path) {
       input >> astring;
       curNode = new Node();
       g->vertices.insert(curNode);
-      nodes[astring] = curNode;
+      g->nodeByName[astring] = curNode;
       curNode->name = astring;
     }
     else if( astring == "room" ) {
@@ -208,8 +207,8 @@ void math::read_graph(Graph * g, const char * path) {
     else if( astring == "EDGE" ) {
       string bstring;
       input >> astring >> bstring;
-      Node * aNode = nodes[astring];
-      Node * bNode = nodes[bstring];
+      Node * aNode = g->nodeByName[astring];
+      Node * bNode = g->nodeByName[bstring];
       if( !aNode || !bNode ) {
         cout << "Edge between nonexistent nodes: " << astring << " and " << bstring << "\n";
         input.ignore(LONG_MAX, '\n');

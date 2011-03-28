@@ -88,6 +88,7 @@ namespace math {
         std::vector<Node*> route;   // route will be filled when traverse is called
         int nodecount;    // give each node a unique ID for trouble shooting
         std::set<Node*> vertices;
+        std::map<std::string, Node*> nodeByName;
         Graph(bool left, bool right, bool front, bool back=false) {
             H=new Node(); 
             cur=H; 
