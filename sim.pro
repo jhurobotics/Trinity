@@ -16,6 +16,7 @@ SOURCES += \
     src/Nodel.cpp \
     src/serial.cpp \
     src/arduino.cpp \
+    src/maestro.cpp \
     src/setup.cpp \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
