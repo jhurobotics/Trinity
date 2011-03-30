@@ -21,6 +21,12 @@ struct timeval robot::time(void) {
   return tv;
 }
 
+#ifndef timevalcmp
+#define timevalcmp(l, r, cmp) \
+ (((tvp)->tv_sec == (uvp)->tv_sec) ?				\
+ ((tvp)->tv_usec cmp (uvp)->tv_usec) :			\
+ ((tvp)->tv_sec cmp (uvp)->tv_sec))
+#endif
 
 // returns the difference between two times in microseconds
 unsigned long robot::time_diff(struct timeval first, struct timeval second) {
