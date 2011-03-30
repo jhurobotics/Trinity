@@ -84,7 +84,7 @@
 		DAADDDBF12FCC09800B11B07 /* slam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slam.h; sourceTree = "<group>"; };
 		DAADDE2012FCD57A00B11B07 /* mcl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mcl.cpp; sourceTree = "<group>"; };
 		DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeasurementModel.cpp; sourceTree = "<group>"; };
-		DAB40508132D3311005500E1 /* controllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = controllers.h; path = ../controllers.h; sourceTree = "<group>"; };
+		DAB40508132D3311005500E1 /* controllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllers.h; sourceTree = "<group>"; };
 		DABEF4F9132C8FE9002D4E22 /* maestro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maestro.cpp; sourceTree = "<group>"; };
 		DABEF4FA132C8FE9002D4E22 /* maestro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maestro.h; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };

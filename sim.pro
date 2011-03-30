@@ -37,6 +37,7 @@ HEADERS  += \
     src/timers.h \
     src/serial.h \
     src/arduino.h \
+    src/controllers.h \
     src/slam/slam.h \
     src/slam/simslam.h \
     qt/mapwidget.h \
