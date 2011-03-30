@@ -22,7 +22,7 @@ struct timeval robot::time(void) {
 }
 
 #ifndef timevalcmp
-#define timevalcmp(l, r, cmp) \
+#define timevalcmp(tvp, uvp, cmp) \
  (((tvp)->tv_sec == (uvp)->tv_sec) ?				\
  ((tvp)->tv_usec cmp (uvp)->tv_usec) :			\
  ((tvp)->tv_sec cmp (uvp)->tv_sec))
