@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <map>
+#include <limits.h>
 #include "geometryio.h"
 #include "Nodel.h"
 using namespace std;

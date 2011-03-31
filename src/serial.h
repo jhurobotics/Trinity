@@ -3,6 +3,7 @@
  */
 
 #include <exception>
+#include <stdlib.h>
 
 #ifndef __SERIAL_H__
 #define __SERIAL_H__
