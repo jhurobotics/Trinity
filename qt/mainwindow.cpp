@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
   //change later for myself.
 
-  setRobotPath(QString("/Users/paul/Desktop/Trinity/robots/first"));
-  setSensorPath(QString("/Users/paul/Desktop/Trinity/sensors"));
-  setMapPath(QString("/Users/paul/Desktop/Trinity/maps/basic_map"));
+  setRobotPath(QString("../robots/first"));
+  setSensorPath(QString("../sensors"));
+  setMapPath(QString("../maps/basic_map"));
 
   openDialog->setWindowModality(Qt::ApplicationModal);
   openDialog->setAcceptMode(QFileDialog::AcceptOpen);
