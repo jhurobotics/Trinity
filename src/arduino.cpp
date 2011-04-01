@@ -118,6 +118,24 @@ void Arduino::switchLight(bool on) throw(Serial::WriteError) {
   }
 }
 
+void Arduino::buttonWait() throw(Serial::WriteError) {
+  struct cmd {
+    uint8_t name;
+    uint8_t end;
+  };
+  union {
+    char buff[2];
+    struct cmd cmd;
+  };
+  cmd.name = BUTTON_WAIT;
+  cmd.end = END;
+  serial.Write(buff, 2);
+  serial.Read(buff, 2);
+  if( cmd.name != BUTTON_WAIT || cmd.end != END ) {
+    throw Serial::WriteError(-1);
+  }
+}
+
 static inline int32_t convertVelocity(float vel, Motor m) {
   return static_cast<int32_t>((vel - m.minSpeed)/(m.maxSpeed - m.minSpeed)) * INT_MAX;
 }
