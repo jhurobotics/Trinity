@@ -95,13 +95,13 @@ static byte read() {
   int result = 0;
   do {
     result = Serial.read();
-  } while( result != -1 );
+  } while( result == -1 );
   return (byte)result;
 }
 
 static bool read(byte * b) {
   int result = 0;
-  for( byte i = 0; i < 10; i++ ) {
+  for( byte i = 0; i < 1000; i++ ) {
     result = Serial.read();
     if( result != -1 ) {
       (*b) = (byte)result;
@@ -201,7 +201,7 @@ void parseCommand() {
     set_command_t set_cmd;
     light_command_t light_cmd;
   };
-  data[0] = (name_t)read();
+  data[0] = read();
   // I need to read at least 2 more bytes, so do it now:
   if( !read(&data[1]) ) {
     fail();
@@ -286,7 +286,7 @@ void setup() {
 
 void loop() {
   for( byte i = 0; i < SONAR_COUNT; i++ ) {
-    ping(i);
+    //ping(i);
     while( Serial.available() > 0 ) {
       parseCommand();
     }
