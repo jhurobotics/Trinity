@@ -21,7 +21,7 @@ SOURCES += \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
-    src/CandleScan.cpp
+    src/CandleScan.cpp \
     qt/mapwidget.cpp \
     qt/robotwidget.cpp \
 
