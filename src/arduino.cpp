@@ -4,7 +4,7 @@
 #include "controllers.h"
 using namespace robot;
 
-void Arduino::setup(const char * path) {
+void Arduino::setup(const char * path) throw(Serial::OpenError) {
   serial.Open(path);
 }
 
@@ -31,7 +31,7 @@ void Arduino::getSensor(sensorid_t id, char * value) throw(Serial::ReadError) {
   serial.Write(buff, 3);
   serial.Read(buff, 7);
   if( resp.name != GET || resp.id != id || resp.end != END ) {
-    throw Serial::ReadError();
+    throw Serial::ReadError(-1);
   }
   memcpy(value, resp.val, 4);
 }
@@ -60,7 +60,7 @@ void Arduino::setMotor(motorid_t id, int32_t value) throw(Serial::WriteError) {
   serial.Write(buff, 7);
   serial.Read(buff, 3);
   if( resp.name != SET_MOTOR || resp.id != id || resp.end != END ) {
-    throw Serial::WriteError();
+    throw Serial::WriteError(-1);
   }
 }
 
@@ -89,7 +89,7 @@ void Arduino::setSensor(sensorid_t id, int32_t *value) throw(Serial::WriteError)
   serial.Write(buff, 7);
   serial.Read(buff, 7);
   if( resp.name != SET_SENSOR || resp.id != id || resp.end != END ) {
-    throw Serial::WriteError();
+    throw Serial::WriteError(-1);
   }
   (*value) = resp.val;
 }
@@ -110,7 +110,7 @@ void Arduino::switchLight(bool on) throw(Serial::WriteError) {
   serial.Write(buff, 3);
   serial.Read(buff, 3);
   if( cmd.name != SET_LIGHT || cmd.state != (on ? 1 : 0 ) || cmd.end != END ) {
-    throw Serial::WriteError();
+    throw Serial::WriteError(-1);
   }
 }
 

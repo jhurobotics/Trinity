@@ -26,7 +26,7 @@ namespace robot {
     static const motorid_t MOTOR_FLAG = 0x80;
     static const uint8_t END = 0xFF;
     
-    void setup(const char * path);
+    void setup(const char * path) throw(Serial::OpenError);
     void getSensor(sensorid_t id, char * value) throw(Serial::ReadError);
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
     // Pass in the desired value
