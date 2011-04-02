@@ -2,6 +2,7 @@
  * Interface to the Arduino
  */
 #include <stdint.h>
+#include <assert.h>
 #include "serial.h"
 #include "robot.h"
 
@@ -13,6 +14,7 @@ namespace robot {
   class Arduino {
   protected:
     Serial serial;
+    void getSensor_internal(sensorid_t id, char * value) throw(Serial::ReadError);
   public:
     Arduino() throw() {}
     
@@ -27,8 +29,15 @@ namespace robot {
     static const uint8_t END = 0xFF;
     
     void setup(const char * path) throw(Serial::OpenError);
-    void getSensor(sensorid_t id, char * value) throw(Serial::ReadError);
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
+    template<typename T>
+    void getSensor(sensorid_t id, T * value) throw(Serial::ReadError) {
+      assert(sizeof(T) == 4);
+      getSensor_internal(id, reinterpret_cast<char*>(value));
+    }
+    void getSensor(sensorid_t id, int32_t * value) throw(Serial::ReadError) {
+      getSensor_internal(id, reinterpret_cast<char*>(value));
+    }
     // Pass in the desired value
     // The value getting replaced is passed back out
     void setSensor(sensorid_t id, int32_t *value) throw(Serial::WriteError);
