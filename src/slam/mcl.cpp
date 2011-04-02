@@ -145,15 +145,18 @@ Pose MCL::getPose() {
   return getAverage(*next_belief);
 }
 
+#ifndef NO_GUI
 #ifndef __APPLE__
 #include <GL/gl.h>
 #else
 #include <OpenGL/gl.h>
 #endif
+#endif
 
 #define RED 1.0, 0.0, 0.0
 
 void MCL::draw() {
+#ifndef NO_GUI
   const belief_t& bel = ( cur_bel ? bels[1] : bels[0] );
   glColor4f(RED, 1.0);
   
@@ -180,4 +183,5 @@ void MCL::draw() {
     
     glPopMatrix();
   }
+#endif
 }

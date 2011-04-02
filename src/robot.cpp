@@ -18,7 +18,6 @@
 #include "arduino.h"
 #include "maestro.h"
 #include "timers.h"
-#include "CandleScan.h"
 using namespace robot;
 using namespace math;
 
@@ -521,6 +520,7 @@ Encoder * SensorFactory::encoder(const std::string& name) throw(WrongSensorKind)
 #define THOUGHT 1.0, 1.0, 0.5
 
 void SonarRobot::draw() {
+#ifndef NO_GUI
   glPointSize(4.0);
   glColor4f(BLUE, 1.0);
   glBegin(GL_POINTS);
@@ -569,4 +569,5 @@ void SonarRobot::draw() {
     glEnd();
     glPopMatrix();
   }
+#endif
 }

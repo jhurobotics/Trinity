@@ -5,10 +5,12 @@
 #include <iostream>
 #include <fstream>
 #include <climits>
+#ifndef NO_GUI
 #ifndef __APPLE__
 #include <GL/gl.h>
 #else
 #include <OpenGL/gl.h>
+#endif
 #endif
 #include "geometryio.h"
 #include "map.h"
@@ -71,6 +73,7 @@ Map* sim::read_map(const char* path) {
 }
 
 void sim::draw_map(Map * map, bool start, bool doCandles) {
+#ifndef NO_GUI
   glMatrixMode(GL_MODELVIEW);
   glLineWidth(2.0);
   glBegin(GL_LINES);
@@ -111,4 +114,5 @@ void sim::draw_map(Map * map, bool start, bool doCandles) {
     }
   }
   glFlush();
+#endif
 }

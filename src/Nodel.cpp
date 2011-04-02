@@ -55,10 +55,12 @@ int Graph::traverse(Node ** next) {
   return Direction;
 }
 
+#ifndef NO_GUI
 #ifndef __APPLE__
 #include <GL/gl.h>
 #else
 #include <OpenGL/gl.h>
+#endif
 #endif
 
 #define RED 1.0, 0.0, 0.0
@@ -67,6 +69,7 @@ int Graph::traverse(Node ** next) {
 #define WHITE 1.0, 1.0, 1.0
 
 void Graph::draw() {
+#ifndef NO_GUI
   set<Node*>::iterator vEnd = vertices.end();
   for( set<Node*>::iterator iter = vertices.begin(); iter != vEnd; iter++ ) {
     Node * n = *iter;
@@ -107,6 +110,7 @@ void Graph::draw() {
     }
     glEnd();
   }
+#endif
 }
 
 // for trouble shooting
