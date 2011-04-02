@@ -68,6 +68,7 @@ enum name_t {
   SET_MOTOR = 0x02,
   SET_SENSOR = 0x03,
   SET_LIGHT = 0x04,
+  BUTTON_WAIT = 0x05,
 };
 
 static const byte MOTOR_FLAG = 0x80;
@@ -194,6 +195,17 @@ static void setLight(struct light_command_t light_cmd) {
   Serial.write((byte*)&light_cmd, sizeof(light_cmd));
 }
 
+#define BUTTON_PIN  12
+
+static void button_wait(void) {
+  digitalWrite(BUTTON_PIN, HIGH);
+  while( digitalRead(BUTTON_PIN) == HIGH )
+    ;
+  digitalWrite(BUTTON_PIN, LOW);
+  Serial.write(BUTTON_WAIT);
+  Serial.write(END);
+}
+
 void parseCommand() {
   union {
     byte data[7];
@@ -201,25 +213,28 @@ void parseCommand() {
     set_command_t set_cmd;
     light_command_t light_cmd;
   };
-  data[0] = read();
-  // I need to read at least 2 more bytes, so do it now:
-  if( !read(&data[1]) ) {
+  if( !read(&data[0]) ) {
     fail();
     return;
   }
-  if( !read(&data[2]) ) {
+  // I need to read at least 1 more byte, so do it now:
+  if( !read(&data[1]) ) {
     fail();
     return;
   }
   switch (data[0]) {
     case GET:
+      if( !read(&data[2]) || data[2] != END ) {
+        fail();
+        return;
+      }
       getValue(get_cmd);
       break;
     case SET_MOTOR:
     case SET_SENSOR:
       // read in 4 more bytes
-      for( byte i = 0; i < 4; i++) {
-        if( !read(&data[i+3]) ) {
+      for( byte i = 2; i < 7; i++) {
+        if( !read(&data[i]) ) {
           fail();
           return;
         }
@@ -237,7 +252,18 @@ void parseCommand() {
       }
       break;
     case SET_LIGHT:
+      if( !read(&data[2]) || data[2] != END ) {
+        fail();
+        return;
+      }
       setLight(light_cmd);
+      break;
+    case BUTTON_WAIT:
+      if( data[1] != END ) {
+        fail();
+        return;
+      }
+      button_wait();
       break;
   }
 }
@@ -277,6 +303,8 @@ void setup() {
   
   attachInterrupt(0, left_encoder_tick, CHANGE);  
   attachInterrupt(1, right_encoder_tick, CHANGE);
+  
+  pinMode(BUTTON_PIN, INPUT);
   
   Serial.begin(9600);
   while( Serial.available() > 0 ) {
