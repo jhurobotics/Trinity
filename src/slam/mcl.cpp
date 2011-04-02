@@ -16,7 +16,7 @@ using namespace math;
 #define M_PI 3.14159265358979323846264338327950288
 #endif
 
-void MCL::initialize(Pose start, float range, const sim::Map& m) {
+void MCL::initialize(Pose start, float range, sim::Map* m) {
   bels[0].clear();
   bels[0].reserve(START_P_COUNT);
   bels[1].clear();

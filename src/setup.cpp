@@ -69,7 +69,7 @@ sim::World * create_world(AbstractRobot * bot,
 
   sim::Map * map = sim::read_map(mapPath);
   robot::MCL * mcl = new robot::MCL();
-  mcl->initialize(map->start, 10, *map);
+  mcl->initialize(map->start, 10, map);
   bot->addSlam(mcl);
   
   // create the factories

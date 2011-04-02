@@ -16,7 +16,7 @@ float MCL::minDist(const Ray& ray, const Pose& x) {
   // In the perfect simulation model,
   // find the nearest distance
   float dist = -10;
-  const std::vector<sim::Wall>& walls = map.walls;
+  const std::vector<sim::Wall>& walls = map->walls;
   for( unsigned int i = 0; i < walls.size(); i++ ) {
     const sim::Wall& curWall = walls[i];
     float curDist = distance(absPos, curWall);
