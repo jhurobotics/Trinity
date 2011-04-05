@@ -32,7 +32,7 @@ namespace robot {
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
     template<typename T>
     void getSensor(sensorid_t id, T * value) throw(Serial::ReadError) {
-      assert(sizeof(T) == 4);
+      assert(sizeof(value) == 4); 
       getSensor_internal(id, reinterpret_cast<char*>(value));
     }
     void getSensor(sensorid_t id, int32_t * value) throw(Serial::ReadError) {
