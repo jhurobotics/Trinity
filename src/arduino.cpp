@@ -8,7 +8,7 @@ void Arduino::setup(const char * path) throw(Serial::OpenError) {
   serial.Open(path);
 }
 
-void Arduino::getSensor(sensorid_t id, char * value) throw(Serial::ReadError) {
+void Arduino::getSensor_internal(sensorid_t id, char * value) throw(Serial::ReadError) {
   struct cmd {
     uint8_t name;
     uint8_t id;
@@ -130,12 +130,12 @@ void ArduinoMotors::sendCommand() {
 
 float ArduinoSonar::getValue() {
   float distance;
-  arduino->getSensor(id, reinterpret_cast<char*>(&distance));
+  arduino->getSensor(id, &distance);
   return distance;
 }
 
 long ArduinoEncoder::getCount() {
-  long count;
-  arduino->getSensor(id, reinterpret_cast<char*>(&count));
+  int32_t count;
+  arduino->getSensor(id, &count);
   return count;
 }

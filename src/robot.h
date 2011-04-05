@@ -144,6 +144,7 @@ namespace robot {
       }
       graph = g;
     }
+    virtual void addMap(sim::Map * m, std::string name) = 0;
     // Takes ownership of SLAM, will delete it if replaced
     virtual void addSlam(SLAM * s) {
       if( slammer ) {
@@ -186,15 +187,29 @@ namespace robot {
       VERIFY_READING
     } curScanMode;
     math::Node * currentObjective;
-    
+
+    enum mapNames {
+      map_1A_4A = 0,
+      map_1A_4B = 1,
+      map_1B_4A = 2,
+      map_1B_4B = 3,
+    };
+
+
     std::set<RangeSensor*> rangeFinders;
     typedef std::set<RangeSensor*>::iterator rangeIter_t;
     std::set<Encoder*> encoders;
     MotorControl * control;
-    
+
     float size;
     std::vector<math::vec2> edges;
     std::vector<math::vec2> path;
+
+
+    //Store all the maps in a vector, so that we can switch between maps whenever necessary
+    std::vector<sim::Map*> mapVector;
+    int mapVectorCurrentIndex;
+
   public:
     std::vector<math::vec2> realPoints;
   protected:
@@ -236,7 +251,25 @@ namespace robot {
     virtual void addMotor(Motor m) {
       control->addMotor(m);
     }
+    
+    virtual void addMap(sim::Map* m, std::string name) {
+      //ok. So lets name all the maps "1A_2A" and so on so forth. I will write code here based on this system.
 
+      int i;
+      //apparently we can use string comparisons using "==".
+      if(name == "map_1A_4A")
+	i=map_1A_4A;
+      else if(name == "map_1A_4B")
+	i=map_1A_4B;
+      else if(name == "map_1B_4A")
+	i=map_1B_4A;
+      else if(name == "map_1B_4B")
+	i=map_1B_4B;
+
+      mapVector[i]= m;
+
+      // Juneki!
+    }
     virtual void draw();
     virtual const math::Ray& getPosition() throw() {
       return position;

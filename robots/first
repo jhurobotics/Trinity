@@ -15,3 +15,8 @@ motor Vex LEFT  1 -10 10
 motor Vex RIGHT 2 -10 10
 
 graph graph
+
+map 1A_4A ../maps/basic_map
+map 1B_4A ../maps/other_map
+map 1A_4B ../maps/stuff_map
+map 1B_4B ../maps/stufstuff_map

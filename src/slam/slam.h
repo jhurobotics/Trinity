@@ -36,6 +36,7 @@ namespace robot {
     //! The MCL needs to get rid of all the initial noise,
     //! but then gives very accurate results
     virtual bool settled() = 0;
+    virtual void setMap(sim::Map* m) = 0;
   }; // class SLAM
   
   class MCL : public SLAM {
@@ -49,7 +50,7 @@ namespace robot {
     
     belief_t bels[2];
     unsigned char cur_bel;
-    sim::Map map;
+    sim::Map* map;
     Pose lastPose;
     long lastCount[2];
     long tmpCount[2];
@@ -73,7 +74,13 @@ namespace robot {
       odometryNoise[2] = odometryNoise[3] = 0.7;
       cycleCount = 0;
     }
-    void initialize(Pose start, float range, const sim::Map& m);
+    void initialize(Pose start, float range, sim::Map* m);
+    virtual void setMap(sim::Map* m) {
+      map = m;
+    }
+    void setMap(const sim::Map& m) {
+      
+    }
     virtual Pose getPose();
     virtual Pose increment(Pose curPose) {
       return determineNext(curPose, tmpCount);

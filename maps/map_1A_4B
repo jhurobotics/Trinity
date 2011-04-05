@@ -1,0 +1,51 @@
+# Basic Arena
+# origin in lower left
+# units = centimeters
+# wall startX startY endX endY
+# door startX startY endX endY
+# start x y dirx diry
+# candle x y
+
+width 248
+height 248
+start 95 225 0 -1
+
+# Room 2
+wall 0 91 72 91
+wall 72 46 72 90.9
+door 72 0 72 46
+candle 5 5
+candle 5 85
+candle 65 85
+wall 70 46 71.9 46
+
+# Room 1
+wall 128 0 128 45
+door 128 45 128 91
+wall 128 91 248 91
+candle 135 5
+candle 235 5
+candle 235 85
+wall 128 45.1 130 45
+wall 128 89 128 90.9
+
+# Room 4
+wall 128 137 201.9 137
+wall 202 137.1 202 201.9
+door 202.1 202 146.1 202 
+wall 146.1 202 128 202
+wall 128 202 128 137
+candle 135 195
+candle 195 195
+candle 195 145
+wall 202 201.9 200 201.9
+wall 146.1 202 146.1 200
+
+# Room 3
+door 0 137 46 137
+wall 46 137 72 137
+wall 72 137 72 248
+candle 5 240
+candle 65 240
+candle 65 145
+wall 46 137 46 139

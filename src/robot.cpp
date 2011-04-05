@@ -129,6 +129,13 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       math::read_graph(g, graphPath.c_str());
       bot->addGraph(g);
     }
+    else if( astring == "map" ) {
+      std::string name;
+      input >> name;
+      input >> astring;
+      sim::Map * map = sim::read_map(astring.c_str());
+      bot->addMap(map, name);
+    }
   }
     
   input.close();
@@ -139,6 +146,8 @@ SonarRobot::SonarRobot() throw() : curMode(INIT), curDecision(ROOM1A),
                                    currentObjective(NULL), rangeFinders(),
                                    control(), edges(), path(), position()
 {
+  mapVector.reserve(4);
+  mapVectorCurrentIndex=0;
 }
 
 void robot::SonarRobot::act() throw() {
@@ -282,7 +291,7 @@ void SonarRobot::hallway() throw() {
 #define DECISION_THRESHOLD  4
 // If the measurements average less than 20 cm, then assume
 // that there is a wall in that direction
-#define WALL_CUTOFF         20.0
+#define WALL_CUTOFF         30.0
 
 void SonarRobot::hallwayCheck() throw() {
   if( ! decidingEye ) {
@@ -311,6 +320,7 @@ void SonarRobot::hallwayCheck() throw() {
   }
   
   float measure = decidingEye->getValue();
+
   if( measure != lastMeasurement ) {
     lastMeasurement = measure;
     totalMeasure += lastMeasurement;
@@ -327,10 +337,34 @@ void SonarRobot::hallwayCheck() throw() {
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM1A"];
             closeNode = graph->nodeByName["ROOM1B"];
+
+	    if(mapVectorCurrentIndex == map_1B_4A)
+	      {
+		mapVectorCurrentIndex = map_1A_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4B)
+	      {
+		mapVectorCurrentIndex = map_1A_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	   
           }
           else {
             openNode = graph->nodeByName["ROOM1B"];
             closeNode = graph->nodeByName["ROOM1A"];
+
+	    if(mapVectorCurrentIndex == map_1A_4A)
+	      {
+		mapVectorCurrentIndex = map_1B_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1A_4B)
+	      {
+		mapVectorCurrentIndex = map_1B_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+
           }
           break;
         case ROOM1B:
@@ -339,10 +373,34 @@ void SonarRobot::hallwayCheck() throw() {
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM1B"];
             closeNode = graph->nodeByName["ROOM1A"];
+
+	    if(mapVectorCurrentIndex == map_1A_4A)
+	      {
+		mapVectorCurrentIndex = map_1B_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1A_4B)
+	      {
+		mapVectorCurrentIndex = map_1B_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+
           }
           else {
             openNode = graph->nodeByName["ROOM1A"];
             closeNode = graph->nodeByName["ROOM1B"];
+	    
+	    if(mapVectorCurrentIndex == map_1B_4A)
+	      {
+		mapVectorCurrentIndex = map_1A_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4B)
+	      {
+		mapVectorCurrentIndex = map_1A_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+
           }
           break;
         case ROOM4A:
@@ -351,10 +409,33 @@ void SonarRobot::hallwayCheck() throw() {
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM4A"];
             closeNode = graph->nodeByName["ROOM4B"];
+
+	    if(mapVectorCurrentIndex == map_1A_4B)
+	      {
+		mapVectorCurrentIndex = map_1A_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4B)
+	      {
+		mapVectorCurrentIndex = map_1B_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+
           }
           else {
             openNode = graph->nodeByName["ROOM4B"];
             closeNode = graph->nodeByName["ROOM4A"];
+	    
+	    if(mapVectorCurrentIndex == map_1A_4A)
+	      {
+		mapVectorCurrentIndex = map_1A_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4A)
+	      {
+		mapVectorCurrentIndex = map_1B_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
           }
           break;
         case ROOM4B:
@@ -363,10 +444,34 @@ void SonarRobot::hallwayCheck() throw() {
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM4B"];
             closeNode = graph->nodeByName["ROOM4A"];
+	    
+	    if(mapVectorCurrentIndex == map_1A_4A)
+	      {
+		mapVectorCurrentIndex = map_1A_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4A)
+	      {
+		mapVectorCurrentIndex = map_1B_4B;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    
           }
           else {
             openNode = graph->nodeByName["ROOM4A"];
             closeNode = graph->nodeByName["ROOM4B"];
+
+	    if(mapVectorCurrentIndex == map_1A_4B)
+	      {
+		mapVectorCurrentIndex = map_1A_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+	    else if(mapVectorCurrentIndex == map_1B_4B)
+	      {
+		mapVectorCurrentIndex = map_1B_4A;
+		slammer->setMap(mapVector[mapVectorCurrentIndex]);
+	      }
+
           }
           break;
       }
