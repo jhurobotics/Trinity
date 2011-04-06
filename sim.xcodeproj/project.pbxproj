@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		DA2EC8DA12F3747A0029F044 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC8D912F3747A0029F044 /* timers.cpp */; };
-		DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA35B15E13020DCD00DAD788 /* Nodel.cpp */; };
 		DA36E5791344332C00330758 /* arduinoTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA36E5771344319D00330758 /* arduinoTest.cpp */; };
 		DA36E57A134433CF00330758 /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC921329C4D600493D34 /* arduino.cpp */; };
 		DA36E57B134433D600330758 /* serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC951329C4D600493D34 /* serial.cpp */; };
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DA675316134D2097000F8C39 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA675314134D2097000F8C39 /* graph.cpp */; };
 		DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */; };
 		DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC052132AEEF6003DD620 /* moc_robotwidget.cpp */; };
 		DA72DC981329C4D600493D34 /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC921329C4D600493D34 /* arduino.cpp */; };
@@ -74,7 +74,6 @@
 		DA2EC8D812F3747A0029F044 /* timers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timers.h; sourceTree = "<group>"; };
 		DA2EC8D912F3747A0029F044 /* timers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = timers.cpp; sourceTree = "<group>"; };
 		DA35B15D13020DBE00DAD788 /* simslam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simslam.h; sourceTree = "<group>"; };
-		DA35B15E13020DCD00DAD788 /* Nodel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Nodel.cpp; sourceTree = "<group>"; };
 		DA35B2EF130227B200DAD788 /* Encoder */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Encoder; sourceTree = "<group>"; };
 		DA36E56E1344317300330758 /* arduinoTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = arduinoTest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA36E5771344319D00330758 /* arduinoTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = arduinoTest.cpp; path = src/arduinoTest.cpp; sourceTree = SOURCE_ROOT; };
@@ -85,12 +84,13 @@
 		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DA675314134D2097000F8C39 /* graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph.cpp; sourceTree = "<group>"; };
+		DA675315134D2097000F8C39 /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robotwidget.cpp; sourceTree = "<group>"; };
 		DA6AC050132AE9B4003DD620 /* robotwidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robotwidget.h; sourceTree = "<group>"; };
 		DA6AC052132AEEF6003DD620 /* moc_robotwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = moc_robotwidget.cpp; sourceTree = "<group>"; };
 		DA72DC921329C4D600493D34 /* arduino.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = arduino.cpp; sourceTree = "<group>"; };
 		DA72DC931329C4D600493D34 /* arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arduino.h; sourceTree = "<group>"; };
-		DA72DC941329C4D600493D34 /* Nodel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Nodel.h; sourceTree = "<group>"; };
 		DA72DC951329C4D600493D34 /* serial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = serial.cpp; sourceTree = "<group>"; };
 		DA72DC961329C4D600493D34 /* serial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = serial.h; sourceTree = "<group>"; };
 		DA72DC971329C4D600493D34 /* setup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setup.cpp; sourceTree = "<group>"; };
@@ -222,8 +222,8 @@
 				DABEF4F9132C8FE9002D4E22 /* maestro.cpp */,
 				DAC75F4612C859F900E7E711 /* map.h */,
 				DAC75F7012C85E1600E7E711 /* map.cpp */,
-				DA72DC941329C4D600493D34 /* Nodel.h */,
-				DA35B15E13020DCD00DAD788 /* Nodel.cpp */,
+				DA675315134D2097000F8C39 /* graph.h */,
+				DA675314134D2097000F8C39 /* graph.cpp */,
 				DA5F5BCD12C96A6800BEA4B0 /* robot.h */,
 				DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */,
 				DA72DC961329C4D600493D34 /* serial.h */,
@@ -488,13 +488,13 @@
 				DAADDDC012FCC09800B11B07 /* OdometryModel.cpp in Sources */,
 				DAADDE2112FCD57A00B11B07 /* mcl.cpp in Sources */,
 				DAADDE6312FCD96600B11B07 /* MeasurementModel.cpp in Sources */,
-				DA35B15F13020DCD00DAD788 /* Nodel.cpp in Sources */,
 				DA72DC981329C4D600493D34 /* arduino.cpp in Sources */,
 				DA72DC991329C4D600493D34 /* serial.cpp in Sources */,
 				DA72DC9A1329C4D600493D34 /* setup.cpp in Sources */,
 				DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */,
 				DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */,
 				DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */,
+				DA675316134D2097000F8C39 /* graph.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

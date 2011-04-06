@@ -123,10 +123,10 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
     }
     else if( astring == "graph" ) {
       input >> astring;
-      Graph * g = new Graph(0,0,0,0);
+      Graph * g = new Graph();
       std::string pathStr = path;
       std::string graphPath = pathStr.substr(0, pathStr.find_last_of('/')+1) + astring;
-      math::read_graph(g, graphPath.c_str());
+      read_graph(g, graphPath.c_str());
       bot->addGraph(g);
     }
     else if( astring == "map" ) {
@@ -173,30 +173,6 @@ void robot::SonarRobot::act() throw() {
       if( !slammer->settled() ) {
         break;
       }
-      else {
-        // tell Nodel which way we're facing
-        static const vec2 NORTH( 0, 1);
-        static const vec2 EAST ( 1, 0);
-        curMode = HALLWAY;
-        vec2 dir = position.dir();
-        float d;
-        if( abs(d = dir.dot(NORTH)) > 0.5 ) {
-          if( d > 0 ) {
-            graph->turn(N);
-          }
-          else {
-            graph->turn(S);
-          }
-        }
-        else {
-          if( dir.dot(EAST) > 0 ) {
-            graph->turn(E);
-          }
-          else {
-            graph->turn(W);
-          }
-        }
-      }
     case HALLWAY:
       hallway();
       break;
@@ -216,12 +192,9 @@ void robot::SonarRobot::act() throw() {
 
 void SonarRobot::hallway() throw() {
   static bool moving = false;
-  static int cur_dir = 0;
   if( !currentObjective ) {
     // get an objective!
-    cur_dir = graph->traverse(&currentObjective);
-    graph->turn(cur_dir);
-    graph->move();
+    currentObjective = graph->getObjective(position.origin());
   }
   
   // am I at the objective?
@@ -254,11 +227,7 @@ void SonarRobot::hallway() throw() {
       }
     }
     else {
-      int dir = graph->traverse();
-      currentObjective = graph->cur->getnode(dir);
-      int destDir = (dir + cur_dir) % 4;
-      graph->turn(destDir);
-      graph->move();
+      currentObjective = graph->getObjective(position.origin());
     }
   }
   else { // get there
@@ -531,6 +500,7 @@ void SonarRobot::scan() throw() {
       // return to hallway mode
       curScanMode = START;
       curMode = HALLWAY;
+      currentObjective->checked = true;
       break;
     case VERIFY_READING:
       // No-op for now

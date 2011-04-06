@@ -379,6 +379,15 @@ namespace math {
       float dy = p.y - center.y;
       return dx*dx + dy*dy < _radius * _radius;
     }
+    
+    bool operator<(const Circle& o) {
+      if( _radius == o._radius ) {
+        return center < o.center;
+      }
+      else {
+        return _radius < o._radius;
+      }
+    }
   }; // class Circle
   
   // doesn't have to be a wall, but I need a name...

@@ -13,7 +13,7 @@ SOURCES += \
     src/map.cpp \
     src/geometry.cpp \
     src/timers.cpp \
-    src/Nodel.cpp \
+    src/graph.cpp \
     src/serial.cpp \
     src/arduino.cpp \
     src/maestro.cpp \
@@ -37,6 +37,7 @@ HEADERS  += \
     src/timers.h \
     src/serial.h \
     src/arduino.h \
+    src/graph.h \
     src/controllers.h \
     src/slam/slam.h \
     src/slam/simslam.h \
