@@ -13,6 +13,7 @@ void Maestro::setup(const char *path) {
 }
 
 void Maestro::setChannel(id_t channel, uint16_t value) {
+  value *= 4;
   unsigned char command[] = {
     0x84, channel, value & 0x7F, (value >> 7) & 0x7F
   };
