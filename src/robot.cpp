@@ -456,26 +456,24 @@ void SonarRobot::hallwayCheck() throw() {
 #define SCAN_SPEED M_PI / 8
 
 void SonarRobot::scan() throw() {
-  static float startAngle;
-  float diff;
+  static vec2 targetDir;
   switch( curScanMode ) {
     case START:
-      startAngle = slammer->getPose().angle();
+      targetDir = slammer->getPose().dir();
+      // Rotate Pi/2 CW
+      targetDir = vec2(targetDir.y, targetDir.x);
       control->setVelocity(0);
       control->setAngularVelocity( -SCAN_SPEED);
       curScanMode = TURN_RIGHT;
     case TURN_RIGHT:
-      diff = startAngle - slammer->getPose().angle();
-      if( diff < 0 ) {
-        diff += 2*M_PI;
-      }
-      if( diff < M_PI / 2 ) {
+      if( position.dir().dot(targetDir) < 0.99 ) {
         break;
       }
       else {
         // start the left scan
         curScanMode = SCAN_LEFT;
         control->setAngularVelocity( SCAN_SPEED );
+        targetDir *= -1;
       }
     case SCAN_LEFT:
       // check to see if we saw anthing
@@ -485,11 +483,7 @@ void SonarRobot::scan() throw() {
       //  motors->setAngularVelocity(0);
       //  break;
       // }
-      diff = slammer->getPose().angle() - startAngle;
-      if( diff < 0 ) {
-        diff += 2*M_PI;
-      }
-      if( diff < M_PI / 2 || diff > 3 * M_PI / 2) {
+      if( position.dir().dot(targetDir) < 0.99 ) {
         break;
       }
       else {
