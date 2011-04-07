@@ -70,8 +70,8 @@ namespace robot {
     public:
     explicit MCL() {
       cur_bel = 0;
-      odometryNoise[0] = odometryNoise[1] = 0.1;
-      odometryNoise[2] = odometryNoise[3] = 0.7;
+      odometryNoise[0] = odometryNoise[1] = 0.2;
+      odometryNoise[2] = odometryNoise[3] = 0.4;
       cycleCount = 0;
     }
     void initialize(Pose start, float range, sim::Map* m);

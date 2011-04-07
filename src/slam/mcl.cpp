@@ -107,7 +107,17 @@ Pose MCL::determineNext(Pose curPose, long encCount[2])
     angle = curPose.angle()+theta;
     return Ray(origin, angle);
   }
-  
+
+  if( fabsf(s1+s2) < 0.1 && fabsf(s1)+fabsf(s2) > 0.1 ) {
+    odometryNoise[0] = odometryNoise[1] = 0.0;
+    odometryNoise[2] = odometryNoise[3] = 0.0;
+  }
+  else {
+    odometryNoise[0] = odometryNoise[1] = 0.2;
+    odometryNoise[2] = odometryNoise[3] = 0.4;
+  }
+
+
   float r = s1 * d / (s2 - s1);
   origin = (encoders[1]->relPos - encoders[0]->relPos)*r + curPose.origin();
   float R = r + d / 2;
