@@ -22,13 +22,21 @@ Graph::~Graph() {
 }
 
 Node * Graph::onNode(const vec2& pos ) {
+  Node * closest = NULL;
+  float dist = -1.0;
+  float d;
   set<Node*>::iterator end = vertices.end();
   for( set<Node*>::iterator iter = vertices.begin(); iter != end; iter++ ) {
     if( (*iter)->position.contains(pos) ) {
       return *iter;
     }
+    d = (pos - (*iter)->position.center).mag_sq();
+    if( !closest || d < dist ) {
+      dist = d;
+      closest = (*iter);
+    }
   }
-  return NULL;
+  return closest;
 }
 
 struct D_Data {
@@ -227,9 +235,9 @@ void Graph::draw() {
     neighbor_iter_t end = n->links.end();
     glColor4f(GREEN, 1.0);
     glBegin(GL_LINES);
-    for( neighbor_iter_t iter = n->links.begin(); iter != end; iter++ ) {
+    for( neighbor_iter_t l_iter = n->links.begin(); l_iter != end; l_iter++ ) {
       glVertex2f(n->position.center.x, n->position.center.y);
-      glVertex2f((*iter)->position.center.x, (*iter)->position.center.y);
+      glVertex2f((*l_iter)->position.center.x, (*l_iter)->position.center.y);
     }
     glEnd();
     
