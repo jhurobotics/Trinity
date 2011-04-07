@@ -37,10 +37,13 @@ namespace robot {
     //! but then gives very accurate results
     virtual bool settled() = 0;
     virtual void setMap(sim::Map* m) = 0;
+    virtual bool isInitialized() = 0;
+    virtual void initialize(Pose start, float range, sim::Map* m) = 0;
   }; // class SLAM
   
   class MCL : public SLAM {
     protected:
+    bool inited;
     std::set<RangeSensor*> rangeFinders;
     std::vector<Encoder*> encoders;
     typedef std::vector<Pose> belief_t;
@@ -73,8 +76,12 @@ namespace robot {
       odometryNoise[0] = odometryNoise[1] = 0.2;
       odometryNoise[2] = odometryNoise[3] = 0.4;
       cycleCount = 0;
+      inited = false;
     }
     void initialize(Pose start, float range, sim::Map* m);
+    bool isInitialized() {
+      return inited;
+    }
     virtual void setMap(sim::Map* m) {
       map = m;
     }

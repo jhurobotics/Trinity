@@ -31,6 +31,7 @@ void MCL::initialize(Pose start, float range, sim::Map* m) {
   lastCount[0] = lastCount[1] = 0;
   map = m;
   cycleCount = 0;
+  inited = true;
 }
 
 void MCL::low_variance_sampler(const weighted_belief_t & input, float total, unsigned long count,

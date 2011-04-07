@@ -148,6 +148,7 @@ SonarRobot::SonarRobot() throw() : curMode(INIT), curDecision(ROOM1A),
 {
   mapVector.reserve(4);
   mapVectorCurrentIndex=0;
+  slammer = new MCL();
 }
 
 void robot::SonarRobot::act() throw() {

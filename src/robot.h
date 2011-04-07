@@ -146,12 +146,6 @@ namespace robot {
     }
     virtual void addMap(sim::Map * m, std::string name) = 0;
     // Takes ownership of SLAM, will delete it if replaced
-    virtual void addSlam(SLAM * s) {
-      if( slammer ) {
-        delete slammer;
-      }
-      slammer = s;
-    }
     virtual void draw() { }
     virtual const math::Ray& getPosition() = 0;
     virtual void halt() = 0;
@@ -267,8 +261,9 @@ namespace robot {
 	i=map_1B_4B;
 
       mapVector[i]= m;
-
-      // Juneki!
+      if( !slammer->isInitialized() ) {
+        slammer->initialize(m->start, 10, m);
+      }
     }
     virtual void draw();
     virtual const math::Ray& getPosition() throw() {
