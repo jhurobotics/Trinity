@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <assert.h>
 #include "robot.h"
 #include "simulation.h"
 #include "arduino.h"
@@ -60,8 +61,9 @@ public:
 };
 
 sim::World * create_world(AbstractRobot * bot,
-                  const char *mapPath, const char *botPath, const char *sensLibPath,
-                  setupflags_t devices)
+                          const char *mapPath, const char *botPath, const char *sensLibPath,
+                          setupflags_t devices, const char * arduinoPath,
+                          const char * maestroPath)
 {
   HybridSensorFactory sensors(sensLibPath);
   MotorControl * motors;
@@ -113,6 +115,8 @@ sim::World * create_world(AbstractRobot * bot,
     }
     if( devices & ARDUINO_REQUIRED ) {
       Arduino * arduino = new Arduino();
+      assert(arduinoPath != NULL);
+      arduino->setup(arduinoPath);
       bot->setArduino(arduino);
       
       if( devices & MOTORS_ARDUINO ) {
@@ -132,6 +136,8 @@ sim::World * create_world(AbstractRobot * bot,
     
     if( devices & MAESTRO_REQUIRED ) {
       Maestro * maestro = new Maestro();
+      assert(maestroPath != NULL);
+      maestro->setup(maestroPath);
       bot->setMaestro(maestro);
       
       if( devices & MOTORS_MAESTRO ) {

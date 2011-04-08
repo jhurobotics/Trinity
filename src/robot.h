@@ -279,8 +279,8 @@ namespace robot {
   
   enum Implementation {
     SONAR,
+    SPEEDTEST,
     CPP_1,
-    CPP_2
   };
   class BadRobotImplementation : public std::exception {};
   AbstractRobot * new_robot(Implementation imp) throw(BadRobotImplementation);

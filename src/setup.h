@@ -41,7 +41,8 @@ namespace sim {
 #endif // __SIMULATION_H__
 
 sim::World * create_world(robot::AbstractRobot * bot,
-                               const char *mapPath, const char *botPath, const char *sensLibPath,
-                               setupflags_t devices);
+                          const char *mapPath, const char *botPath, const char *sensLibPath,
+                          setupflags_t devices, const char * arduinoPath,
+                          const char * maestroPath);
 
 #endif

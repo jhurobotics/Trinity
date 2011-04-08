@@ -1,4 +1,4 @@
-QT       -= core
+QT       -= core gui
 CONFIG += debug
 TARGET = cli
 TEMPLATE = app
