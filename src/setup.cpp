@@ -66,9 +66,9 @@ sim::World * create_world(AbstractRobot * bot,
   HybridSensorFactory sensors(sensLibPath);
   MotorControl * motors;
   sim::World * result = NULL;
-
-  sim::Map * map = sim::read_map(mapPath);
-  
+  if(!(devices & REAL_WORLD)) {
+    sim::Map * map = sim::read_map(mapPath);
+  }
   // create the factories
   if( devices & SIM_REQUIRED ) {
     sim::Simulation * theSim = NULL;
@@ -92,7 +92,9 @@ sim::World * create_world(AbstractRobot * bot,
     }
     
     result = theSim;
-    theSim->map = map;
+    if(!(devices & REAL_WORLD)) {
+      theSim->map = map;
+    }
     theSim->bot = bot;
     theSim->simBot.position = theSim->map->start;
     theSim->simBot.lastPosition = theSim->simBot.position;
