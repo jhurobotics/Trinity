@@ -85,6 +85,7 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
   StrToRay_t sensorPositions;
   std::ifstream input(path);
   std::string astring;
+  std::string pathStr = path;
   while( input ) {
     input >> astring;
     if( astring[0] == '#' ) { // comment, skip line
@@ -124,7 +125,6 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
     else if( astring == "graph" ) {
       input >> astring;
       Graph * g = new Graph();
-      std::string pathStr = path;
       std::string graphPath = pathStr.substr(0, pathStr.find_last_of('/')+1) + astring;
       read_graph(g, graphPath.c_str());
       bot->addGraph(g);
@@ -133,7 +133,8 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       std::string name;
       input >> name;
       input >> astring;
-      sim::Map * map = sim::read_map(astring.c_str());
+      std::string mapPath = pathStr.substr(0, pathStr.find_last_of('/')+1) + astring;
+      sim::Map * map = sim::read_map(mapPath.c_str());
       bot->addMap(map, name);
     }
   }
@@ -281,7 +282,7 @@ void SonarRobot::hallwayCheck() throw() {
     // find the sensor lookiing in the given absolute direction
     rangeIter_t end = rangeFinders.end();
     for( rangeIter_t iter = rangeFinders.begin(); iter != end && !decidingEye; iter++ ) {
-      if( position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir) > 0.99 ) {
+      if( position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir) > 0.9 ) {
         decidingEye = *iter;
       }
     }
