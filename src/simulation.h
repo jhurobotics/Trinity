@@ -1,4 +1,4 @@
-/*
+/* -*-C++-*-
  *  simulation.h
  *  sim
  */

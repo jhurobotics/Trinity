@@ -216,10 +216,12 @@ void robot::read_graph(Graph * g, const char * path) {
   }
 }
 
+#ifndef NO_GUI
 #ifndef __APPLE__
 #include <GL/gl.h>
 #else
 #include <OpenGL/gl.h>
+#endif
 #endif
 
 #define RED 1.0, 0.0, 0.0
@@ -228,6 +230,7 @@ void robot::read_graph(Graph * g, const char * path) {
 #define WHITE 1.0, 1.0, 1.0
 
 void Graph::draw() {
+#ifndef NO_GUI
   set<Node*>::iterator vEnd = vertices.end();
   for( set<Node*>::iterator iter = vertices.begin(); iter != vEnd; iter++ ) {
     Node * n = *iter;
@@ -268,13 +271,5 @@ void Graph::draw() {
     glPopMatrix();
   }
   
-  /*glColor4f(GREEN, 1.0);
-  set<Edge*>::iterator eEnd = edges.end();
-  for( set<Edge*>::iterator iter = edges.begin(); iter != eEnd; iter++ ) {
-    Edge * e = *iter;
-    glBegin(GL_LINES);
-    glVertex2f(e->start->position.center.x, e->start->position.center.y);
-    glVertex2f(e->end->position.center.x, e->end->position.center.y);
-    glEnd();
-  }*/
+#endif
 }
