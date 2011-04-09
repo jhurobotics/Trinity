@@ -31,9 +31,7 @@ void Arduino::getSensor_internal(sensorid_t id, char * value) throw(Serial::Read
   cmd.id = id;
   cmd.end = END;
   serial.Write(buff, 3);
-std::cout<<"--written!" <<std::endl;
   serial.Read(buff, 7);
-std::cout<<"--read!" <<std::endl;
   if( resp.name != GET || resp.id != id || resp.end != END ) {
     throw Serial::ReadError(-1);
   }
