@@ -31,9 +31,7 @@ namespace robot {
     
     void setup(const char * path) throw(Serial::OpenError);
     void setMotor(motorid_t id, int32_t value) throw(Serial::WriteError);
-    template<typename T>
-    void getSensor(sensorid_t id, T * value) throw(Serial::ReadError) {
-      assert(sizeof(value) == 4); 
+    void getSensor(sensorid_t id, float * value) throw(Serial::ReadError) {
       getSensor_internal(id, reinterpret_cast<char*>(value));
     }
     void getSensor(sensorid_t id, int32_t * value) throw(Serial::ReadError) {
