@@ -3,7 +3,7 @@
  * JHU Robotics Team Trinity Fire Fighting Robot
  */
 #define SONAR_COUNT     4
-#define SONAR_PIN_START 0
+#define SONAR_PIN_START 4
 
 static float sonarVals[SONAR_COUNT];
 
@@ -293,15 +293,14 @@ void ping(int id) {
   
   // trigger the ping
   pinMode(pin, OUTPUT);
-  digitalWrite(id, HIGH);
+  digitalWrite(pin, HIGH);
   delayMicroseconds(5);
-  digitalWrite(id, LOW);
-  pinMode(id, INPUT);
+  digitalWrite(pin, LOW);
+  pinMode(pin, INPUT);
   
-  while( digitalRead(id) == LOW ) ; // wait for the holdoff time
-  startTime = micros(); // record the time the signal goes high
-  while( digitalRead(id) == HIGH ) ;
-  endTime = micros();
+  while( digitalRead(pin) == LOW ) ; // wait for the holdoff time
+  endTime = startTime = micros(); // record the time the signal goes high
+  while( digitalRead(pin) == HIGH && (endTime = micros()) - startTime < 100000) ;
   
   sonarVals[id] = (endTime - startTime)*0.0343;
 }
@@ -310,7 +309,7 @@ void setup() {
   pinMode(13, OUTPUT);
   // These values are specified in the robot configuration
   int sensCount = 0;
-  for( int i = 0; i < ENCODER_COUNT; i++ ) {
+  for( byte i = 0; i < ENCODER_COUNT; i++ ) {
     encoderVals[i] = 0;
     sensorVals[++sensCount] = (byte*)(encoderVals+i);
   }
@@ -319,7 +318,7 @@ void setup() {
   digitalWrite(MULTIPLEX_PIN,LOW);
   encoderState[1] = encoderStatus();
   
-  for( int i = 0; i < SONAR_COUNT; i++ ) {
+  for( byte i = 0; i < SONAR_COUNT; i++ ) {
     sonarVals[i] = 0;
     sensorVals[++sensCount] = (byte*)(sonarVals+i);
   }
@@ -337,7 +336,7 @@ void setup() {
 
 void loop() {
   for( byte i = 0; i < SONAR_COUNT; i++ ) {
-    //ping(i);
+    ping(0);
     while( Serial.available() > 0 ) {
       parseCommand();
     }
