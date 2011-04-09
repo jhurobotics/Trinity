@@ -16,7 +16,7 @@ motor Vex RIGHT 2 -10  10
 
 graph graph
 
-map 1A_4A ../maps/basic_map
-map 1B_4A ../maps/other_map
-map 1A_4B ../maps/stuff_map
-map 1B_4B ../maps/stufstuff_map
+map 1A_4A ../maps/map_1A_4A
+map 1B_4A ../maps/map_1B_4A
+map 1A_4B ../maps/map_1A_4B
+map 1B_4B ../maps/map_1B_4B
