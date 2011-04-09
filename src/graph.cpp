@@ -61,7 +61,6 @@ bool D_compare(const D_Data * a, const D_Data * b) {
   return a->dist < b->dist;
 }
 
-
 Node * Graph::getObjective(const vec2& pos) throw(EmptyGraphException, AllCheckedException) {
   if( currentObjective ) {
     if( !currentObjective->position.contains(pos) ) {
@@ -99,6 +98,7 @@ Node * Graph::getObjective(const vec2& pos) throw(EmptyGraphException, AllChecke
   // do dijkstra's to find shortest path to unchecked nodes, add those to destinations
   for( unsigned int finCount = 0; finCount < vertices.size() && !unexplored.empty() ; finCount++) {
     D_Data * data = unexplored.front();
+    unexplored.pop_front();
     pop_heap(unexplored.begin(), unexplored.end(), D_compare);
     const Node * node = data->n;
     
@@ -181,6 +181,7 @@ void robot::read_graph(Graph * g, const char * path) {
     else if( astring == "NODE" ) {
       input >> astring;
       curNode = new Node();
+      curNode->name = astring;
       g->vertices.insert(curNode);
       g->nodeByName[astring] = curNode;
     }

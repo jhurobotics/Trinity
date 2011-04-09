@@ -305,7 +305,6 @@ void SonarRobot::hallwayCheck() throw() {
     lastMeasurement = measure;
     totalMeasure += lastMeasurement;
     decisionCount ++;
-    cout << "taken " << decisionCount << 
     if( decisionCount >= DECISION_THRESHOLD ) {
       float avgDist = totalMeasure / static_cast<float>(decisionCount);
       Node * doors[2];
@@ -314,7 +313,7 @@ void SonarRobot::hallwayCheck() throw() {
       switch( curDecision ) {
         case ROOM1A:
           doors[0] = graph->nodeByName["ROOM1_ENTER"];
-          doors[0] = graph->nodeByName["ROOM2_ENTER"];
+          doors[1] = graph->nodeByName["ROOM2_ENTER"];
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM1A"];
             closeNode = graph->nodeByName["ROOM1B"];
@@ -328,7 +327,7 @@ void SonarRobot::hallwayCheck() throw() {
           break;
         case ROOM1B:
           doors[0] = graph->nodeByName["ROOM1_ENTER"];
-          doors[0] = graph->nodeByName["ROOM2_ENTER"];
+          doors[1] = graph->nodeByName["ROOM2_ENTER"];
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM1B"];
             closeNode = graph->nodeByName["ROOM1A"];
@@ -342,7 +341,7 @@ void SonarRobot::hallwayCheck() throw() {
           break;
         case ROOM4A:
           doors[0] = graph->nodeByName["ROOM4A_ENTER"];
-          doors[0] = graph->nodeByName["ROOM4B_ENTER"];
+          doors[1] = graph->nodeByName["ROOM4B_ENTER"];
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM4A"];
             closeNode = graph->nodeByName["ROOM4B"];
@@ -356,7 +355,7 @@ void SonarRobot::hallwayCheck() throw() {
           break;
         case ROOM4B:
           doors[0] = graph->nodeByName["ROOM4A_ENTER"];
-          doors[0] = graph->nodeByName["ROOM4B_ENTER"];
+          doors[1] = graph->nodeByName["ROOM4B_ENTER"];
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM4B"];
             closeNode = graph->nodeByName["ROOM4A"];
@@ -371,10 +370,11 @@ void SonarRobot::hallwayCheck() throw() {
       }
       doors[0]->checked = doors[1]->checked = true;
       closeNode->checked = true;
+      slammer->setMap(mapVector[currentMapIndex]);
+      decidingEye = NULL;
+      curMode = HALLWAY;
+      currentObjective = graph->getObjective(position.origin());
     }
-    slammer->setMap(mapVector[currentMapIndex]);
-    decidingEye = NULL;
-    curMode = HALLWAY;
   }
 }
 
