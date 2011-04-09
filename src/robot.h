@@ -181,12 +181,16 @@ namespace robot {
       VERIFY_READING
     } curScanMode;
     Node * currentObjective;
-
+    
+#define map_1A 0x00
+#define map_1B 0x01
+#define map_4A 0x00
+#define map_4B 0x10
     enum mapNames {
-      map_1A_4A = 0,
-      map_1A_4B = 1,
-      map_1B_4A = 2,
-      map_1B_4B = 3,
+      map_1A_4A = map_1A | map_4A,
+      map_1A_4B = map_1A | map_4B,
+      map_1B_4A = map_1B | map_4A,
+      map_1B_4B = map_1B | map_4B,
     };
 
 
@@ -202,7 +206,7 @@ namespace robot {
 
     //Store all the maps in a vector, so that we can switch between maps whenever necessary
     std::vector<sim::Map*> mapVector;
-    int mapVectorCurrentIndex;
+    int currentMapIndex;
 
   public:
     std::vector<math::vec2> realPoints;
