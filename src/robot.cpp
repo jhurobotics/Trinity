@@ -18,7 +18,11 @@
 #include "arduino.h"
 #include "maestro.h"
 #include "timers.h"
+<<<<<<< Updated upstream
 #include "speedTest.h"
+=======
+
+>>>>>>> Stashed changes
 using namespace robot;
 using namespace math;
 
