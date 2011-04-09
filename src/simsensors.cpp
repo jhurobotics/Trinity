@@ -89,7 +89,7 @@ float sim::Ultrasonic::getValue() {
       }
 
       // is this actually the first thing that gets hit?
-      if( minDist(absPos.transformRayToAbsolute(dispRay)) < curDist ) {
+      if( minDist(absPos.transformRayToAbsolute(dispRay)) - curDist > 2 ) {
         continue;
       }
     }
