@@ -7,12 +7,24 @@
 
 static float sonarVals[SONAR_COUNT];
 
+#define MULTIPLEX_PIN 8
 #define ENCODER_COUNT   2
-#define ENCODER_PIN_START 4
+#define ENCODER_PIN_START 2
 #define ENC_CHAN_1 0x01
 #define ENC_CHAN_2 0x02
+
 volatile long encoderVals[ENCODER_COUNT];
 // The order in which the states should occur
+//
+//       _____      _____
+//  ____|     |____|     |
+//
+//  __      _____      ___
+//    |____|     |____|
+//
+//  1  0  1 0  1  0  1  0   XOR'ed
+//
+//  3  0  1 2  3  0  1  2   State   
 static byte stateMap[4] = {
   0,
   1,
@@ -21,37 +33,44 @@ static byte stateMap[4] = {
 };
 volatile byte encoderState[ENCODER_COUNT];
 
-inline byte encoderStatus(byte pinStart) {
+inline byte encoderStatus() {
   byte result = 0;
-  if( digitalRead(pinStart) == HIGH ) {
+  if( digitalRead(ENCODER_PIN_START) == HIGH ) {
     result |= ENC_CHAN_1;
   }
-  if( digitalRead(pinStart+1) == HIGH ) {
+  if( digitalRead(ENCODER_PIN_START+1) == HIGH ) {
     result |= ENC_CHAN_2;
   }
   return stateMap[result];
 }
 
+
+// new state 4
+// old state 0
+
+
 // these counters may be backwards
-void encoder_tick(byte pin) {
-  byte newState = encoderStatus(ENCODER_PIN_START + pin*2);
-  byte dir = (newState - encoderState[pin-1] + 4) % 4;
+void encoder_tick(byte lrFlag) {
+  byte newState = encoderStatus();
+  byte dir = (newState - encoderState[lrFlag] + 4) % 4;
   if( dir == 1 ) {
-    encoderVals[pin]++;
+    encoderVals[lrFlag]++;
   }
   else if( dir == 3) {
-    encoderVals[pin]--;
+    encoderVals[lrFlag]--;
   }
   else { // we missed a tick, this is bad, so just guess
-    encoderVals[pin] += dir;
+    encoderVals[lrFlag] += dir;
   }
 }
 
 void left_encoder_tick() {
+  digitalWrite(MULTIPLEX_PIN,HIGH);
   encoder_tick(0);
 }
 
 void right_encoder_tick() {
+  digitalWrite(MULTIPLEX_PIN,LOW);  
   encoder_tick(1);
 }
 
@@ -293,9 +312,13 @@ void setup() {
   int sensCount = 0;
   for( int i = 0; i < ENCODER_COUNT; i++ ) {
     encoderVals[i] = 0;
-    encoderState[i] = encoderStatus(i);
     sensorVals[++sensCount] = (byte*)(encoderVals+i);
   }
+  digitalWrite(MULTIPLEX_PIN,HIGH);
+  encoderState[0] = encoderStatus();
+  digitalWrite(MULTIPLEX_PIN,LOW);
+  encoderState[1] = encoderStatus();
+  
   for( int i = 0; i < SONAR_COUNT; i++ ) {
     sonarVals[i] = 0;
     sensorVals[++sensCount] = (byte*)(sonarVals+i);
