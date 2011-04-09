@@ -32,7 +32,6 @@ AbstractRobot * robot::new_robot(robot::Implementation imp) throw(BadRobotImplem
     return new SonarRobot;
   case SPEEDTEST:
     return new SpeedTest;
-  case CPP_1:
   default:
     throw BadRobotImplementation();
   }
@@ -144,18 +143,19 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       bot->addMap(map, name);
     }
   }
-    
+  
   input.close();
 }
 
-SonarRobot::SonarRobot() throw() : curMode(INIT), curDecision(ROOM1A),
-                                  decidingEye(NULL), curScanMode(START),
-                                   currentObjective(NULL), rangeFinders(),
-                                   control(), edges(), path(), position()
+SonarRobot::SonarRobot() throw() :  curMode(INIT), curDecision(ROOM1A),
+                                    decidingEye(NULL), curScanMode(START),
+                                    currentObjective(NULL), rangeFinders(),
+                                    control(), edges(), path(), position()
 {
   mapVector.reserve(4);
   currentMapIndex = 0;
   slammer = new MCL();
+  mapVector[0] = mapVector[1] = mapVector[2] = mapVector[3] = NULL;
 }
 
 void robot::SonarRobot::act() throw() {
@@ -202,7 +202,13 @@ void SonarRobot::hallway() throw() {
   static bool moving = false;
   if( !currentObjective ) {
     // get an objective!
-    currentObjective = graph->getObjective(position.origin());
+    try {
+      currentObjective = graph->getObjective(position.origin());
+    }
+    catch( Graph::AllCheckedException e) {
+      halt();
+      return;
+    }
   }
   
   // am I at the objective?
@@ -219,7 +225,7 @@ void SonarRobot::hallway() throw() {
         // we need to check out something in the hallway
         // this is probably where one of the uncertain doors is
         curMode = HALLWAY_CHECK;
-        if( currentObjective->name == "ROOM1A_ENTER" ) {
+        if( currentObjective->name == "ROOM1_ENTER" ) {
           curDecision = ROOM1A;
         }
         else if( currentObjective->name == "ROOM2_ENTER" ) {
@@ -240,7 +246,7 @@ void SonarRobot::hallway() throw() {
   }
   else { // get there
     vec2 disp = currentObjective->position.center - position.origin();
-      
+    
     disp.normalize();
     float curDir = position.angle();
     if( disp.dot(position.dir()) > 0.99 ) {
@@ -272,35 +278,49 @@ void SonarRobot::hallway() throw() {
 
 void SonarRobot::hallwayCheck() throw() {
   if( ! decidingEye ) {
-    vec2 dir;
     switch( curDecision ) {
       case ROOM1A:
       case ROOM1B:
-        dir = vec2(-1, 0);
+        doorDir = vec2(-1, 0);
         break;
       case ROOM4A:
-        dir = vec2(0, 1);
+        doorDir = vec2(0, 1);
         break;
       case ROOM4B:
-        dir = vec2(0, -1);
+        doorDir = vec2(0, -1);
         break;
     }
     // find the sensor lookiing in the given absolute direction
     rangeIter_t end = rangeFinders.end();
     float bestDot = -2.0;
     for( rangeIter_t iter = rangeFinders.begin(); iter != end && !decidingEye; iter++ ) {
-      float dot = position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir);
+      float dot = position.transformRayToAbsolute((*iter)->relPos).dir().dot(doorDir);
       if( dot > bestDot ) {
         bestDot = dot;
         decidingEye = *iter;
       }
     }
-    totalMeasure = lastMeasurement = decidingEye->getValue();
-    decisionCount = 1;
+    totalMeasure = lastMeasurement = 0;
+    decisionCount = 0;
+  }
+  
+  
+  vec2 lookDir = position.transformRayToAbsolute(decidingEye->relPos).dir();
+  float cross = lookDir.cross(doorDir);
+  if( cross > 0.2 ) {
+    control->setAngularVelocity(TURN_SPEED);
+    return;
+  }
+  else if( cross < -0.2 ) {
+    control->setAngularVelocity(-TURN_SPEED);
+    return;
+  }
+  else {
+    control->setAngularVelocity(0);
   }
   
   float measure = decidingEye->getValue();
-
+  
   if( measure != lastMeasurement ) {
     lastMeasurement = measure;
     totalMeasure += lastMeasurement;
@@ -336,7 +356,7 @@ void SonarRobot::hallwayCheck() throw() {
           else {
             openNode = graph->nodeByName["ROOM1A"];
             closeNode = graph->nodeByName["ROOM1B"];
-	    currentMapIndex |= map_1A;
+            currentMapIndex |= map_1A;
           }
           break;
         case ROOM4A:
@@ -350,7 +370,7 @@ void SonarRobot::hallwayCheck() throw() {
           else {
             openNode = graph->nodeByName["ROOM4B"];
             closeNode = graph->nodeByName["ROOM4A"];
-	    currentMapIndex |= map_4B;
+            currentMapIndex |= map_4B;
           }
           break;
         case ROOM4B:
@@ -359,7 +379,7 @@ void SonarRobot::hallwayCheck() throw() {
           if( avgDist > WALL_CUTOFF ) {
             openNode = graph->nodeByName["ROOM4B"];
             closeNode = graph->nodeByName["ROOM4A"];
-	    currentMapIndex |= map_4B;
+            currentMapIndex |= map_4B;
           }
           else {
             openNode = graph->nodeByName["ROOM4A"];
@@ -512,7 +532,7 @@ Encoder * SensorFactory::encoder(const std::string& name) throw(WrongSensorKind)
 #define GREEN 0.0, 1.0, 0.0
 #define BLUE 0.0, 0.0, 1.0
 #define WHITE 1.0, 1.0, 1.0
-#define THOUGHT 1.0, 1.0, 0.5
+#define THOUGHT 1.0, 0.0, 0.5
 
 void SonarRobot::draw() {
 #ifndef NO_GUI
@@ -549,7 +569,7 @@ void SonarRobot::draw() {
   glVertex2f(8.0, 0.0);
   glVertex2f(6.0, 2.0);
   glEnd();
-
+  
   glPopMatrix();
   
   if( currentObjective ) {

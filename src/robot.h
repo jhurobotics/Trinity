@@ -168,6 +168,7 @@ namespace robot {
       ROOM4A,
       ROOM4B,
     } curDecision;
+    math::vec2 doorDir;
     RangeSensor * decidingEye;
     float lastMeasurement;
     float totalMeasure;
@@ -255,14 +256,14 @@ namespace robot {
 
       int i;
       //apparently we can use string comparisons using "==".
-      if(name == "map_1A_4A")
-	i=map_1A_4A;
-      else if(name == "map_1A_4B")
-	i=map_1A_4B;
-      else if(name == "map_1B_4A")
-	i=map_1B_4A;
-      else if(name == "map_1B_4B")
-	i=map_1B_4B;
+      if(name == "1A_4A")
+        i = map_1A_4A;
+      else if(name == "1A_4B")
+        i = map_1A_4B;
+      else if(name == "1B_4A")
+        i = map_1B_4A;
+      else if(name == "1B_4B")
+        i = map_1B_4B;
 
       mapVector[i]= m;
       if( !slammer->isInitialized() ) {
