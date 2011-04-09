@@ -14,6 +14,7 @@
 		DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA47B86012C922EE00A7A0AF /* geometry.cpp */; };
 		DA5F5BD012C96A6800BEA4B0 /* robot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */; };
 		DA5F5BE012C96D4200BEA4B0 /* simsensors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */; };
+		DA668DCC1350D5CD0077B6E4 /* speedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */; };
 		DA675316134D2097000F8C39 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA675314134D2097000F8C39 /* graph.cpp */; };
 		DA6AC051132AE9B4003DD620 /* robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */; };
 		DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA6AC052132AEEF6003DD620 /* moc_robotwidget.cpp */; };
@@ -84,6 +85,8 @@
 		DA5F5BCE12C96A6800BEA4B0 /* robot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robot.cpp; sourceTree = "<group>"; };
 		DA5F5BDD12C96D4200BEA4B0 /* simsensors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simsensors.h; sourceTree = "<group>"; };
 		DA5F5BDE12C96D4200BEA4B0 /* simsensors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = simsensors.cpp; sourceTree = "<group>"; };
+		DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = speedTest.cpp; sourceTree = "<group>"; };
+		DA668DCB1350D5CD0077B6E4 /* speedTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speedTest.h; sourceTree = "<group>"; };
 		DA675314134D2097000F8C39 /* graph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph.cpp; sourceTree = "<group>"; };
 		DA675315134D2097000F8C39 /* graph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph.h; sourceTree = "<group>"; };
 		DA6AC04F132AE9B4003DD620 /* robotwidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = robotwidget.cpp; sourceTree = "<group>"; };
@@ -232,6 +235,8 @@
 				DA72DC971329C4D600493D34 /* setup.cpp */,
 				DAC9ADE612CAB49500691585 /* simulation.h */,
 				DAC9ADE712CAB49500691585 /* simulation.cpp */,
+				DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */,
+				DA668DCB1350D5CD0077B6E4 /* speedTest.h */,
 				DA2EC8D812F3747A0029F044 /* timers.h */,
 				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 			);
@@ -495,6 +500,7 @@
 				DA6AC053132AEEF6003DD620 /* moc_robotwidget.cpp in Sources */,
 				DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */,
 				DA675316134D2097000F8C39 /* graph.cpp in Sources */,
+				DA668DCC1350D5CD0077B6E4 /* speedTest.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +605,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUILD_ROOT = "$(SOURCE_ROOT)/build";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1.0;
@@ -655,6 +662,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				BUILD_ROOT = "$(SOURCE_ROOT)/build";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
