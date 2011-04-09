@@ -1,13 +1,19 @@
 #include <iostream>
-#include "../src/arduino.h"
+#include "arduino.h"
+#include "maestro.h"
 
 using namespace robot;
 
 int main(){
+/*	
+	Maestro *mae = new Maestro();
+	mae->setup("/dev/ttyUSB0");
+
+*/
+
 	
 	Arduino *ard = new Arduino();
 	ard->setup("/dev/ttyUSB0");
-	
 	int sensorId = 0;
 	float* sensorVal = (float*)new char[4];
 	for(;;){
@@ -21,5 +27,5 @@ int main(){
 
 		std::cout << "Sensor " << sensorId<< " just read " << *sensorVal <<std::endl;
 	}
-
+	
 }
