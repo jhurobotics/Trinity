@@ -2,18 +2,24 @@
  * Arduino software for the
  * JHU Robotics Team Trinity Fire Fighting Robot
  */
-#define SONAR_COUNT     4
-#define SONAR_PIN_START 4
+#define SONAR_COUNT        4
+#define SONAR_PIN_START    4
+#define MULTIPLEX_PIN      8
+#define ENCODER_COUNT      2
+#define ENCODER_PIN_START  2
+#define MOTOR_PIN_START    8
+#define ENC_CHAN_1      0x01
+#define ENC_CHAN_2      0x02
+#define BUTTON_PIN        11
+#define FAN_PIN           12
+#define LED_PIN           13
+#define SENSOR_COUNT      SONAR_COUNT + ENCODER_COUNT
 
 static float sonarVals[SONAR_COUNT];
-
-#define MULTIPLEX_PIN 8
-#define ENCODER_COUNT   2
-#define ENCODER_PIN_START 2
-#define ENC_CHAN_1 0x01
-#define ENC_CHAN_2 0x02
-
 volatile long encoderVals[ENCODER_COUNT];
+// index into the array is the id of that sensor
+byte* sensorVals[SENSOR_COUNT+1];
+
 // The order in which the states should occur
 //
 //       _____      _____
@@ -44,11 +50,6 @@ inline byte encoderStatus() {
   return stateMap[result];
 }
 
-
-// new state 4
-// old state 0
-
-
 // these counters may be backwards
 void encoder_tick(byte lrFlag) {
   byte newState = encoderStatus();
@@ -73,14 +74,6 @@ void right_encoder_tick() {
   digitalWrite(MULTIPLEX_PIN,LOW);  
   encoder_tick(1);
 }
-
-#define SENSOR_COUNT 6
-// index into the array is the id of that sensor
-byte* sensorVals[SENSOR_COUNT+1];
-
-#define MOTOR_PIN_START 8
-
-#define LED_PIN 13
 
 enum name_t {
   GET = 0x01,
@@ -214,8 +207,6 @@ static void setLight(struct light_command_t light_cmd) {
   Serial.write((byte*)&light_cmd, sizeof(light_cmd));
 }
 
-#define BUTTON_PIN  12
-
 static void button_wait(void) {
   digitalWrite(BUTTON_PIN, HIGH);
   while( digitalRead(BUTTON_PIN) == HIGH )
@@ -306,27 +297,35 @@ void ping(int id) {
 }
 
 void setup() {
-  pinMode(13, OUTPUT);
   // These values are specified in the robot configuration
   int sensCount = 0;
   for( byte i = 0; i < ENCODER_COUNT; i++ ) {
+    pinMode(i + 2, INPUT);
     encoderVals[i] = 0;
     sensorVals[++sensCount] = (byte*)(encoderVals+i);
-  }
-  digitalWrite(MULTIPLEX_PIN,HIGH);
-  encoderState[0] = encoderStatus();
-  digitalWrite(MULTIPLEX_PIN,LOW);
-  encoderState[1] = encoderStatus();
-  
-  for( byte i = 0; i < SONAR_COUNT; i++ ) {
-    sonarVals[i] = 0;
-    sensorVals[++sensCount] = (byte*)(sonarVals+i);
   }
   
   attachInterrupt(0, left_encoder_tick, CHANGE);  
   attachInterrupt(1, right_encoder_tick, CHANGE);
-  
+
+  for( byte i = 0; i < SONAR_COUNT; i++ ) {
+    sonarVals[i] = 0;
+    sensorVals[++sensCount] = (byte*)(sonarVals+i);
+    pinMode(SONAR_PIN_START+i, INPUT);
+  }
+    
+  pinMode(MULTIPLEX_PIN, OUTPUT);
+  pinMode(ENCODER_PIN_START,     INPUT);
+  pinMode(ENCODER_PIN_START + 1, INPUT);
+
+  digitalWrite(MULTIPLEX_PIN, HIGH);
+  encoderState[0] = encoderStatus();
+  digitalWrite(MULTIPLEX_PIN, LOW);
+  encoderState[1] = encoderStatus();
+
   pinMode(BUTTON_PIN, INPUT);
+  pinMode(FAN_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
   
   Serial.begin(9600);
   while( Serial.available() > 0 ) {
