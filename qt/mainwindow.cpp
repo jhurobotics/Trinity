@@ -183,10 +183,10 @@ void MainWindow::startSimulation()
     bot = new_robot(robot::SONAR);
   }
   else if( ui->cppButton_2->isChecked() ) {
-    bot = new_robot(robot::CPP_1);
+    bot = new_robot(robot::SPEEDTEST);
   }
   else if( ui->cppButton_3->isChecked() ) {
-    bot = new_robot(robot::CPP_2);
+    bot = new_robot(robot::CPP_1);
   }
   
   setupflags_t setupflags = 0;
@@ -217,7 +217,7 @@ void MainWindow::startSimulation()
   
   sim::World * world = create_world(bot, mapPath.toAscii().data(),
                                     robotPath.toAscii().data(), sensorPath.toAscii().data(),
-                                    setupflags);
+                                    setupflags, "/dev/ttyACM0", "/dev/ttyACM1");
   if( world->realTime() ) {
     realDisplay->setWorld(world);
     realWindow->show();

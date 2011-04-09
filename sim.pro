@@ -18,6 +18,7 @@ SOURCES += \
     src/arduino.cpp \
     src/maestro.cpp \
     src/setup.cpp \
+    src/speedTest.cpp \
     src/slam/OdometryModel.cpp \
     src/slam/mcl.cpp \
     src/slam/MeasurementModel.cpp \
@@ -39,6 +40,7 @@ HEADERS  += \
     src/arduino.h \
     src/graph.h \
     src/controllers.h \
+    src/speedTest.h \
     src/slam/slam.h \
     src/slam/simslam.h \
     qt/mapwidget.h \
