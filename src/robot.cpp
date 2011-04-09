@@ -283,8 +283,11 @@ void SonarRobot::hallwayCheck() throw() {
     }
     // find the sensor lookiing in the given absolute direction
     rangeIter_t end = rangeFinders.end();
+    float bestDot = -2.0;
     for( rangeIter_t iter = rangeFinders.begin(); iter != end && !decidingEye; iter++ ) {
-      if( position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir) > 0.9 ) {
+      float dot = position.transformRayToAbsolute((*iter)->relPos).dir().dot(dir);
+      if( dot > bestDot ) {
+        bestDot = dot;
         decidingEye = *iter;
       }
     }
