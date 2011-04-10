@@ -403,7 +403,10 @@ void SonarRobot::scan() throw() {
     case START:
       targetDir = slammer->getPose().dir();
       // Rotate Pi/2 CW
-      targetDir = vec2(targetDir.y, targetDir.x);
+      //targetDir = vec2(targetDir.y, targetDir.x);
+
+			//Rotate Pi CW
+      targetDir = vec2(-targetDir.x, -targetDir.y);
       control->setVelocity(0);
       control->setAngularVelocity( -SCAN_SPEED);
       curScanMode = TURN_RIGHT;
@@ -414,7 +417,8 @@ void SonarRobot::scan() throw() {
       else {
         // start the left scan
         curScanMode = SCAN_LEFT;
-        control->setAngularVelocity( SCAN_SPEED );
+//        control->setAngularVelocity( SCAN_SPEED );
+        control->setAngularVelocity( -SCAN_SPEED );
         targetDir *= -1;
       }
     case SCAN_LEFT:
