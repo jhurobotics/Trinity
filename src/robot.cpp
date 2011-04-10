@@ -421,9 +421,6 @@ void SonarRobot::hallwayCheck() throw() {
 
 void SonarRobot::scan() throw() {
   static vec2 targetDir;
-  static ScanModes lastMode;
-  static timeval lastTime;
-  static int uvTotal;
   switch( curScanMode ) {
     case START:
       targetDir = slammer->getPose().dir();
@@ -438,7 +435,7 @@ void SonarRobot::scan() throw() {
       if( (uvTotal = uvtron->getValue()) > uvBaseline + UV_THRESHOLD ) {
         lastTime = time();
         decisionCount = 1;
-        lastMode = curScanMode;
+        lastScanMode = curScanMode;
         curScanMode = VERIFY_READING;
         control->setAngularVelocity(0);
         break;
@@ -458,7 +455,7 @@ void SonarRobot::scan() throw() {
       if( (uvTotal = uvtron->getValue()) > uvBaseline + UV_THRESHOLD ) {
         lastTime = time();
         decisionCount = 1;
-        lastMode = curScanMode;
+        lastScanMode = curScanMode;
         curScanMode = VERIFY_READING;
         control->setAngularVelocity(0);
         break;
@@ -491,7 +488,7 @@ void SonarRobot::scan() throw() {
           }
           else {
             control->setAngularVelocity(SCAN_SPEED);
-            curScanMode = lastMode;
+            curScanMode = lastScanMode;
           }
         }
       }

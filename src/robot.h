@@ -193,6 +193,10 @@ namespace robot {
       FINISHED,
       VERIFY_READING
     } curScanMode;
+    
+    ScanModes lastScanMode;
+    timeval lastTime;
+    int uvTotal;
 
 		struct timeval extinguishTimer;
 
