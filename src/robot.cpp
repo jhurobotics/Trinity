@@ -197,6 +197,12 @@ void robot::SonarRobot::act() throw() {
     case SCAN:
       scan();
       break;
+		case EXTINGUISH:
+      extinguish();
+      break;
+		case GO_HOME:
+      goHome();
+      break;
     default:
       break;
   }
@@ -413,8 +419,6 @@ void SonarRobot::scan() throw() {
   switch( curScanMode ) {
     case START:
       targetDir = slammer->getPose().dir();
-      // Rotate Pi/2 CW
-      //targetDir = vec2(targetDir.y, targetDir.x);
 
 			//Rotate Pi CW
       targetDir = vec2(-targetDir.x, -targetDir.y);
@@ -422,13 +426,20 @@ void SonarRobot::scan() throw() {
       control->setAngularVelocity( -SCAN_SPEED);
       curScanMode = TURN_RIGHT;
     case TURN_RIGHT:
+      // check to see if we saw anthing
+      // if( see something ) {
+      //  say something;
+      //  curScanMode = VERIFY_READING;
+      //  motors->setAngularVelocity(0);
+      //  break;
+      // }
+
       if( position.dir().dot(targetDir) < 0.99 ) {
         break;
       }
       else {
-        // start the left scan
+        // start the left half scan
         curScanMode = SCAN_LEFT;
-//        control->setAngularVelocity( SCAN_SPEED );
         control->setAngularVelocity( -SCAN_SPEED );
         targetDir *= -1;
       }
@@ -436,7 +447,7 @@ void SonarRobot::scan() throw() {
       // check to see if we saw anthing
       // if( see something ) {
       //  say something;
-      //  curMode = VERIFY_READING;
+      //  curScanMode = VERIFY_READING;
       //  motors->setAngularVelocity(0);
       //  break;
       // }
@@ -459,6 +470,22 @@ void SonarRobot::scan() throw() {
       curScanMode = SCAN_LEFT;
       break;
   }
+}
+
+void SonarRobot::extinguish() throw() {
+	if(false){ //light is on
+		//slowly advanceRobot
+		exinguishCount = 0;
+	}else if(extinguishCount < MAX_EXTINGUISH_TIME){
+		extinguishCount++;
+	}
+	else{
+		curMode = GO_HOME;
+	}
+}
+
+void SonarRobot::goHome() throw() {
+
 }
 
 RangeSensor * SensorFactory::rangeSensor(const std::string& name) throw(WrongSensorKind) {

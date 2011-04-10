@@ -169,6 +169,8 @@ namespace robot {
       HALLWAY,
       HALLWAY_CHECK,
       SCAN,
+			EXTINGUISH,
+			GO_HOME,
     } curMode;
     
     enum HallChoices {
@@ -177,6 +179,7 @@ namespace robot {
       ROOM4A,
       ROOM4B,
     } curDecision;
+
     math::vec2 doorDir;
     RangeSensor * decidingEye;
     float lastMeasurement;
@@ -190,6 +193,9 @@ namespace robot {
       FINISHED,
       VERIFY_READING
     } curScanMode;
+
+		int extinguishTimer;
+
     Node * currentObjective;
     
 #define map_1A 0x00
