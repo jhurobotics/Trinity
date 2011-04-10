@@ -83,6 +83,7 @@ enum name_t {
   SET_SENSOR = 0x03,
   SET_LIGHT = 0x04,
   BUTTON_WAIT = 0x05,
+  SET_FAN = 0x06,
 };
 
 static const byte MOTOR_FLAG = 0x80;
@@ -212,6 +213,17 @@ static void setLight(struct light_command_t light_cmd) {
   Serial.write((byte*)&light_cmd, sizeof(light_cmd));
 }
 
+static void setFan(struct light_command_t light_cmd) {
+  if( light_cmd.end != END ) {
+    fail();
+    return;
+  }
+  
+  digitalWrite(FAN_PIN, (light_cmd.state ? HIGH : LOW ));
+  
+  Serial.write((byte*)&light_cmd, sizeof(light_cmd));
+}
+
 static void button_wait(void) {
   digitalWrite(BUTTON_PIN, HIGH);
   while( digitalRead(BUTTON_PIN) == HIGH )
@@ -280,7 +292,14 @@ void parseCommand() {
       }
       button_wait();
       break;
-  }
+    case SET_FAN:
+      if( !read(&data[2]) || data[2] != END ) {
+        fail();
+        return;
+      }
+      setFan(light_cmd);
+      break;
+    }
 }
 
 void ping(int id) {

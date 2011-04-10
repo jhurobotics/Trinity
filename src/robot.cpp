@@ -20,7 +20,8 @@
 #include "timers.h"
 #include "speedTest.h"
 
-#define MAX_EXTINGUISH_TIME 8000
+#define MAX_EXTINGUISH_TIME 1000000
+  // one second
 
 using namespace robot;
 using namespace math;
@@ -416,6 +417,8 @@ void SonarRobot::hallwayCheck() throw() {
 
 // turn 180 degrees to the left in 8 seconds
 #define SCAN_SPEED M_PI / 8
+#define UV_THRESHOLD   82
+  // corresponds to 0.4 volts
 
 void SonarRobot::scan() throw() {
   static vec2 targetDir;
@@ -430,12 +433,14 @@ void SonarRobot::scan() throw() {
       curScanMode = TURN_RIGHT;
     case TURN_RIGHT:
       // check to see if we saw anthing
-      // if( see something ) {
-      //  say something;
-      //  curScanMode = VERIFY_READING;
-      //  motors->setAngularVelocity(0);
-      //  break;
-      // }
+      if( (uvTotal = uvtron->getValue()) > uvBaseline + UV_THRESHOLD ) {
+        lastTime = time();
+        decisionCount = 1;
+        lastScanMode = curScanMode;
+        curScanMode = VERIFY_READING;
+        control->setAngularVelocity(0);
+        break;
+      }
 
       if( position.dir().dot(targetDir) < 0.99 ) {
         break;
@@ -448,12 +453,15 @@ void SonarRobot::scan() throw() {
       }
     case SCAN_LEFT:
       // check to see if we saw anthing
-      // if( see something ) {
-      //  say something;
-      //  curScanMode = VERIFY_READING;
-      //  motors->setAngularVelocity(0);
-      //  break;
-      // }
+      if( (uvTotal = uvtron->getValue()) > uvBaseline + UV_THRESHOLD ) {
+        lastTime = time();
+        decisionCount = 1;
+        lastScanMode = curScanMode;
+        curScanMode = VERIFY_READING;
+        control->setAngularVelocity(0);
+        break;
+      }
+      
       if( position.dir().dot(targetDir) < 0.99 ) {
         break;
       }
@@ -468,22 +476,48 @@ void SonarRobot::scan() throw() {
       currentObjective->checked = true;
       break;
     case VERIFY_READING:
-      // No-op for now
-      control->setAngularVelocity(SCAN_SPEED);
-      curScanMode = SCAN_LEFT;
+      // take 3 more readings 0.05 seconds apart, takes 0.2s total
+      timeval t = time();
+      if( time_diff(lastTime, t) > 50000 ) {
+        lastTime = t;
+        uvTotal += uvtron->getValue();
+        decisionCount++;
+        
+        if( decisionCount > 4 ) {
+          if( uvTotal / decisionCount > UV_THRESHOLD + uvBaseline ) {
+            curMode = EXTINGUISH;
+            curExtMode = EXT_START;
+          }
+          else {
+            control->setAngularVelocity(SCAN_SPEED);
+            curScanMode = lastScanMode;
+          }
+        }
+      }
       break;
   }
 }
 
+#define ADVANCE_SPEED 10
+
 void SonarRobot::extinguish() throw() {
-	if(false){ //light is on
-		//slowly advanceRobot
-		extinguishTimer = robot::time();
-	}else if(time_diff(extinguishTimer, robot::time()) < MAX_EXTINGUISH_TIME){
-			// keep blowing fan
-	}else{
-		curMode = GO_HOME;
-	}
+  switch( curExtMode ) {
+    case EXT_START:
+      control->setVelocity(ADVANCE_SPEED);
+      curExtMode = FIRE_ON;
+      arduino->setFan(true);
+    case FIRE_ON:
+      if( uvtron->getValue() > UV_THRESHOLD + uvBaseline ) {
+        break;
+      }
+      extinguishTime = time();
+    case FIRE_OFF:
+      if( time_diff(extinguishTime, time()) > MAX_EXTINGUISH_TIME ) {
+        arduino->setFan(false);
+        curExtMode = EXT_START;
+        curMode = GO_HOME;
+      }
+  }
 }
 
 void SonarRobot::goHome() throw() {

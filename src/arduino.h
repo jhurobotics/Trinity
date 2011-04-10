@@ -24,6 +24,7 @@ namespace robot {
       SET_SENSOR = 0x03,
       SET_LIGHT = 0x04,
       BUTTON_WAIT = 0x05,
+      SET_FAN = 0x06,
     };
     
     static const motorid_t MOTOR_FLAG = 0x80;
@@ -41,6 +42,7 @@ namespace robot {
     // The value getting replaced is passed back out
     void setSensor(sensorid_t id, int32_t *value) throw(Serial::WriteError);
     void switchLight(bool on) throw(Serial::WriteError);
+    void setFan(bool on) throw(Serial::WriteError);
     void buttonWait() throw(Serial::WriteError);
   };
   
