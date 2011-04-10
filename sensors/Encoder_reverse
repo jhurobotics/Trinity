@@ -1,0 +1,5 @@
+kind ENCODER
+tickDist -0.157
+# alternately (both are valid)
+# wheelSize radius
+# tickCount count
