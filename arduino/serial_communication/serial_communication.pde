@@ -13,10 +13,12 @@
 #define BUTTON_PIN        11
 #define FAN_PIN           12
 #define LED_PIN           13
-#define SENSOR_COUNT      SONAR_COUNT + ENCODER_COUNT
+#define UV_PIN            A0
+#define SENSOR_COUNT      SONAR_COUNT + ENCODER_COUNT + 1
 
 static float sonarVals[SONAR_COUNT];
 volatile long encoderVals[ENCODER_COUNT];
+long uvValue;
 // index into the array is the id of that sensor
 byte* sensorVals[SENSOR_COUNT+1];
 
@@ -152,6 +154,9 @@ static void getValue(struct get_command_t get_cmd) {
   if( get_cmd.end != END ) {
     fail();
     return;
+  }
+  if( get_cmd.id == SENSOR_COUNT ) {
+    uvValue = analogRead(UV_PIN);
   }
   
   resp.name = GET;
@@ -327,6 +332,11 @@ void setup() {
   pinMode(FAN_PIN, OUTPUT);
   pinMode(LED_PIN, OUTPUT);
   
+  analogReference(DEFAULT);
+  pinMode(UV_PIN, INPUT);
+  uvValue = 0;
+  sensorVals[++sensCount] = (byte*)&uvValue;
+  
   Serial.begin(9600);
   while( Serial.available() > 0 ) {
     parseCommand();
@@ -335,9 +345,9 @@ void setup() {
 
 void loop() {
   for( byte i = 0; i < SONAR_COUNT; i++ ) {
-    ping(0);
+    ping(i);
     while( Serial.available() > 0 ) {
       parseCommand();
-    }
+    }  
   }
 }
