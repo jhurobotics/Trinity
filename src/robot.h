@@ -197,8 +197,13 @@ namespace robot {
     ScanModes lastScanMode;
     timeval lastTime;
     int uvTotal;
-
-		struct timeval extinguishTimer;
+    
+    enum ExtModes {
+      EXT_START = 0,
+      FIRE_ON,
+      FIRE_OFF,
+    } curExtMode;
+		struct timeval extinguishTime;
 
     Node * currentObjective;
     

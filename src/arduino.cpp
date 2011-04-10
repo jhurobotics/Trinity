@@ -116,6 +116,26 @@ void Arduino::switchLight(bool on) throw(Serial::WriteError) {
   }
 }
 
+void Arduino::setFan(bool on) throw(Serial::WriteError) {
+  struct cmd {
+    uint8_t name;
+    uint8_t state;
+    uint8_t end;
+  };
+  union {
+    char buff[3];
+    struct cmd cmd;
+  };
+  cmd.name = SET_FAN;
+  cmd.state = (on ? 1 : 0 );
+  cmd.end = END;
+  serial.Write(buff, 3);
+  serial.Read(buff, 3);
+  if( cmd.name != SET_FAN || cmd.state != (on ? 1 : 0 ) || cmd.end != END ) {
+    throw Serial::WriteError(-1);
+  }
+}
+
 void Arduino::buttonWait() throw(Serial::WriteError) {
   struct cmd {
     uint8_t name;

@@ -20,7 +20,8 @@
 #include "timers.h"
 #include "speedTest.h"
 
-#define MAX_EXTINGUISH_TIME 8000
+#define MAX_EXTINGUISH_TIME 1000000
+  // one second
 
 using namespace robot;
 using namespace math;
@@ -485,6 +486,7 @@ void SonarRobot::scan() throw() {
         if( decisionCount > 4 ) {
           if( uvTotal / decisionCount > UV_THRESHOLD + uvBaseline ) {
             curMode = EXTINGUISH;
+            curExtMode = EXT_START;
           }
           else {
             control->setAngularVelocity(SCAN_SPEED);
@@ -496,15 +498,26 @@ void SonarRobot::scan() throw() {
   }
 }
 
+#define ADVANCE_SPEED 10
+
 void SonarRobot::extinguish() throw() {
-	if(false){ //light is on
-		//slowly advanceRobot
-		extinguishTimer = robot::time();
-	}else if(time_diff(extinguishTimer, robot::time()) < MAX_EXTINGUISH_TIME){
-			// keep blowing fan
-	}else{
-		curMode = GO_HOME;
-	}
+  switch( curExtMode ) {
+    case EXT_START:
+      control->setVelocity(ADVANCE_SPEED);
+      curExtMode = FIRE_ON;
+      arduino->setFan(true);
+    case FIRE_ON:
+      if( uvtron->getValue() > UV_THRESHOLD + uvBaseline ) {
+        break;
+      }
+      extinguishTime = time();
+    case FIRE_OFF:
+      if( time_diff(extinguishTime, time()) > MAX_EXTINGUISH_TIME ) {
+        arduino->setFan(false);
+        curExtMode = EXT_START;
+        curMode = GO_HOME;
+      }
+  }
 }
 
 void SonarRobot::goHome() throw() {
