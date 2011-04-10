@@ -324,13 +324,12 @@ void setup() {
   // These values are specified in the robot configuration
   int sensCount = 0;
   for( byte i = 0; i < ENCODER_COUNT; i++ ) {
-    pinMode(i + 2, INPUT);
     encoderVals[i] = 0;
     sensorVals[++sensCount] = (byte*)(encoderVals+i);
   }
   
-  attachInterrupt(0, left_encoder_tick, CHANGE);  
-  attachInterrupt(1, right_encoder_tick, CHANGE);
+  attachInterrupt(1, left_encoder_tick, CHANGE);  
+  attachInterrupt(0, right_encoder_tick, CHANGE);
 
   for( byte i = 0; i < SONAR_COUNT; i++ ) {
     sonarVals[i] = 0;
