@@ -19,6 +19,9 @@
 #include "maestro.h"
 #include "timers.h"
 #include "speedTest.h"
+
+#define MAX_EXTINGUISH_TIME 8000
+
 using namespace robot;
 using namespace math;
 
@@ -475,11 +478,10 @@ void SonarRobot::scan() throw() {
 void SonarRobot::extinguish() throw() {
 	if(false){ //light is on
 		//slowly advanceRobot
-		exinguishCount = 0;
-	}else if(extinguishCount < MAX_EXTINGUISH_TIME){
-		extinguishCount++;
-	}
-	else{
+		extinguishTimer = robot::time();
+	}else if(time_diff(extinguishTimer, robot::time()) < MAX_EXTINGUISH_TIME){
+			// keep blowing fan
+	}else{
 		curMode = GO_HOME;
 	}
 }

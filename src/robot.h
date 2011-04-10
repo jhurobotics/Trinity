@@ -194,7 +194,7 @@ namespace robot {
       VERIFY_READING
     } curScanMode;
 
-		int extinguishTimer;
+		struct timeval extinguishTimer;
 
     Node * currentObjective;
     
@@ -250,6 +250,8 @@ namespace robot {
     void hallway() throw();
     void hallwayCheck() throw();
     void scan() throw();
+    void extinguish() throw();
+    void goHome() throw();
   public:
     // SLAM is added before reading the config
     virtual void addRangeSensor(RangeSensor * sensor) {
