@@ -153,7 +153,8 @@ SonarRobot::SonarRobot() throw() :  curMode(INIT), curDecision(ROOM1A),
                                     decidingEye(NULL), curScanMode(START),
                                     currentObjective(NULL), rangeFinders(),
                                     encoders(), uvtron(NULL), control(), edges(),
-                                    path(),uvBaseline(0), position()
+                                    path(), uvBaselineCount(0), uvBaseline(0),
+                                    position()
 {
   mapVector.reserve(4);
   currentMapIndex = 0;
@@ -182,8 +183,11 @@ void robot::SonarRobot::act() throw() {
     case INIT:
       // Only move once the SLAM module has settled
       if( !slammer->settled() ) {
+        uvBaseline += uvtron->getValue();
+        uvBaselineCount++;
         break;
       }
+      uvBaseline /= uvBaselineCount;
     case HALLWAY:
       hallway();
       break;

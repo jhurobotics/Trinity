@@ -222,6 +222,7 @@ namespace robot {
   public:
     std::vector<math::vec2> realPoints;
   protected:
+    int32_t uvBaselineCount;
     int32_t uvBaseline;
     math::Ray position;
     struct timeval lastSLAMTime;
