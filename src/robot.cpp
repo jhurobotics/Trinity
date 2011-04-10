@@ -115,6 +115,12 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
       input >> encoder->id;
       bot->addEncoder(encoder);
     }
+    else if( astring == "uvsensor" ) {
+      UVSensor * uv = sensors->uvsensor();
+      uv->relPos = read_position(input, sensorPositions);
+      input >> uv->id;
+      bot->addUV(uv);
+    }
     else if( astring == "motor" ) {
       Motor m;
       input >> astring;
@@ -146,7 +152,8 @@ void robot::read_robot(AbstractRobot * bot, const char * path, SensorFactory * s
 SonarRobot::SonarRobot() throw() :  curMode(INIT), curDecision(ROOM1A),
                                     decidingEye(NULL), curScanMode(START),
                                     currentObjective(NULL), rangeFinders(),
-                                    control(), edges(), path(), position()
+                                    encoders(), uvtron(NULL), control(), edges(),
+                                    path(),uvBaseline(0), position()
 {
   mapVector.reserve(4);
   currentMapIndex = 0;

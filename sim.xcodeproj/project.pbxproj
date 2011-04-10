@@ -235,8 +235,8 @@
 				DA72DC971329C4D600493D34 /* setup.cpp */,
 				DAC9ADE612CAB49500691585 /* simulation.h */,
 				DAC9ADE712CAB49500691585 /* simulation.cpp */,
-				DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */,
 				DA668DCB1350D5CD0077B6E4 /* speedTest.h */,
+				DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */,
 				DA2EC8D812F3747A0029F044 /* timers.h */,
 				DA2EC8D912F3747A0029F044 /* timers.cpp */,
 			);

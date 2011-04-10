@@ -38,6 +38,7 @@ class HybridSensorFactory : public SensorFactory {
 public:
   SensorFactory * rangeFactory;
   SensorFactory * encoderFactory;
+  SensorFactory * uvFactory;
   
   virtual RangeSensor * allocRange(const RangeSpecs& specs) {
     return rangeFactory->allocRange(specs);
@@ -48,7 +49,9 @@ public:
   }
   
   HybridSensorFactory(std::string libPath) throw()
-    : SensorFactory(libPath), rangeFactory(NULL), encoderFactory(NULL) { }
+    : SensorFactory(libPath), rangeFactory(NULL), encoderFactory(NULL),
+      uvFactory(NULL)
+  { }
   
   virtual ~HybridSensorFactory() {
     if( rangeFactory ) {
@@ -57,6 +60,13 @@ public:
     if( encoderFactory ) {
       delete encoderFactory;
     }
+    if( uvFactory ) {
+      delete uvFactory;
+    }
+  }
+  
+  virtual UVSensor * uvsensor() throw(WrongSensorKind) {
+    return uvFactory->uvsensor();
   }
 };
 
@@ -72,6 +82,7 @@ sim::World * create_world(AbstractRobot * bot,
   if(!(devices & REAL_WORLD)) {
     map = sim::read_map(mapPath);
   }
+  
   // create the factories
   if( devices & SIM_REQUIRED ) {
     sim::Simulation * theSim = NULL;
@@ -107,6 +118,10 @@ sim::World * create_world(AbstractRobot * bot,
     if( devices & ENCODER_SIM ) {
       sensors.encoderFactory = new sim::SensorFactory(sensLibPath, theSim);
     }
+    
+    if( devices & UV_SIM ) {
+      sensors.uvFactory = new sim::SensorFactory(sensLibPath, theSim);
+    }
   }
   
   if( devices & REAL_WORLD ) {
@@ -131,6 +146,10 @@ sim::World * create_world(AbstractRobot * bot,
       
       if( devices & ENCODER_ARDUINO ) {
         sensors.encoderFactory = new ArduinoSensorFactory(sensLibPath, arduino);
+      }
+      
+      if( devices & UV_ARDUINO ) {
+        sensors.uvFactory = new ArduinoSensorFactory(sensLibPath, arduino);
       }
     }
     

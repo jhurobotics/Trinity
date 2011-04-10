@@ -71,6 +71,13 @@ namespace robot {
     virtual long getCount() = 0;
   };
   
+  class UVSensor : public Sensor {
+  public:
+    math::Ray relPos;
+    explicit UVSensor() : relPos() { }
+    virtual int getValue() = 0;
+  };
+  
   class SensorFactory {
   protected:
     std::string libPath;
@@ -88,6 +95,7 @@ namespace robot {
     
     virtual RangeSensor * rangeSensor(const std::string& name) throw(WrongSensorKind);
     virtual Encoder * encoder(const std::string& name) throw(WrongSensorKind);
+    virtual UVSensor * uvsensor() throw(WrongSensorKind) = 0;
   };  // class SensorFactory
   
   struct Motor {
@@ -135,6 +143,7 @@ namespace robot {
     virtual void act() = 0; // do one iteration of its thang.
     virtual void addRangeSensor(RangeSensor * sensor) = 0;
     virtual void addEncoder(Encoder * encoder) = 0;
+    virtual void addUV(UVSensor * uv) = 0;
     virtual void setMotorController(MotorControl * control) = 0;
     virtual void addMotor(Motor motors) = 0;
     // Takes ownership of the graph, will delete it if replaced
@@ -198,6 +207,7 @@ namespace robot {
     std::set<RangeSensor*> rangeFinders;
     typedef std::set<RangeSensor*>::iterator rangeIter_t;
     std::set<Encoder*> encoders;
+    UVSensor * uvtron;
     MotorControl * control;
 
     float size;
@@ -212,6 +222,7 @@ namespace robot {
   public:
     std::vector<math::vec2> realPoints;
   protected:
+    int32_t uvBaseline;
     math::Ray position;
     struct timeval lastSLAMTime;
     std::vector<long> encoderCounts;
@@ -241,6 +252,12 @@ namespace robot {
     virtual void addEncoder(Encoder * encoder) {
       encoders.insert(encoder);
       slammer->addEncoder(encoder);
+    }
+    virtual void addUV(UVSensor * uv) {
+      if( uvtron ) {
+        delete uvtron;
+      }
+      uvtron = uv;
     }
     
     virtual void setMotorController(MotorControl * c) {

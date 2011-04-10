@@ -215,6 +215,13 @@ void MainWindow::startSimulation()
     setupflags |= ENCODER_ARDUINO;
   }
   
+  if( ui->uv_sim->isChecked() ) {
+    setupflags |= UV_SIM;
+  }
+  else if( ui->uv_arduino->isChecked() ) {
+    setupflags |= UV_ARDUINO;
+  }
+  
   sim::World * world = create_world(bot, mapPath.toAscii().data(),
                                     robotPath.toAscii().data(), sensorPath.toAscii().data(),
                                     setupflags, "/dev/ttyACM0", "/dev/ttyACM1");

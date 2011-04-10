@@ -19,6 +19,9 @@ namespace robot {
     virtual void addEncoder(Encoder * encoder) {
       delete encoder;
     }
+    virtual void addUV(UVSensor * uv) {
+      delete uv;
+    }
     virtual void setMotorController(MotorControl * c) {
       control = c;
     }

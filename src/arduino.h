@@ -68,6 +68,12 @@ namespace robot {
     virtual long getCount();
   };
   
+  class ArduinoUV : public UVSensor, public ArduinoDevice {
+  public:
+    explicit ArduinoUV(Arduino * a = NULL) : UVSensor(), ArduinoDevice(a) { }
+    virtual int getValue();
+  };
+  
   class ArduinoSensorFactory : public SensorFactory, public ArduinoDevice {
   public:
     ArduinoSensorFactory(std::string libPath, Arduino * a = NULL)
@@ -79,6 +85,10 @@ namespace robot {
     
     virtual robot::Encoder * allocEncoder(float td) {
       return new ArduinoEncoder(td, arduino);
+    }
+    
+    virtual robot::UVSensor * uvsensor() throw(WrongSensorKind) {
+      return new ArduinoUV(arduino);
     }
   };
 }

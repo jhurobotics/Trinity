@@ -159,3 +159,9 @@ long ArduinoEncoder::getCount() {
   arduino->getSensor(id, &count);
   return count;
 }
+
+int ArduinoUV::getValue() {
+  int32_t val;
+  arduino->getSensor(id, &val);
+  return val;
+}

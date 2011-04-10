@@ -45,6 +45,13 @@ namespace sim {
     
     virtual long getCount();
   };
+  
+  class UVSensor : public robot::UVSensor {
+  public:
+    virtual int getValue() {
+      return 0;
+    }
+  };
 
   class SensorFactory : public robot::SensorFactory {
   protected:
@@ -57,6 +64,10 @@ namespace sim {
     SensorFactory(const std::string& lib, sim::Simulation * w)
     : robot::SensorFactory(lib), world(w) { }
     virtual ~SensorFactory() {}
+    
+    virtual robot::UVSensor * uvsensor() throw(WrongSensorKind) {
+      return new UVSensor();
+    }
   };
 } // namespace sim
 

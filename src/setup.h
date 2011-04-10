@@ -6,27 +6,29 @@
 #ifndef __SETUP_H__
 #define __SETUP_H__
 
-#define SIM_REQUIRED     0x1000
-#define ARDUINO_REQUIRED 0x0100
-#define MAESTRO_REQUIRED 0x0200
+#define SIM_REQUIRED     0x10000
+#define ARDUINO_REQUIRED 0x01000
+#define MAESTRO_REQUIRED 0x02000
 
-#define REAL_WORLD       0x0F00
-#define COMM_MASK        0xFF00
+#define REAL_WORLD       0x0F000
+#define COMM_MASK        0xFF000
 
-#define MOTOR_MASK       0x00F0
-#define SENSOR_MASK      0x000F
+#define MOTOR_MASK       0x00F00
+#define SENSOR_MASK      0x000FF
 
-#define MOTORS_SIM       (SIM_REQUIRED     | 0x0080)
-#define MOTORS_ARDUINO   (ARDUINO_REQUIRED | 0x0010)
-#define MOTORS_MAESTRO   (MAESTRO_REQUIRED | 0x0020)
+#define MOTORS_SIM       (SIM_REQUIRED     | 0x00800)
+#define MOTORS_ARDUINO   (ARDUINO_REQUIRED | 0x00100)
+#define MOTORS_MAESTRO   (MAESTRO_REQUIRED | 0x00200)
 #define REAL_MOTORS      (MOTORS_ARDUINO | MOTORS_MAESTRO)
 
-#define SONAR_SIM        (SIM_REQUIRED     | 0x0001)
-#define SONAR_ARDUINO    (ARDUINO_REQUIRED | 0x0002)
-#define ENCODER_SIM      (SIM_REQUIRED     | 0x0004)
-#define ENCODER_ARDUINO  (ARDUINO_REQUIRED | 0x0008)
+#define SONAR_SIM        (SIM_REQUIRED     | 0x00001)
+#define SONAR_ARDUINO    (ARDUINO_REQUIRED | 0x00002)
+#define ENCODER_SIM      (SIM_REQUIRED     | 0x00004)
+#define ENCODER_ARDUINO  (ARDUINO_REQUIRED | 0x00008)
+#define UV_SIM           (SIM_REQUIRED     | 0x00010)
+#define UV_ARDUINO       (ARDUINO_REQUIRED | 0x00020)
 
-typedef uint16_t setupflags_t;
+typedef uint32_t setupflags_t;
 
 #ifndef __ROBOT_H__
 namespace robot {
