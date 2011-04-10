@@ -12,8 +12,8 @@ encoder Encoder LEFT  1
 encoder Encoder_reverse RIGHT 2
 uvsensor FRONT 7
 
-motor Vex LEFT  1  10 -10
-motor Vex RIGHT 2 -10  10
+motor Vex LEFT  2  10 -10
+motor Vex RIGHT 1 -10  10
 
 graph graph
 
