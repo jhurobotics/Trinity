@@ -2,12 +2,18 @@
 #include <string.h>
 #include "arduino.h"
 #include "controllers.h"
-
-#include <iostream>
 using namespace robot;
 
 void Arduino::setup(const char * path) throw(Serial::OpenError) {
   serial.Open(path);
+  unsigned char i = 1;
+  char ch;
+  while( i <= 3 ) {
+    serial.Read(&ch, 1);
+    if( ch == i ) {
+      i++;
+    }
+  }
 }
 
 void Arduino::getSensor_internal(sensorid_t id, char * value) throw(Serial::ReadError) {

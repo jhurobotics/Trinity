@@ -356,6 +356,8 @@ void setup() {
   sensorVals[++sensCount] = (byte*)&uvValue;
   
   Serial.begin(9600);
+  byte buff[3] = {1,2,3};
+  Serial.write(buff, 3);
   while( Serial.available() > 0 ) {
     parseCommand();
   }
