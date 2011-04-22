@@ -10,13 +10,14 @@
 #include "setup.h"
 using namespace robot;
 
-template<class mType1>
+template<class mType1, class comm>
 class HybridMotorControl : public MotorControl {
 public:
   mType1 motors_0;
   sim::MotorControl motors_1;
   
   HybridMotorControl(sim::Simulation * w) : motors_0(), motors_1(w) {}
+  HybridMotorControl(sim::Simulation * w, comm * c) : motors_0(c), motors_1(w) {}
   
   virtual void setVelocity(float velocity) {
     motors_0.setVelocity(velocity);
@@ -79,12 +80,22 @@ sim::World * create_world(AbstractRobot * bot,
   MotorControl * motors;
   sim::World * result = NULL;
   sim::Map * map = NULL;
-  if(!(devices & REAL_WORLD)) {
-    map = sim::read_map(mapPath);
+  Arduino * arduino = NULL;
+  if( devices & ARDUINO_REQUIRED ) {
+    arduino = new Arduino();
+    assert(arduinoPath != NULL);
+    arduino->setup(arduinoPath);
+  }
+  Maestro * maestro = NULL;
+  if( devices & MAESTRO_REQUIRED ) {
+    maestro = new Maestro();
+    assert(maestroPath != NULL);
+    maestro->setup(maestroPath);
   }
   
   // create the factories
   if( devices & SIM_REQUIRED ) {
+    map = sim::read_map(mapPath);
     sim::Simulation * theSim = NULL;
     // If we have real motors and are actually moving,
     // then the simulation should be done in real time with real movement
@@ -94,10 +105,10 @@ sim::World * create_world(AbstractRobot * bot,
     if( devices & REAL_MOTORS ) {
       theSim = new sim::RealTimeSimulation();
       if( devices & MOTORS_ARDUINO ) {
-        motors = new HybridMotorControl<ArduinoMotors>(theSim);
+        motors = new HybridMotorControl<ArduinoMotors, Arduino>(theSim, arduino);
       }
       else if( devices & MOTORS_MAESTRO ) {
-        // motors = new HybridMotorControl<MaestroMotors, sim::MotorControl>();
+        motors = new HybridMotorControl<MaestroMotors, Maestro>(theSim, maestro);
       }
     }
     else if( devices & MOTORS_SIM ) {
@@ -129,9 +140,6 @@ sim::World * create_world(AbstractRobot * bot,
       result = new sim::RealWorld(bot);
     }
     if( devices & ARDUINO_REQUIRED ) {
-      Arduino * arduino = new Arduino();
-      assert(arduinoPath != NULL);
-      arduino->setup(arduinoPath);
       bot->setArduino(arduino);
       
       if( devices & MOTORS_ARDUINO ) {
@@ -154,9 +162,6 @@ sim::World * create_world(AbstractRobot * bot,
     }
     
     if( devices & MAESTRO_REQUIRED ) {
-      Maestro * maestro = new Maestro();
-      assert(maestroPath != NULL);
-      maestro->setup(maestroPath);
       bot->setMaestro(maestro);
       
       if( devices & MOTORS_MAESTRO ) {
@@ -165,7 +170,6 @@ sim::World * create_world(AbstractRobot * bot,
         }
       }
     }
-  
   }
   
   bot->setMotorController(motors);

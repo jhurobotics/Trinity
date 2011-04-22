@@ -16,7 +16,7 @@ namespace robot {
     Serial serial;
     
   public:
-    Maestro() throw() { };
+    Maestro() throw() { }
     
     void setup(const char * path);
     void setChannel(id_t channel, uint16_t value);
