@@ -19,8 +19,8 @@ int main(int argc, char** argv)
     return -1;
   }
   std::string robotPath = argv[1], sensorPath = argv[2];//, mapPath = argv[3];
-  const char * arduino = argv[3];
-  const char * maestro = argv[4];
+  const char * arduino_path = argv[3];
+  const char * maestro_path = argv[4];
   robot::Implementation imp = robot::SONAR;
   if( argc == 6 ) {
     std::string test = argv[5];
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
   setupflags |= ENCODER_ARDUINO;
   sim::World * world = create_world(bot, NULL, //mapPath.c_str(),
                                     robotPath.c_str(), sensorPath.c_str(),
-                                    setupflags, arduino, maestro);
+                                    setupflags, arduino_path, maestro_path);
   for(;;) {
     world->step();
   }
