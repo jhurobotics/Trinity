@@ -34,7 +34,7 @@ static speed_t get_baud_constant(long baud) {
 
 void Serial::Open(const char * path) throw(Serial::OpenError)
 {
-  fd = open(path, O_RDWR | O_NOCTTY | O_NONBLOCK );
+  fd = open(path, O_RDWR | O_NOCTTY | O_NDELAY);
   if( fd < 0 ) {
     throw OpenError("could not open file");
   }
@@ -61,7 +61,7 @@ void Serial::Open(const char * path) throw(Serial::OpenError)
   // no Ctrl-D suppression, no fill characters, no case mapping,
   // no local output processing
   //
-   config.c_oflag &= ~(OCRNL | ONLCR | ONLRET |
+  config.c_oflag &= ~(OCRNL | ONLCR | ONLRET |
                        ONOCR | /*ONOEOT|*/ OFILL  | OPOST);
   //config.c_oflag = 0;
   //
