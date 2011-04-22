@@ -20,7 +20,7 @@
 #include "timers.h"
 #include "speedTest.h"
 
-#define MAX_EXTINGUISH_TIME 1000000
+#define MAX_EXTINGUISH_TIME 4000000
   // one second
 
 using namespace robot;
