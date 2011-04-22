@@ -221,10 +221,23 @@ void MainWindow::startSimulation()
   else if( ui->uv_arduino->isChecked() ) {
     setupflags |= UV_ARDUINO;
   }
-  
+
+  char * arduino_path = ui->arduino_path->text().toAscii().data();
+  int len = strlen(arduino_path);
+  arduino_path = new char[len+1];
+  strncpy(arduino_path, ui->arduino_path->text().toAscii().data(), len);
+  arduino_path[len] = 0;
+  char * maestro_path = ui->maestro_path->text().toAscii().data();
+  len = strlen(maestro_path);
+  maestro_path = new char[len+1];
+  strncpy(maestro_path, ui->maestro_path->text().toAscii().data(), len);
+  maestro_path[len] = 0;
   sim::World * world = create_world(bot, mapPath.toAscii().data(),
                                     robotPath.toAscii().data(), sensorPath.toAscii().data(),
-                                    setupflags, "/dev/ttyACM0", "/dev/ttyACM1");
+                                    setupflags, arduino_path, maestro_path);
+  delete maestro_path;
+  delete arduino_path;
+
   if( world->realTime() ) {
     realDisplay->setWorld(world);
     realWindow->show();
