@@ -27,7 +27,17 @@
 		DABEF4FB132C8FEA002D4E22 /* maestro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABEF4F9132C8FE9002D4E22 /* maestro.cpp */; };
 		DABF690212D2CFA200CA7B16 /* simmotors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA29583C12CD1310003D4584 /* simmotors.cpp */; };
 		DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC9ADE712CAB49500691585 /* simulation.cpp */; };
-		DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DABF690812D2CFE800CA7B16 /* OpenGL.framework */; };
+		DAC2E1FC136254AE00BBBBF6 /* cli.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC2E1FA136254A600BBBBF6 /* cli.cpp */; };
+		DAC2E1FD136254BD00BBBBF6 /* graph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA675314134D2097000F8C39 /* graph.cpp */; };
+		DAC2E1FE136254C500BBBBF6 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA2EC8D912F3747A0029F044 /* timers.cpp */; };
+		DAC2E1FF136254D100BBBBF6 /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC921329C4D600493D34 /* arduino.cpp */; };
+		DAC2E200136254D500BBBBF6 /* maestro.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DABEF4F9132C8FE9002D4E22 /* maestro.cpp */; };
+		DAC2E201136254DD00BBBBF6 /* serial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC951329C4D600493D34 /* serial.cpp */; };
+		DAC2E202136254E100BBBBF6 /* setup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA72DC971329C4D600493D34 /* setup.cpp */; };
+		DAC2E203136254E900BBBBF6 /* speedTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DA668DCA1350D5CD0077B6E4 /* speedTest.cpp */; };
+		DAC2E204136254F300BBBBF6 /* mcl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE2012FCD57A00B11B07 /* mcl.cpp */; };
+		DAC2E205136254F600BBBBF6 /* MeasurementModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDE6212FCD96600B11B07 /* MeasurementModel.cpp */; };
+		DAC2E206136254F800BBBBF6 /* OdometryModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAADDDBE12FCC09800B11B07 /* OdometryModel.cpp */; };
 		DAC760B012C86B0500E7E711 /* map.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAC75F7012C85E1600E7E711 /* map.cpp */; };
 		DAFD40B612DECF5400E5D62C /* mainwindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD404E12DECBDE00E5D62C /* mainwindow.cpp */; };
 		DAFD40B712DECF5400E5D62C /* mapwidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DAFD405112DECBDE00E5D62C /* mapwidget.cpp */; };
@@ -105,11 +115,12 @@
 		DABEF4F9132C8FE9002D4E22 /* maestro.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = maestro.cpp; sourceTree = "<group>"; };
 		DABEF4FA132C8FE9002D4E22 /* maestro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maestro.h; sourceTree = "<group>"; };
 		DABF690812D2CFE800CA7B16 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
+		DAC2E1FA136254A600BBBBF6 /* cli.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cli.cpp; sourceTree = "<group>"; };
 		DAC2F9D712E7C4B90084052D /* qt_preprocess.mak */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; name = qt_preprocess.mak; path = ../qt_preprocess.mak; sourceTree = "<group>"; };
 		DAC75F4212C8596D00E7E711 /* basic_map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = basic_map; sourceTree = "<group>"; };
 		DAC75F4612C859F900E7E711 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
 		DAC75F7012C85E1600E7E711 /* map.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map.cpp; sourceTree = "<group>"; };
-		DAC760A712C86ACB00E7E711 /* sim */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sim; sourceTree = BUILT_PRODUCTS_DIR; };
+		DAC760A712C86ACB00E7E711 /* cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC9AB9012CA594B00691585 /* Nomadic */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Nomadic; sourceTree = "<group>"; };
 		DAC9AB9312CA5A9900691585 /* first */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = first; sourceTree = "<group>"; };
 		DAC9ABE412CA5EFE00691585 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
@@ -147,7 +158,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DABF690912D2CFE800CA7B16 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +231,7 @@
 				DA72DC931329C4D600493D34 /* arduino.h */,
 				DA72DC921329C4D600493D34 /* arduino.cpp */,
 				DAB40508132D3311005500E1 /* controllers.h */,
+				DAC2E1FA136254A600BBBBF6 /* cli.cpp */,
 				DABEF4FA132C8FE9002D4E22 /* maestro.h */,
 				DABEF4F9132C8FE9002D4E22 /* maestro.cpp */,
 				DAC75F4612C859F900E7E711 /* map.h */,
@@ -246,7 +257,7 @@
 		DAC760A812C86ACB00E7E711 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DAC760A712C86ACB00E7E711 /* sim */,
+				DAC760A712C86ACB00E7E711 /* cli */,
 				DAFD40A912DECDB700E5D62C /* QtSim.app */,
 				DA36E56E1344317300330758 /* arduinoTest */,
 			);
@@ -361,9 +372,9 @@
 			productReference = DA36E56E1344317300330758 /* arduinoTest */;
 			productType = "com.apple.product-type.tool";
 		};
-		DAC760A612C86ACB00E7E711 /* sim */ = {
+		DAC760A612C86ACB00E7E711 /* cli */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "sim" */;
+			buildConfigurationList = DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "cli" */;
 			buildPhases = (
 				DAC760A412C86ACB00E7E711 /* Sources */,
 				DAC760A512C86ACB00E7E711 /* Frameworks */,
@@ -373,9 +384,9 @@
 			);
 			dependencies = (
 			);
-			name = sim;
+			name = cli;
 			productName = sim;
-			productReference = DAC760A712C86ACB00E7E711 /* sim */;
+			productReference = DAC760A712C86ACB00E7E711 /* cli */;
 			productType = "com.apple.product-type.tool";
 		};
 		DAFD40A812DECDB700E5D62C /* QtSim */ = {
@@ -416,7 +427,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DAC760A612C86ACB00E7E711 /* sim */,
+				DAC760A612C86ACB00E7E711 /* cli */,
 				DAFD40A812DECDB700E5D62C /* QtSim */,
 				DA36E56D1344317300330758 /* arduinoTest */,
 			);
@@ -471,6 +482,17 @@
 				DAC760B012C86B0500E7E711 /* map.cpp in Sources */,
 				DA47B86212C922EE00A7A0AF /* geometry.cpp in Sources */,
 				DABF690312D2CFA300CA7B16 /* simulation.cpp in Sources */,
+				DAC2E1FC136254AE00BBBBF6 /* cli.cpp in Sources */,
+				DAC2E1FD136254BD00BBBBF6 /* graph.cpp in Sources */,
+				DAC2E1FE136254C500BBBBF6 /* timers.cpp in Sources */,
+				DAC2E1FF136254D100BBBBF6 /* arduino.cpp in Sources */,
+				DAC2E200136254D500BBBBF6 /* maestro.cpp in Sources */,
+				DAC2E201136254DD00BBBBF6 /* serial.cpp in Sources */,
+				DAC2E202136254E100BBBBF6 /* setup.cpp in Sources */,
+				DAC2E203136254E900BBBBF6 /* speedTest.cpp in Sources */,
+				DAC2E204136254F300BBBBF6 /* mcl.cpp in Sources */,
+				DAC2E205136254F600BBBBF6 /* MeasurementModel.cpp in Sources */,
+				DAC2E206136254F800BBBBF6 /* OdometryModel.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,11 +600,11 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_GUI;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
-				PRODUCT_NAME = sim;
+				PRODUCT_NAME = cli;
 			};
 			name = Debug;
 		};
@@ -593,10 +615,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = NO_GUI;
 				INSTALL_PATH = /usr/local/bin;
 				PREBINDING = NO;
-				PRODUCT_NAME = sim;
+				PRODUCT_NAME = cli;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -745,7 +767,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "sim" */ = {
+		DAC760AC12C86ACC00E7E711 /* Build configuration list for PBXNativeTarget "cli" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DAC760AA12C86ACC00E7E711 /* Debug */,
